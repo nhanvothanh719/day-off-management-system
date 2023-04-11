@@ -2,7 +2,6 @@ import {
   BrowserRouter,
   Route,
   Routes,
-  Redirect,
   Navigate,
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";

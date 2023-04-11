@@ -1,0 +1,198 @@
+$white: #fff;
+$blue: #226EB7;
+$orange: #F6931D;
+
+@mixin text-custom ($font_family, $font_size, $font_weight) {
+    font-family: $font_family, sans-serif;
+    font-size: $font_size;
+    font-weight: $font_weight;
+}
+
+.login {
+  &__area {
+    justify-content: center;
+  }
+
+  &__container {
+    margin-inline: auto;
+    width: 100%;
+
+    @media only screen and (min-width: 1367px) {
+      & {
+        max-width: 1070px !important;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) and (max-width: 1366px) {
+      & {
+        max-width: 970px !important;
+      }
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+      & {
+        max-width: 760px !important;
+      }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      & {
+        max-width: 600px !important;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      & {
+        max-width: 500px !important;
+      }
+    }
+  }
+
+  &__content {
+    
+    margin-top: 20px;
+    box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+
+    @media screen and (max-width: 767px) {
+      & {
+        display: flex;
+      }
+    }
+
+    .section {
+      &--left {
+
+        &__title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+
+          .logo--center {
+            padding: 35px 0 30px 0;
+            max-width: 300px;
+            max-height: 150px;
+          }
+
+          .title {
+            &--big {
+                @include text-custom(Rubik, 40px, 500);
+                color: $blue;
+                text-transform: uppercase;
+                display: block;
+            }
+
+            &--small {
+                @include text-custom(Nunito, 30px, 700);
+                color: $orange;
+                display: block;
+            }
+          }
+        }
+      }
+
+      &--right {
+        background-image: url('https://th.bing.com/th/id/R.d53c0f19c108ca1e30f0c6f297e10649?rik=xvh6AcCCno6c7Q&riu=http%3a%2f%2ffondation-adlania.ch%2ffiles%2ffichiers%2fpages%2fculturedepaix%2fpecp.jpg&ehk=2kEaTQfijvOJ2XUmpyko2cBhaSFqCd7nSUo%2bHPZKVzw%3d&risl=&pid=ImgRaw&r=0');
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 350px;
+
+        border-left: 3px dashed $blue;
+
+        @media only screen and (max-width: 1199px) {
+            & {
+              border-left: none;
+            }
+          }
+
+        &__title {
+            text-align: center
+        }
+
+        .title {
+            &--big {
+                @include text-custom(Rubik, 30px, 500);
+                text-transform: uppercase;      
+                display: block;      
+            }
+
+            &--small {
+                @include text-custom(Nunito, 20px, 700);
+                display: block;
+                margin-bottom: 20px;
+            }
+        }
+
+        .button__wrapper {
+            padding-inline: 20px;
+
+            @media screen and (min-width: 1199px) {
+                padding-inline: 30px;
+            }
+
+            .login-with__button {
+                width: 100%;
+                margin-bottom: 10px;
+
+                span {
+                    @include text-custom(Nunito, 17px, 600);
+                }
+
+                &:hover {
+                    background: linear-gradient(135deg, #f77b59 0%, #21abfa 100%);
+                    color: $white;
+                    transition: all 30ms ease-in-out;
+                    border-style: none;
+                }
+            }
+        }
+      }
+    }
+  }
+
+  &__form.ant-form {
+    padding: 20px 140px;
+
+    @media screen and (max-width: 1199px) {
+        & {
+            padding: 20px 50px;
+        }
+    }
+
+    .ant {
+
+        &-input {
+            @include text-custom(Nunito, 17px, 600);
+        }
+
+        &-input, &-input-password {
+            border-radius: 40px;
+        }
+
+        &-form-item:first-child {
+            .ant-input-lg {
+                padding-left: 30px;
+            }
+        }
+
+        &-form-item:not(:first-child) {
+            .ant-input-lg {
+                padding-left: 20px;
+            }
+        }
+    }
+  }
+
+  &__button.ant-btn  {
+    left: 30%;
+    padding-inline: 30px;
+    border-radius: 5px;
+
+    span {
+        @include text-custom(Nunito, 16px, 600);
+    }
+  }
+}
