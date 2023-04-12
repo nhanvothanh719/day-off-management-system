@@ -3,7 +3,9 @@ import React from 'react'
 
 function Header() {
   return (
-    <Typography.Text>Header</Typography.Text>
+    <Typography.Text>
+      Header
+      </Typography.Text>
   )
 }
 
