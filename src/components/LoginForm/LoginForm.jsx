@@ -21,7 +21,13 @@ function LoginForm() {
 
   return (
     <Row className="login__area">
+      <div className="side__image">
+      </div>
       <Col className="login__container" xl={24} lg={24} md={24} sm={24} xs={24}>
+      <span class="top"></span>
+      <span class="right"></span>
+      <span class="bottom"></span>
+      <span class="left"></span>
         <Row className="login__content">
           <Col
             className="section--left"
