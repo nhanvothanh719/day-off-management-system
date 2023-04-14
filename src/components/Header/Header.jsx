@@ -64,7 +64,7 @@ function HeaderComponent(props) {
         <Col xs={4} sm={4} md={4} lg={4} xl={4} className="avatar-container">
           <Dropdown
             overlay={menu}
-            placement="bottomRight"
+            placement="bottom"
             className="avatar-dropdown"
           >
             <div style={{ display: "flex" }}>

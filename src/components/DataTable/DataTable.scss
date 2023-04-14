@@ -1,0 +1,11 @@
+.ant-table-content {
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+//   background: #EF3B36;  /* fallback for old browsers */
+//   background: -webkit-linear-gradient(to top, #FFFFFF, #EF3B36);  /* Chrome 10-25, Safari 5.1-6 */
+//   background: linear-gradient(to top, #FFFFFF, #EF3B36); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+  .ant-table-thead > tr > th {
+    background-color: #ea7a9a  !important;
+    color: #f5f5dc !important;
+  }
+}
