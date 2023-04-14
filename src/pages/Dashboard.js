@@ -3,7 +3,8 @@ import React, { Fragment, useState } from 'react';
 import BreadcrumbComponent from '../components/Breadcrumb/Breadcrumb';
 import HeaderComponent from '../components/Header/Header';
 import { SideBar } from '../components/SideBar/SideBar';
-const {  Content } = Layout;
+import ContentConfig from '../components/Content/Content';
+
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,16 +16,7 @@ const Dashboard = () => {
       <Layout className="site-layout">
         <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} />
         <BreadcrumbComponent />
-        <Content
-          className="site-layout-background"
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-          }}
-        >
-          Content
-        </Content>
+        <ContentConfig />
       </Layout>
     </Layout>
 </Fragment>
