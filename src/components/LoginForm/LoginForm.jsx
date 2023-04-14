@@ -32,7 +32,7 @@ function LoginForm() {
           <Col
             className="section--left"
             xl={15}
-            lg={14}
+            lg={24}
             md={24}
             sm={24}
             xs={24}
@@ -107,7 +107,7 @@ function LoginForm() {
               </Col>
             </Row>
           </Col>
-          <Col className="section--right" xl={9} lg={10} md={24} sm={24} xs={24}>
+          <Col className="section--right" xl={9} lg={24} md={24} sm={24} xs={24}>
             <Row>
               <Col
                 className="section--right__title"
