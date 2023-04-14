@@ -1,0 +1,54 @@
+.header-container {
+    height: 100px !important;
+    max-width: 100%;
+    width: 100%;
+    background: #fff !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    line-height: auto !important;
+  
+    .ant-layout-header {
+      height: 100px !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+    .avatar-container {
+      display: flex;
+      justify-content: center;
+      padding-right: 10px;
+      .avatar:hover {
+        cursor: pointer;
+      }
+      .avatar-details {
+        padding: 0 20px 0 12px;
+        @media only screen and (max-width: 1376px) {
+          display: none;
+        }
+      }
+      .avatar-name {
+        font-weight: bold;
+        color: black;
+      }
+      .avatar-role {
+        color: black;
+      }
+    }
+    .badge {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
+  .ant-layout-header {
+    line-height: unset !important;
+  }
+  .ant-dropdown-menu {
+    border-radius: 15px !important;
+    padding: 12px !important;
+    margin-top: 12px !important;
+    li:hover {
+      color: #ea7a9a;
+    }
+  }
+  
