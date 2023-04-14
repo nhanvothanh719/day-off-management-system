@@ -1,6 +1,6 @@
 import {
   AntDesignOutlined,
-  BellOutlined,
+  PlusCircleOutlined,
   ExportOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -47,10 +47,10 @@ function HeaderComponent(props) {
         </Col>
         <Col xs={16} sm={16} md={16} lg={16} xl={16} className="badge">
           <Badge
-            count={5}
             style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }}
           >
-            <BellOutlined
+
+            <PlusCircleOutlined
               style={{
                 fontSize: "30px",
                 color: "rgb(76, 129, 71)",
