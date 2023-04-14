@@ -1,0 +1,191 @@
+$pink: #e97a9a;
+$gray: #7e7e7e;
+$nude: #f9c4b4;
+$baby-pink: #fbe8ee;
+$white: #fff;
+
+@mixin text-custom($font_family, $font_size, $font_weight) {
+  font-family: $font_family, sans-serif;
+  font-size: $font_size;
+  font-weight: $font_weight;
+}
+
+@mixin input-custom() {
+  border-radius: 15px;
+  height: 56px;
+}
+
+//Out side the form
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: $baby-pink !important;
+}
+
+.rc-virtual-list-holder {
+  max-height: auto;
+
+  .ant-select-item.ant-select-item-option {
+    @include text-custom(Nunito, 18px, 600);
+    line-height: 30px;
+  }
+}
+
+.custom-form.ant-form {
+
+  padding-left: 100px;
+
+  *::selection {
+    border-color: $pink !important;
+  }
+
+  *:where(:hover) {
+    border-color: $pink !important;
+  }
+
+  //Label
+  label {
+    @include text-custom(Nunito, 18px, 600);
+    color: #000;
+  }
+
+  .ant {
+
+    &-radio {
+      &-input:focus + .ant-radio-inner,
+      &:hover .ant-radio-inner,
+      &-wrapper:hover .ant-radio,
+      &-checked .ant-radio-inner {
+        border-color: $pink;
+
+        &::after {
+          background-color: $pink;
+        }
+      }
+
+      &-input:focus + .ant-radio-inner {
+        box-shadow: 0 0 0 3px rgba(236, 98, 209, 0.12);
+        border: 1px solid $pink;
+      }
+
+      &-checked::after {
+        border: 1px solid $pink;
+      }
+
+      &-checked .ant-radio-inner::after {
+        transform: scale(0.7);
+      }
+
+      &-inner {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    //Day range select
+
+    &-picker-input > input {
+      @include text-custom(Nunito, 18px, 600);
+    }
+
+    &-picker {
+      width: 100%;
+      
+      &-range {
+        @include text-custom(Nunito, 18px, 600);
+        @include input-custom();
+      }
+
+      &-input {
+        @include text-custom(Nunito, 18px, 600);
+      }
+
+      &:hover,
+      &-focused {
+        border-color: $pink;
+      }
+
+      &-focused {
+        box-shadow: 0 0 0 2px $baby-pink;
+      }
+
+      &-range .ant-picker-active-bar {
+        background: #f4adac;
+      }
+    }
+
+    //Select option
+
+    &-select {
+
+      &:not(.ant-select-disabled):hover .ant-select-selector {
+        border-color: $pink;
+      }
+
+      &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        box-shadow: 0 0 0 2px $baby-pink;
+        border-color: $pink;
+      }
+
+      //text inside
+      &-single.ant-select-show-arrow .ant-select-selection-item {
+        top: 20%;
+      }
+
+      &:not(.ant-select-customize-input) .ant-select-selector {
+        @include text-custom(Nunito, 18px, 600);
+        @include input-custom();
+      }
+    }
+
+    //Number
+
+    &-input {
+      @include text-custom(Nunito, 18px, 600);
+      @include input-custom();
+
+      &-number {
+        @include text-custom(Nunito, 18px, 600);
+        @include input-custom();
+
+        width: 100%;
+
+        &-focused {
+          box-shadow: 0 0 0 2px $baby-pink;
+          border-color: $pink;
+        }
+
+        &-input-wrap {
+          line-height: 56px;
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 2px $baby-pink;
+          border-color: $pink;
+        }
+      }
+    }
+
+    //TextArea
+
+    &-input:focus, &-input-focused {
+      box-shadow: 0 0 0 2px $baby-pink;
+      border-color: $pink;
+    }
+
+    //Button
+    &-btn {
+      padding: 10px 20px;
+      height: auto;
+      @include text-custom(Nunito, 18px, 700);
+      border-radius: 20px;
+      border-style: none;
+      background-color: $baby-pink;
+      color: $pink;
+
+      &:hover {
+        color: $white;
+        background-color: $pink;
+      }
+    }
+
+  }
+}

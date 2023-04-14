@@ -1,0 +1,432 @@
+$white: #fff;
+$blue: #3c4562;
+$pink: #ed8a9f;
+$light-pink: #ea7a9a;
+$dark-pink: #e65980;
+$baby-pink: #fbe8ee;
+
+@mixin text-custom($font_family, $font_size, $font_weight) {
+  font-family: $font_family, sans-serif;
+  font-size: $font_size;
+  font-weight: $font_weight;
+}
+
+.login {
+  &__area {
+    width: 100vw;
+    height: 100vh;
+
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+    position: relative;
+
+    *::selection {
+      border-color: $pink !important;
+    }
+
+    .ant {
+      &-input {
+        &:focus, &-focused {
+          border-color: $pink !important;
+          box-shadow: 0 0 0 2px $baby-pink !important;
+        }
+
+        &:hover {
+          border-color: $pink !important;
+        }
+
+        &-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+          border-color: $pink !important;
+        }
+
+        &-affix-wrapper:focus, &-affix-wrapper-focused {
+          border-color: $pink !important;
+          box-shadow: 0 0 0 2px $baby-pink !important;
+        }
+      }
+    }
+
+    .side__image {
+      width: 100vw;
+      height: 100vh;
+
+      z-index: 3;
+
+      position: fixed;
+      background-image: url('https://sego.dexignzone.com/react/demo/static/media/bg-login.d7c75a6897d9506756b1.jpg');
+      height: 100vh;
+      width: 120%;
+      background-size: cover;
+      background-repeat: repeat-y;
+      background-position-y: -350px;
+
+      left: 53%;
+
+      transform: skew(-5deg);
+
+      @media only screen and (max-width: 1199px) {
+        & {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__container {
+    margin-inline: auto;
+    width: 100%;
+    position: relative;
+
+    @media only screen and (min-width: 1367px) {
+      & {
+        max-width: 1070px !important;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) and (max-width: 1366px) {
+      & {
+        max-width: 970px !important;
+      }
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+      & {
+        max-width: 760px !important;
+      }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      & {
+        max-width: 600px !important;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      & {
+        max-width: 500px !important;
+      }
+    }
+
+    .top {
+      position: absolute;
+      border-radius: 100vmax;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 5px;
+      background: linear-gradient(
+        90deg,
+        transparent 50%,
+        rgba(255, 49, 193, 0.5),
+        rgb(255, 49, 214)
+      );
+      z-index: 2;
+    }
+
+    .bottom {
+      position: absolute;
+      border-radius: 100vmax;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      background: linear-gradient(
+        90deg,
+        rgb(200, 20, 255),
+        rgba(231, 20, 255, 0.5),
+        transparent 50%
+      );
+      z-index: 2;
+    }
+
+    .right {
+      position: absolute;
+      border-radius: 100vmax;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 30%,
+        rgba(255, 0, 242, 0.62),
+        rgb(193, 137, 190)
+      );
+      z-index: 2;
+    }
+
+    .left {
+      position: absolute;
+      border-radius: 100vmax;
+      left: 0;
+      bottom: 0;
+      width: 5px;
+      height: 0;
+      background: linear-gradient(
+        180deg,
+        rgb(255, 113, 246),
+        rgba(234, 171, 230, 0.5),
+        transparent 70%
+      );
+      z-index: 2;
+    }
+
+    .top {
+      animation: animateTop 6s ease-in-out infinite;
+    }
+
+    .bottom {
+      animation: animateBottom 6s ease-in-out infinite;
+    }
+
+    .right {
+      animation: animateRight 6s ease-in-out infinite;
+    }
+
+    .left {
+      animation: animateLeft 6s ease-in-out infinite;
+    }
+  }
+
+  &__content {
+    box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+
+    @media screen and (max-width: 767px) {
+      & {
+        display: flex;
+      }
+    }
+
+    .section {
+      &--left {
+
+        &__title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+
+          .logo--center {
+            padding: 40px 0;
+            max-width: 300px;
+            max-height: 150px;
+          }
+
+          .title {
+            &--big {
+              @include text-custom(Rubik, 40px, 500);
+              color: $blue;
+              text-transform: uppercase;
+              display: block;
+            }
+
+            &--small {
+              @include text-custom(Nunito, 30px, 700);
+              color: $dark-pink;
+              display: block;
+            }
+          }
+        }
+      }
+
+      &--right {
+
+        background-image: url("https://th.bing.com/th/id/R.d53c0f19c108ca1e30f0c6f297e10649?rik=xvh6AcCCno6c7Q&riu=http%3a%2f%2ffondation-adlania.ch%2ffiles%2ffichiers%2fpages%2fculturedepaix%2fpecp.jpg&ehk=2kEaTQfijvOJ2XUmpyko2cBhaSFqCd7nSUo%2bHPZKVzw%3d&risl=&pid=ImgRaw&r=0");
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 350px;
+
+        z-index: 9;
+
+        @media only screen and (min-width: 1200px) {
+          & {
+            background: unset !important;
+          }
+        }
+
+        @media only screen and (max-width: 1199px) {
+          & {
+            border-left: none;
+          }
+        }
+
+
+
+        &__title {
+          text-align: center;
+        }
+
+        .title {
+          &--big {
+            @include text-custom(Rubik, 30px, 500);
+            color: $blue;
+            text-transform: uppercase;
+            display: block;
+          }
+
+          &--small {
+            @include text-custom(Nunito, 20px, 700);
+            color: $blue;
+            display: block;
+            margin-bottom: 20px;
+          }
+        }
+
+        .button__wrapper {
+          padding-inline: 50px;
+
+          @media screen and (min-width: 1199px) {
+            padding: 30px;
+          }
+
+          .login-with__button {
+            width: 100%;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #CB4291 0%, #EF819C 100%);
+            border-style: none;
+            color: $white;
+            transition: all 1s ease-in-out;
+            padding: 5px 0;
+
+            z-index: 5;
+
+            span {
+              @include text-custom(Nunito, 17px, 600);
+            }
+
+            &:hover {
+              background: linear-gradient(135deg, #EF819C 0%, #CB4291 100%);
+              color: $white;
+              transition: all 1s ease;
+              border-style: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__form.ant-form {
+    padding: 20px 110px 30px;
+
+    @media screen and (max-width: 1199px) {
+      & {
+        padding: 20px 50px;
+      }
+    }
+
+    .ant {
+      &-input {
+        @include text-custom(Nunito, 17px, 600);
+      }
+
+      &-input,
+      &-input-password {
+        border-radius: 30px;
+      }
+
+      &-form-item:first-child {
+        .ant-input-lg {
+          padding: 9px 40px;
+          margin-bottom: 10px;
+        }
+      }
+
+      &-form-item:not(:first-child) {
+        .ant-input-lg {
+          padding: 3px 30px;
+        }
+      }
+
+      &-btn-primary:hover {
+        background-color: $dark-pink !important;
+        border-style: none;
+      }
+
+      &icon {
+        font-size: 20px;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  &__button.ant-btn {
+    left: 30%;
+    padding-inline: 50px;
+    border-radius: 5px;
+    background-color: $light-pink;
+    border-style: none;
+    margin-top: 15px;
+
+    span {
+      @include text-custom(Nunito, 16px, 600);
+    }
+  }
+}
+
+@keyframes animateTop {
+  25% {
+    width: 100%;
+    opacity: 1;
+  }
+
+  30%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes animateBottom {
+  0%,
+  50% {
+    opacity: 0;
+    width: 0;
+  }
+
+  75% {
+    opacity: 1;
+    width: 100%;
+  }
+
+  76%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes animateRight {
+  0%,
+  25% {
+    opacity: 0;
+    height: 0;
+  }
+
+  50% {
+    opacity: 1;
+    height: 100%;
+  }
+
+  55%,
+  100% {
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes animateLeft {
+  0%,
+  75% {
+    opacity: 0;
+    bottom: 0;
+    height: 0;
+  }
+
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
+}
