@@ -1,3 +1,14 @@
-.breadcrumb-container {
-  padding: 20px !important;
-}
+.breadcrumb__container {
+    padding: 20px 20px 0 20px;
+    font-family: Poppins;
+    font-weight: 500;
+
+    .ant-breadcrumb-link {
+      font-size: 15px !important;
+    }
+
+    .ant-breadcrumb li:last-child {
+      color: #ea7a9a;
+  }
+  }
+  

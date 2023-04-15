@@ -4,7 +4,7 @@ import React from "react";
 import "./Breadcrumb.scss";
 
 const BreadcrumbComponent = (props) => (
-  <Row className="breadcrumb-container">
+  <Row className="breadcrumb__container">
     <Breadcrumb>
       <Breadcrumb.Item href="">
         <HomeOutlined />

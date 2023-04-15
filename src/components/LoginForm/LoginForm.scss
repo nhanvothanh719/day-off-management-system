@@ -4,6 +4,7 @@ $pink: #ed8a9f;
 $light-pink: #ea7a9a;
 $dark-pink: #e65980;
 $baby-pink: #fbe8ee;
+$gray: #7e7e7e;
 
 @mixin text-custom($font_family, $font_size, $font_weight) {
   font-family: $font_family, sans-serif;
@@ -28,7 +29,8 @@ $baby-pink: #fbe8ee;
 
     .ant {
       &-input {
-        &:focus, &-focused {
+        &:focus,
+        &-focused {
           border-color: $pink !important;
           box-shadow: 0 0 0 2px $baby-pink !important;
         }
@@ -41,7 +43,8 @@ $baby-pink: #fbe8ee;
           border-color: $pink !important;
         }
 
-        &-affix-wrapper:focus, &-affix-wrapper-focused {
+        &-affix-wrapper:focus,
+        &-affix-wrapper-focused {
           border-color: $pink !important;
           box-shadow: 0 0 0 2px $baby-pink !important;
         }
@@ -49,18 +52,15 @@ $baby-pink: #fbe8ee;
     }
 
     .side__image {
-      width: 100vw;
-      height: 100vh;
-
       z-index: 3;
 
       position: fixed;
-      background-image: url('https://sego.dexignzone.com/react/demo/static/media/bg-login.d7c75a6897d9506756b1.jpg');
+      background-image: url("https://sego.dexignzone.com/react/demo/static/media/bg-login.d7c75a6897d9506756b1.jpg");
       height: 100vh;
       width: 120%;
-      background-size: cover;
-      background-repeat: repeat-y;
-      background-position-y: -350px;
+      background-size: contain;
+      background-position-x: 0;
+      background-position-y: 0;
 
       left: 53%;
 
@@ -200,6 +200,13 @@ $baby-pink: #fbe8ee;
 
     .section {
       &--left {
+        .ant-form-item-label {
+
+          label {
+            @include text-custom(Poppins, 16px, 700);
+            color: $gray;
+          }
+        }
 
         &__title {
           display: flex;
@@ -216,14 +223,14 @@ $baby-pink: #fbe8ee;
           .title {
             &--big {
               @include text-custom(Rubik, 40px, 500);
-              color: $blue;
+              color: $dark-pink;
               text-transform: uppercase;
               display: block;
             }
 
             &--small {
-              @include text-custom(Nunito, 30px, 700);
-              color: $dark-pink;
+              @include text-custom(Poppins, 18px, 400);
+              color: $gray;
               display: block;
             }
           }
@@ -231,7 +238,6 @@ $baby-pink: #fbe8ee;
       }
 
       &--right {
-
         background-image: url("https://th.bing.com/th/id/R.d53c0f19c108ca1e30f0c6f297e10649?rik=xvh6AcCCno6c7Q&riu=http%3a%2f%2ffondation-adlania.ch%2ffiles%2ffichiers%2fpages%2fculturedepaix%2fpecp.jpg&ehk=2kEaTQfijvOJ2XUmpyko2cBhaSFqCd7nSUo%2bHPZKVzw%3d&risl=&pid=ImgRaw&r=0");
         background-position: center;
         background-repeat: no-repeat;
@@ -254,25 +260,42 @@ $baby-pink: #fbe8ee;
           }
         }
 
-
-
         &__title {
           text-align: center;
+
+          .logo {
+            &__img {
+              max-width: 130px;
+              height: auto;
+            }
+
+            &__text {
+              max-width: 250px;
+              height: auto;
+            }
+          }
         }
 
         .title {
           &--big {
             @include text-custom(Rubik, 30px, 500);
-            color: $blue;
+            color: $white;
             text-transform: uppercase;
             display: block;
           }
 
           &--small {
             @include text-custom(Nunito, 20px, 700);
-            color: $blue;
+            color: $white;
             display: block;
             margin-bottom: 20px;
+          }
+
+          @media screen and (max-width: 1199px) {
+            &--big,
+            &--small {
+              color: $blue;
+            }
           }
         }
 
@@ -286,7 +309,7 @@ $baby-pink: #fbe8ee;
           .login-with__button {
             width: 100%;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #CB4291 0%, #EF819C 100%);
+            background: linear-gradient(135deg, #cb4291 0%, #ef819c 100%);
             border-style: none;
             color: $white;
             transition: all 1s ease-in-out;
@@ -295,11 +318,11 @@ $baby-pink: #fbe8ee;
             z-index: 5;
 
             span {
-              @include text-custom(Nunito, 17px, 600);
+              @include text-custom(Nunito, 22px, 800);
             }
 
             &:hover {
-              background: linear-gradient(135deg, #EF819C 0%, #CB4291 100%);
+              background: linear-gradient(135deg, #ef819c 0%, #cb4291 100%);
               color: $white;
               transition: all 1s ease;
               border-style: none;
@@ -321,24 +344,24 @@ $baby-pink: #fbe8ee;
 
     .ant {
       &-input {
-        @include text-custom(Nunito, 17px, 600);
+        @include text-custom(Poppins, 17px, 500);
       }
 
       &-input,
       &-input-password {
-        border-radius: 30px;
+        border-radius: 20px;
       }
 
       &-form-item:first-child {
         .ant-input-lg {
-          padding: 9px 40px;
+          padding: 9px 30px;
           margin-bottom: 10px;
         }
       }
 
       &-form-item:not(:first-child) {
         .ant-input-lg {
-          padding: 3px 30px;
+          padding: 3px 20px;
         }
       }
 
@@ -356,14 +379,14 @@ $baby-pink: #fbe8ee;
 
   &__button.ant-btn {
     left: 30%;
-    padding-inline: 50px;
+    padding-inline: 70px;
     border-radius: 5px;
     background-color: $light-pink;
     border-style: none;
     margin-top: 15px;
 
     span {
-      @include text-custom(Nunito, 16px, 600);
+      @include text-custom(Poppins, 18px, 600);
     }
   }
 }

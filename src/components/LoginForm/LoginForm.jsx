@@ -1,9 +1,11 @@
-import { Button, Col, Form, Input, Row, Typography } from "antd";
+import { Button, Col, Form, Input, Row, Space, Typography } from "antd";
 import React, { useState } from "react";
 import "./LoginForm.scss";
 import { ImportOutlined, GoogleOutlined } from "@ant-design/icons";
 import { auth, provider } from "../../config/FirebaseConfig";
 import { signInWithPopup } from "firebase/auth";
+import logo from "../../assets/images/logo.png";
+import logo_text from "../../assets/images/logo_text2.png";
 
 function LoginForm() {
   const [form] = Form.useForm();
@@ -48,23 +50,21 @@ function LoginForm() {
               <Col xl={24} lg={24} md={24} sm={24} xs={24}>
                 <img
                   className="logo--center"
-                  src={img_src}
+                  src={logo_text}
                   alt="devplus_logo"
                 />
               </Col>
               <Col xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Typography.Title className="title--big">
-                  Welcome back
-                </Typography.Title>
-                <Typography.Title level={4} className="title--small">
-                  Sign in to your account
-                </Typography.Title>
+                <Typography.Title className="title--small">
+                Sign in by entering information below
+                </Typography.Title>        
               </Col>
             </Row>
             <Row>
               <Col xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Form
                   form={form}
+                  layout="vertical"
                   name="basic"
                   className="login__form"
                   {...formItemLayout}
@@ -73,6 +73,7 @@ function LoginForm() {
                 >
                   <Form.Item
                     name="username"
+                    label="Username"
                     rules={[
                       {
                         required: true,
@@ -86,6 +87,7 @@ function LoginForm() {
                   <Form.Item
                     name="password"
                     value="password"
+                    label="Password"
                     rules={[
                       {
                         required: true,
@@ -131,6 +133,7 @@ function LoginForm() {
                 sm={24}
                 xs={24}
               >
+                <img src={logo} alt="logo" class="logo__img" />
                 <Typography.Text className="title--big">
                   Other methods
                 </Typography.Text>

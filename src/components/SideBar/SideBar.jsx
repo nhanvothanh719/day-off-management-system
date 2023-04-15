@@ -8,7 +8,7 @@ import { Layout, Menu, Row, Col, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import "./SideBar.scss";
 import logo from "../../assets/images/logo.png";
-import logoText from "../../assets/images/logo_text.png";
+import logoText from "../../assets/images/logo_text2.png";
 import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
 
