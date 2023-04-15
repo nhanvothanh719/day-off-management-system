@@ -4,7 +4,7 @@ $nude: #f9c4b4;
 $baby-pink: #fbe8ee;
 $white: #fff;
 
-@mixin text-custom($font_family, $font_size, $font_weight) {
+@mixin text-custom($font_family: Poppins, $font_size: 16px, $font_weight: 500) {
   font-family: $font_family, sans-serif;
   font-size: $font_size;
   font-weight: $font_weight;
@@ -24,14 +24,14 @@ $white: #fff;
   max-height: auto;
 
   .ant-select-item.ant-select-item-option {
-    @include text-custom(Nunito, 18px, 600);
+    @include text-custom();
     line-height: 30px;
   }
 }
 
 .custom-form.ant-form {
 
-  padding-left: 100px;
+  margin: 0 70px;
 
   *::selection {
     border-color: $pink !important;
@@ -43,8 +43,8 @@ $white: #fff;
 
   //Label
   label {
-    @include text-custom(Nunito, 18px, 600);
-    color: #000;
+    @include text-custom();
+    color: $gray;
   }
 
   .ant {
@@ -83,19 +83,19 @@ $white: #fff;
     //Day range select
 
     &-picker-input > input {
-      @include text-custom(Nunito, 18px, 600);
+      @include text-custom();
     }
 
     &-picker {
       width: 100%;
       
       &-range {
-        @include text-custom(Nunito, 18px, 600);
+        @include text-custom();
         @include input-custom();
       }
 
       &-input {
-        @include text-custom(Nunito, 18px, 600);
+        @include text-custom();
       }
 
       &:hover,
@@ -116,6 +116,10 @@ $white: #fff;
 
     &-select {
 
+      &-selection-item {
+        color: $gray;
+      }
+
       &:not(.ant-select-disabled):hover .ant-select-selector {
         border-color: $pink;
       }
@@ -131,7 +135,7 @@ $white: #fff;
       }
 
       &:not(.ant-select-customize-input) .ant-select-selector {
-        @include text-custom(Nunito, 18px, 600);
+        @include text-custom();
         @include input-custom();
       }
     }
@@ -139,14 +143,18 @@ $white: #fff;
     //Number
 
     &-input {
-      @include text-custom(Nunito, 18px, 600);
+      @include text-custom();
       @include input-custom();
 
       &-number {
-        @include text-custom(Nunito, 18px, 600);
+        @include text-custom();
         @include input-custom();
 
         width: 100%;
+
+        &-input {
+          color: $gray;
+        }
 
         &-focused {
           box-shadow: 0 0 0 2px $baby-pink;
@@ -175,7 +183,7 @@ $white: #fff;
     &-btn {
       padding: 10px 20px;
       height: auto;
-      @include text-custom(Nunito, 18px, 700);
+      @include text-custom(Poppins, 18px, 500);
       border-radius: 20px;
       border-style: none;
       background-color: $baby-pink;

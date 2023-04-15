@@ -44,11 +44,16 @@
     line-height: unset !important;
   }
   .ant-dropdown-menu {
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
     border-radius: 15px !important;
-    padding: 12px !important;
+    padding: 18px !important;
     margin-top: 12px !important;
     li:hover {
       color: #ea7a9a;
+      background-color: #fbe8ee !important;
+      border-radius: 30px;
+      font-size: 17px;
     }
   }
   

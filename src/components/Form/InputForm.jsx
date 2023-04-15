@@ -1,6 +1,6 @@
 import React from "react";
-import "./Form.scss";
-import { Button, Select, Form, DatePicker, Radio, InputNumber } from "antd";
+import "./InputForm.scss";
+import { Button, Select, Form, DatePicker, Radio, InputNumber, Space } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -9,16 +9,9 @@ dayjs.extend(customParseFormat);
 
 function InputForm() {
   const [form] = Form.useForm();
+  const nameValue = Form.useWatch('name', form);
+  
   const dateFormat = "YYYY/MM/DD";
-
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
 
   const initialValues = {
     day_off_type: "off",
@@ -36,12 +29,11 @@ function InputForm() {
 
   return (
     <Form
-      {...layout}
       form={form}
       onFinish={onFinish}
       initialValues={initialValues}
-      style={{ maxWidth: 600 }}
       className="custom-form"
+      layout="vertical"
     >
       <Form.Item
         name="day_off_type"
@@ -49,8 +41,10 @@ function InputForm() {
         rules={[{ required: true }]}
       >
         <Radio.Group size='large'>
+        <Space direction="vertical">
           <Radio value="off">Off</Radio>
           <Radio value="wfh">Work from home</Radio>
+          </Space>
         </Radio.Group>
       </Form.Item>
       

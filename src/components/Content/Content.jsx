@@ -10,6 +10,7 @@ import Sync from "../Sync/Sync";
 import Workspaces from "../Workspaces/Workspaces";
 import Requests from "../Requests/Requests";
 import RequestDetail from "../RequestDetail/RequestDetail";
+import InputForm from '../Form/InputForm';
 
 import "./Content.scss";
 
@@ -19,6 +20,9 @@ const ContentConfig = () => {
   return (
     <Content className="site-layout-background">
       <Routes>
+
+        <Route exact path="/form" element={<InputForm />} />
+
         <Route exact path="/account/dashboard" element={<Dashboard />} />
         <Route exact path="/account/requests" element={<Requests />} />
         <Route

@@ -17,6 +17,7 @@ export const SideBar = (props) => {
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [openKeys, setOpenKeys] = useState(["account"]);
+  const [selectedKey, setSelectedKey] = useState("dashboard");
 
   const rootSubmenuKeys = ["account", "manager", "administrator"];
 
@@ -43,6 +44,7 @@ export const SideBar = (props) => {
 
   const handleNavigate = (route) => {
     navigate(route);
+    setSelectedKey(route.split("/").pop());
   };
 
   return (
@@ -74,7 +76,7 @@ export const SideBar = (props) => {
                 mode="inline"
                 openKeys={openKeys}
                 onOpenChange={onOpenChange}
-                //selectedKeys={[selectedKey]}
+                selectedKeys={[selectedKey]}
               >
                 <Menu.SubMenu
                   icon={<UserOutlined className="icon-menu-color" />}
