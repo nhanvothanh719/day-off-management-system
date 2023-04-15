@@ -18,13 +18,33 @@ import {
 import menu_close from "../../assets/images/menu_close.png";
 import menu_open from "../../assets/images/menu_open.png";
 import "./Header.scss";
+import { getAuth, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { app } from "../../config/FirebaseConfig";
 
+const auth = getAuth();
 function HeaderComponent(props) {
+  const [currentUser, setCurrentUser] = useState({
+    displayName: "",
+    avatar: "",
+  });
+
+  useEffect(() => {
+    if (app) {
+      setCurrentUser({
+        displayName: localStorage.getItem("user_name"),
+        avatar: localStorage.getItem("user_avatar"),
+      });
+    }
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user_email");
-  }
-  
+    signOut(auth).then(() => {
+      localStorage.removeItem("user_email");
+      localStorage.removeItem("user_avatar");
+    });
+  };
+
   const menu = (
     <Menu>
       <Menu.Item
@@ -42,6 +62,15 @@ function HeaderComponent(props) {
       </Menu.Item>
     </Menu>
   );
+
+  const avatar_size = {
+    xs: 35,
+    sm: 45,
+    md: 45,
+    lg: 45,
+    xl: 45,
+    xxl: 45,
+  };
 
   return (
     <Layout.Header className="header-container">
@@ -113,19 +142,28 @@ function HeaderComponent(props) {
             className="avatar-dropdown"
           >
             <div style={{ display: "flex" }}>
-              <Avatar
-                className="avatar"
-                size={{ xs: 35, sm: 45, md: 45, lg: 45, xl: 45, xxl: 45 }}
-                icon={<AntDesignOutlined />}
-              />
+              {currentUser ? (
+                <Avatar
+                  size={{ xs: 35, sm: 45, md: 45, lg: 45, xl: 45, xxl: 45 }}
+                  src={currentUser.avatar}
+                />
+              ) : (
+                <Avatar
+                  className="avatar"
+                  size={{ ...avatar_size }}
+                  icon={<AntDesignOutlined />}
+                />
+              )}
               <Space
                 direction="vertical"
                 size={[8, 0]}
                 className="avatar-details"
               >
-                <Typography.Text className="avatar-name">
-                  DevProMax
-                </Typography.Text>
+                {currentUser && (
+                  <Typography.Text className="avatar-name">
+                    {currentUser.displayName}
+                  </Typography.Text>
+                )}
                 <Typography.Text className="avatar-role">Admin</Typography.Text>
               </Space>
             </div>

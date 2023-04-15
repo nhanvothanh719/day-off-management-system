@@ -1,17 +1,12 @@
 import { Button, Col, Form, Input, Row, Typography } from "antd";
 import React, { useState } from "react";
 import "./LoginForm.scss";
-import {
-  ImportOutlined,
-  GoogleOutlined,
-} from "@ant-design/icons";
-import {auth, provider} from '../../config/LoginGoogle';
-import {signInWithPopup} from 'firebase/auth';
+import { ImportOutlined, GoogleOutlined } from "@ant-design/icons";
+import { auth, provider } from "../../config/FirebaseConfig";
+import { signInWithPopup } from "firebase/auth";
 
 function LoginForm() {
   const [form] = Form.useForm();
-
-  const [email, setEmail] = useState('');
 
   const img_src = "https://devplus.edu.vn/assets/images/devplus/Artboard_2.png";
 
@@ -24,20 +19,22 @@ function LoginForm() {
   const onFinishFailed = (values) => {};
 
   const handleLoginGg = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      localStorage.setItem("user_email", data.user.email);
-    })
-  }
+    signInWithPopup(auth, provider).then((userCredential) => {
+      console.log(userCredential.user)
+      localStorage.setItem("user_email", userCredential.user.email);
+      localStorage.setItem("user_avatar", userCredential.user.photoURL);
+      localStorage.setItem("user_name", userCredential.user.displayName);
+    });
+  };
 
   return (
     <Row className="login__area">
-      <div className="side__image">
-      </div>
+      <div className="side__image"></div>
       <Col className="login__container" xl={24} lg={24} md={24} sm={24} xs={24}>
-      <span class="top"></span>
-      <span class="right"></span>
-      <span class="bottom"></span>
-      <span class="left"></span>
+        <span class="top"></span>
+        <span class="right"></span>
+        <span class="bottom"></span>
+        <span class="left"></span>
         <Row className="login__content">
           <Col
             className="section--left"
@@ -117,7 +114,14 @@ function LoginForm() {
               </Col>
             </Row>
           </Col>
-          <Col className="section--right" xl={9} lg={24} md={24} sm={24} xs={24}>
+          <Col
+            className="section--right"
+            xl={9}
+            lg={24}
+            md={24}
+            sm={24}
+            xs={24}
+          >
             <Row>
               <Col
                 className="section--right__title"
@@ -134,7 +138,14 @@ function LoginForm() {
                   --Sign in with --
                 </Typography.Text>
               </Col>
-              <Col xl={24} lg={24} md={24} sm={24} xs={24} className="button__wrapper">
+              <Col
+                xl={24}
+                lg={24}
+                md={24}
+                sm={24}
+                xs={24}
+                className="button__wrapper"
+              >
                 <Button
                   className="login-with__button"
                   shape="round"
