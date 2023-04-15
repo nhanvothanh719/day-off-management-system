@@ -19,7 +19,12 @@ import menu_close from "../../assets/images/menu_close.png";
 import menu_open from "../../assets/images/menu_open.png";
 import "./Header.scss";
 
-const HeaderComponent = (props) => {
+function HeaderComponent(props) {
+
+  const handleLogout = () => {
+    localStorage.removeItem("user_email");
+  }
+  
   const menu = (
     <Menu>
       <Menu.Item
@@ -31,6 +36,7 @@ const HeaderComponent = (props) => {
       <Menu.Item
         key="2"
         icon={<ExportOutlined style={{ color: "#ea7a9a", fontSize: "16px" }} />}
+        onClick={handleLogout}
       >
         Logout
       </Menu.Item>

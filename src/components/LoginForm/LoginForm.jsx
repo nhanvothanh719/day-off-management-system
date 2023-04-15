@@ -1,13 +1,17 @@
 import { Button, Col, Form, Input, Row, Typography } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "./LoginForm.scss";
 import {
   ImportOutlined,
   GoogleOutlined,
 } from "@ant-design/icons";
+import {auth, provider} from '../../config/LoginGoogle';
+import {signInWithPopup} from 'firebase/auth';
 
 function LoginForm() {
   const [form] = Form.useForm();
+
+  const [email, setEmail] = useState('');
 
   const img_src = "https://devplus.edu.vn/assets/images/devplus/Artboard_2.png";
 
@@ -18,6 +22,12 @@ function LoginForm() {
   const onFinish = (values) => {};
 
   const onFinishFailed = (values) => {};
+
+  const handleLoginGg = () => {
+    signInWithPopup(auth, provider).then((data) => {
+      localStorage.setItem("user_email", data.user.email);
+    })
+  }
 
   return (
     <Row className="login__area">
@@ -130,6 +140,7 @@ function LoginForm() {
                   shape="round"
                   size="large"
                   icon={<GoogleOutlined />}
+                  onClick={handleLoginGg}
                 >
                   Google
                 </Button>
