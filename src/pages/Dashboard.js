@@ -11,15 +11,15 @@ const Dashboard = () => {
 
   return (
     <Fragment>
-    <Layout>
-      <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-      <Layout className="site-layout">
-        <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} />
-        <BreadcrumbComponent />
-        <ContentConfig />
+      <Layout>
+        <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
+        <Layout className="site-layout">
+          <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} />
+          <BreadcrumbComponent />
+          <ContentConfig />
+        </Layout>
       </Layout>
-    </Layout>
-</Fragment>
+    </Fragment>
   );
 };
 export default Dashboard;

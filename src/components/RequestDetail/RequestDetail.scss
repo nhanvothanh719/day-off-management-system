@@ -1,69 +1,9 @@
-.request-detail {
-  .request-detail-container {
-    width: 100%;
-    height: 100vh;
-    .request-detail__basicInformation {
-      width: 50%;
-      height: 50vh;
-      .request-detail__basicInformation-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: #e97a9a;
-        padding-top: 10px;
-        padding-left: 40px;
-      }
-      .request-detail__basicInformation-title-under {
-        font-size: 20px;
-        font-weight: 700;
-        padding-top: 50px;
-        padding-left: 40px;
-        color: #e97a9a;
-      }
-      .request-detail__basicInformation-text {
-        padding-top: 20px;
-        padding-left: 40px;
-        font-size: 16px;
-      }
-      .request-detail__actions {
-        padding-left: 40px;
-        .request-detail__icon2,
-        .request-detail__icon3 {
-          padding-left: 10px;
-        }
-        .request-detail__icon,
-        .request-detail__icon2,
-        .request-detail__icon3 {
-          color: #e97a9a;
-          font-size: 40px;
-          border-radius: 20px;
-        }
-        .request-detail__icon,
-        .request-detail__icon2,
-        .request-detail__icon3:hover {
-          cursor: pointer;
-        }
-      }
-    }
-    .request-detail__history {
-      width: 50%;
-      height: 50vh;
-      padding-left: 10px;
-      .request-detail__history-title {
-        font-size: 20px;
-        font-weight: 700;
-        padding-top: 10px;
-        color: #e97a9a;
-      }
-      .request-detail__history-text {
-        font-weight: 500;
-        color: #e97a9a;
-      }
-      .timeline-clock-icon > * {
-        font-size: 16px;
-      }
-    }
-  }
-
+.card-container {
+  width: 100%;
+  border-radius: 15px !important;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+  margin: 24px 0 !important;
+  padding: 24px !important;
   @media only screen and (max-width: 1367px) {
     .request-detail-container {
       max-width: 1366px;
@@ -92,21 +32,13 @@
   @media only screen and (max-width: 390px) {
     .request-detail-container {
       max-width: 390px;
-      .request-detail__basicInformation {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-left: 10px;
-      }
-      .request-detail__basicInformation-title-under {
-        padding-top: 10px !important;
-      }
-      .request-detail__basicInformation-title,
-      .request-detail__basicInformation-text,
-      .request-detail__actions,
-      .request-detail__basicInformation-title-under {
-        padding-left: 0 !important;
-      }
     }
   }
+}
+.ant-descriptions-item-label {
+  width: 100px !important;
+}
+.ant-layout-content {
+  max-height: 100vh;
+  overflow-y: auto;
 }

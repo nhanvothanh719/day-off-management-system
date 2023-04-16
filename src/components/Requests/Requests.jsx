@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
-import './Requests.scss';
-import { useLocation } from 'react-router-dom';
+import "./Requests.scss"
+import Datable from "../DataTable/DataTable"
 
-function Requests() {
-
+const Requests = ({columns}) => {
   return (
-    <div>Requests</div>
+    <div className="request">
+      <div className="requestContainer">
+        <Datable columns={columns}/>
+      </div>
+    </div>
   )
 }
 
 export default Requests
+
+

@@ -10,13 +10,13 @@ import "./SideBar.scss";
 import logo from "../../assets/images/logo.png";
 import logoText from "../../assets/images/logo_text.png";
 import { useNavigate, useLocation } from "react-router-dom";
+const { Sider } = Layout;
 
 export const SideBar = (props) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [selectedKey, setSelectedKey] = useState('dashboard');
+  const [, setSelectedKey] = useState("dashboard");
   const [openKeys, setOpenKeys] = useState(["account"]);
 
   const rootSubmenuKeys = ["account", "manager", "administrator"];
@@ -45,10 +45,10 @@ export const SideBar = (props) => {
   const handleNavigate = (route) => {
     navigate(route);
     setSelectedKey(route.split("/").pop());
-  }
+  };
 
   return (
-    <Layout.Sider
+    <Sider
       trigger={null}
       collapsible
       collapsed={props.collapsed}
@@ -76,39 +76,79 @@ export const SideBar = (props) => {
                 mode="inline"
                 openKeys={openKeys}
                 onOpenChange={onOpenChange}
-                //selectedKeys={[selectedKey]} 
+                //selectedKeys={[selectedKey]}
               >
                 <Menu.SubMenu
                   icon={<UserOutlined className="icon-menu-color" />}
                   key="account"
                   title="Account"
                 >
-                  <Menu.Item key="dashboard" onClick={() => handleNavigate('/account/dashboard')}>Dashboard</Menu.Item>
-                  <Menu.Item key="requests" onClick={() => handleNavigate('/account/requests')}>Requests</Menu.Item>
-                  <Menu.Item key="day-offs" onClick={() => handleNavigate('/account/day-offs')}>Days off</Menu.Item>
+                  <Menu.Item
+                    key="dashboard"
+                    onClick={() => handleNavigate("/account/dashboard")}
+                  >
+                    Dashboard
+                  </Menu.Item>
+                  <Menu.Item
+                    key="requests"
+                    onClick={() => handleNavigate("/account/requests")}
+                  >
+                    Requests
+                  </Menu.Item>
+                  <Menu.Item
+                    key="day-offs"
+                    onClick={() => handleNavigate("/account/day-offs")}
+                  >
+                    Days off
+                  </Menu.Item>
                 </Menu.SubMenu>
                 <Menu.SubMenu
                   icon={<DatabaseOutlined className="icon-menu-color" />}
                   key="manager"
                   title="Manager"
                 >
-                  <Menu.Item key="members" onClick={() => handleNavigate('/manager/members')}>Members</Menu.Item>
-                  <Menu.Item key="groups" onClick={() => handleNavigate('/manager/groups')}>Groups</Menu.Item>
-                  <Menu.Item key="notifications" onClick={() => handleNavigate('/manager/notifications')}>Notifications</Menu.Item>
-                  <Menu.Item key="sync" onClick={() => handleNavigate('/manager/sync')}>Sync</Menu.Item>
+                  <Menu.Item
+                    key="members"
+                    onClick={() => handleNavigate("/manager/members")}
+                  >
+                    Members
+                  </Menu.Item>
+                  <Menu.Item
+                    key="groups"
+                    onClick={() => handleNavigate("/manager/groups")}
+                  >
+                    Groups
+                  </Menu.Item>
+                  <Menu.Item
+                    key="notifications"
+                    onClick={() => handleNavigate("/manager/notifications")}
+                  >
+                    Notifications
+                  </Menu.Item>
+                  <Menu.Item
+                    key="sync"
+                    onClick={() => handleNavigate("/manager/sync")}
+                  >
+                    Sync
+                  </Menu.Item>
                 </Menu.SubMenu>
                 <Menu.SubMenu
                   icon={<ApartmentOutlined className="icon-menu-color" />}
                   key="administrator"
                   title="Administrator"
                 >
-                  <Menu.Item key="workspaces" onClick={() => handleNavigate('/administrator/workspaces')}>Workspaces</Menu.Item>
+                  <Menu.Item
+                    key="workspaces"
+                    onClick={() => handleNavigate("/administrator/workspaces")}
+                  >
+                    Workspaces
+                  </Menu.Item>
                 </Menu.SubMenu>
               </Menu>
             </Col>
           </Row>
         </Col>
       </Row>
-    </Layout.Sider>
+    </Sider>
   );
 };
