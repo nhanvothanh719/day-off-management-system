@@ -1,14 +1,16 @@
-import { Button, Col, Form, Input, Row, Space, Typography } from "antd";
-import React, { useState } from "react";
-import "./LoginForm.scss";
-import { ImportOutlined, GoogleOutlined } from "@ant-design/icons";
-import { auth, provider } from "../../config/FirebaseConfig";
+import { GoogleOutlined, ImportOutlined } from "@ant-design/icons";
+import { Button, Col, Form, Input, Row, Typography } from "antd";
 import { signInWithPopup } from "firebase/auth";
+import React from "react";
 import logo from "../../assets/images/logo.png";
 import logo_text from "../../assets/images/logo_text2.png";
+import { auth, provider } from "../../config/FirebaseConfig";
+import "./LoginForm.scss";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const img_src = "https://devplus.edu.vn/assets/images/devplus/Artboard_2.png";
 
@@ -16,16 +18,18 @@ function LoginForm() {
     labelCol: { span: 7 },
   };
 
-  const onFinish = (values) => {};
+  const onFinish = (values) => {
+    navigate('/account/dashboard');
+  };
 
   const onFinishFailed = (values) => {};
 
   const handleLoginGg = () => {
     signInWithPopup(auth, provider).then((userCredential) => {
-      console.log(userCredential.user)
       localStorage.setItem("user_email", userCredential.user.email);
       localStorage.setItem("user_avatar", userCredential.user.photoURL);
       localStorage.setItem("user_name", userCredential.user.displayName);
+      navigate('/account/dashboard');
     });
   };
 

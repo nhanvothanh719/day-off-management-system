@@ -1,4 +1,4 @@
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Breadcrumb.scss";

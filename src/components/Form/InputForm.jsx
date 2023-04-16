@@ -30,6 +30,7 @@ function InputForm() {
 
   const onFinish = (values) => {
     form.resetFields();
+    setDayOffAmount(0);
   };
 
   const onDateRangeChange = (range) => {
@@ -48,9 +49,6 @@ function InputForm() {
     }
   }
 
-  const onChange = (value) => {
-  };
-
   return (
     <Form
       form={form}
@@ -59,6 +57,7 @@ function InputForm() {
       className="custom-form"
       layout="vertical"
       >
+
       <Form.Item
         name="day_off_type"
         label="Types of day off"
@@ -81,6 +80,12 @@ function InputForm() {
       </Form.Item>
 
       <Form.Item
+        label="Quantity"
+      >
+        <InputNumber disabled value={dayOffAmount} />
+      </Form.Item>
+
+      <Form.Item
         name="session"
         label="Session"
         rules={[{ required: true }]}
@@ -93,18 +98,13 @@ function InputForm() {
       </Form.Item>
 
       <Form.Item
-        label="Quantity"
-      >
-        <InputNumber disabled value={dayOffAmount} />
-      </Form.Item>
-
-      <Form.Item
         name="reason"
         label="Reason"
         rules={[{ required: true }]}
       >
         <TextArea rows={4} showCount maxLength={100} />
       </Form.Item>
+
       <Form.Item>
         <Button htmlType="submit">Submit</Button>
       </Form.Item>
