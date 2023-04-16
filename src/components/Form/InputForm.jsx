@@ -62,7 +62,7 @@ function InputForm() {
       <Form.Item
         name="day_off_type"
         label="Types of day off"
-        // rules={[{ required: true }]}
+        rules={[{ required: true }]}
       >
         <Radio.Group size="large">
           <Space direction="vertical">
@@ -83,7 +83,7 @@ function InputForm() {
       <Form.Item
         name="session"
         label="Session"
-        // rules={[{ required: true }]}
+        rules={[{ required: true }]}
       >
         <Select onChange={onSessionChange}>
           <Select.Option value="morning">Morning</Select.Option>
@@ -101,7 +101,7 @@ function InputForm() {
       <Form.Item
         name="reason"
         label="Reason"
-        // rules={[{ required: true }]}
+        rules={[{ required: true }]}
       >
         <TextArea rows={4} showCount maxLength={100} />
       </Form.Item>
