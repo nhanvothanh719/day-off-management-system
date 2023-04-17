@@ -1,6 +1,6 @@
 import {
   AntDesignOutlined,
-  PlusCircleOutlined,
+  BellOutlined,
   ExportOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -19,7 +19,7 @@ import menu_close from "../../assets/images/menu_close.png";
 import menu_open from "../../assets/images/menu_open.png";
 import "./Header.scss";
 
-function HeaderComponent(props) {
+const HeaderComponent = (props) => {
   const menu = (
     <Menu>
       <Menu.Item
@@ -40,17 +40,25 @@ function HeaderComponent(props) {
   return (
     <Layout.Header className="header-container">
       <Row className="header-container">
-        <Col xs={4} sm={4} md={4} lg={4} xl={4}
+        <Col
+          xs={4}
+          sm={4}
+          md={4}
+          lg={4}
+          xl={4}
           onClick={() => props.setCollapsed(!props.collapsed)}
         >
-          <img src={!props.collapsed ? menu_open : menu_close} alt="menu_icon" />
+          <img
+            src={!props.collapsed ? menu_open : menu_close}
+            alt="menu_icon"
+          />
         </Col>
         <Col xs={16} sm={16} md={16} lg={16} xl={16} className="badge">
           <Badge
+            count={5}
             style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }}
           >
-
-            <PlusCircleOutlined
+            <BellOutlined
               style={{
                 fontSize: "30px",
                 color: "rgb(76, 129, 71)",
@@ -59,12 +67,43 @@ function HeaderComponent(props) {
                 padding: "10px",
               }}
             />
+            
+          </Badge>
+          <Badge
+            count={5}
+            style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }}
+          >
+            <BellOutlined
+              style={{
+                fontSize: "30px",
+                color: "rgb(76, 129, 71)",
+                backgroundColor: "hsla(0,0%,98%,.8)",
+                borderRadius: "50%",
+                padding: "10px",
+              }}
+            />
+            
+          </Badge>
+          <Badge
+            count={5}
+            style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }}
+          >
+            <BellOutlined
+              style={{
+                fontSize: "30px",
+                color: "rgb(76, 129, 71)",
+                backgroundColor: "hsla(0,0%,98%,.8)",
+                borderRadius: "50%",
+                padding: "10px",
+              }}
+            />
+            
           </Badge>
         </Col>
         <Col xs={4} sm={4} md={4} lg={4} xl={4} className="avatar-container">
           <Dropdown
             overlay={menu}
-            placement="bottomRight"
+            placement="bottom"
             className="avatar-dropdown"
           >
             <div style={{ display: "flex" }}>
@@ -89,6 +128,6 @@ function HeaderComponent(props) {
       </Row>
     </Layout.Header>
   );
-}
+};
 
 export default HeaderComponent;
