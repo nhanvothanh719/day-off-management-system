@@ -9,14 +9,13 @@ import React, { useEffect, useState } from "react";
 import "./SideBar.scss";
 import logo from "../../assets/images/logo.png";
 import logoText from "../../assets/images/logo_text.png";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
 
 export const SideBar = (props) => {
   const navigate = useNavigate();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [, setSelectedKey] = useState("dashboard");
   const [openKeys, setOpenKeys] = useState(["account"]);
 
   const rootSubmenuKeys = ["account", "manager", "administrator"];
@@ -44,7 +43,6 @@ export const SideBar = (props) => {
 
   const handleNavigate = (route) => {
     navigate(route);
-    setSelectedKey(route.split("/").pop());
   };
 
   return (

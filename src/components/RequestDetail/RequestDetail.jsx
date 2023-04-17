@@ -20,9 +20,6 @@ import {
 const RequestDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const { TextArea } = Input;
-  const showModalEdit = () => {
-    setIsModalEditOpen(true);
-  };
   const handleOk = () => {
     setIsModalEditOpen(false);
   };

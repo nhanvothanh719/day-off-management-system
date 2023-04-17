@@ -1,11 +1,11 @@
 import "./Requests.scss"
-import Datable from "../DataTable/DataTable"
+import DataTable from "../DataTable/DataTable"
 
 const Requests = ({columns}) => {
   return (
     <div className="request">
       <div className="requestContainer">
-        <Datable columns={columns}/>
+        <DataTable columns={columns}/>
       </div>
     </div>
   )
