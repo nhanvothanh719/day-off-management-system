@@ -1,4 +1,4 @@
-import { Button, Table, Tag, Row, Modal, Col, Card, Space } from "antd";
+import { Button, Table, Tag, Row, Modal, Col, Card, Input } from "antd";
 import React, { useState } from "react";
 import "./DataTable.scss";
 import {
@@ -31,11 +31,13 @@ const DataTable = () => {
       title: "Request for date",
       align: "center",
       dataIndex: "dayOff",
+      key: "dayOff",
     },
     {
       title: "Quantity",
       align: "center",
       dataIndex: "quantity",
+      sorter: (a, b) => a.quantity - b.quantity,
     },
     {
       title: "Requester",
@@ -66,6 +68,22 @@ const DataTable = () => {
           })}
         </>
       ),
+      filters: [
+        {
+          text: "Pending",
+          value: "Pending",
+        },
+        {
+          text: "Approved",
+          value: "Approved",
+        },
+        {
+          text: "Rejected",
+          value: "Rejected",
+        },
+      ],
+      onFilter: (value, record) => record.address.startsWith(value),
+      filterSearch: true,
     },
     {
       title: "Request date",
@@ -100,6 +118,14 @@ const DataTable = () => {
   const [loading, setLoading] = useState(false);
   const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const filteredData = data.filter((user) =>
+    user.requester.toLowerCase().includes(searchText.toLowerCase())
+  );
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
   };
@@ -130,9 +156,12 @@ const DataTable = () => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  const hasSelected = selectedRowKeys.length > 0;
   return (
-    <Card title="ALL REQUEST" bordered={false} className="card-container">
+    <Card
+      title={<div>ALL REQUEST</div>}
+      bordered={false}
+      className="card-container"
+    >
       <div>
         <Row
           style={{
@@ -155,22 +184,28 @@ const DataTable = () => {
           >
             Create request
           </Button>
-          <span
-            style={{
-              marginLeft: 8,
-            }}
-          >
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-          </span>
         </Row>
+        <Row
+          style={{
+            marginBottom: 16,
+            justifyContent: "flex-end",
+          }}
+        >
+          <Input.Search
+            placeholder="Search requester"
+            onChange={handleSearch}
+            style={{ maxWidth: "300px",minWidth:"150px", }}
+          />
+        </Row>
+
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
             <Table
               rowSelection={rowSelection}
               columns={columns}
-              dataSource={data}
+              dataSource={filteredData}
               className="request-data-table"
-              scroll={{ x: 'max-content' }}
+              scroll={{ x: "max-content" }}
             />
           </Col>
         </Row>

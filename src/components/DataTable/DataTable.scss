@@ -31,6 +31,21 @@
   ):not([colspan])::before {
   background-color: #fff !important;
 }
+.ant-tag-geekblue{
+  color: #fff !important;
+  background-color: rgba(0, 0, 255, 0.844) !important;
+  font-size:10px !important;
+}
+.ant-tag-green{
+  color: #fff !important;
+  background-color: rgba(0, 128, 0, 0.93) !important;
+  font-size:10px   !important;
+}
+.ant-tag-volcano{
+  color: #fff !important;
+  background-color: rgba(223, 3, 3, 0.896) !important;
+  font-size:10px !important;
+}
 .card-container {
   width: 100%;
   border-radius: 15px !important;
