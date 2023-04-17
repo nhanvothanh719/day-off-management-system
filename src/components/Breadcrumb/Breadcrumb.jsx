@@ -1,8 +1,8 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import "./Breadcrumb.scss";
 import { useLocation } from "react-router-dom";
+import "./Breadcrumb.scss";
 
 const BreadcrumbComponent = (props) => {
   const location = useLocation();
@@ -10,7 +10,9 @@ const BreadcrumbComponent = (props) => {
 
   useEffect(() => {
     const pathnames = location.pathname.split("/").filter((x) => x);
-    const new_pathnames = pathnames.map((item) => item.charAt(0).toLocaleUpperCase() + item.slice(1));
+    const new_pathnames = pathnames.map(
+      (item) => item.charAt(0).toLocaleUpperCase() + item.slice(1)
+    );
     const breadcrumb = pathnames.map((_, index) => {
       const pathname = pathnames.slice(0, index + 1);
       const url = `/${pathname.join("/")}`;

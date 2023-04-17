@@ -4,6 +4,11 @@
     justify-content: center !important;
     font-size: 17px;
   }
+
+  .ant-table-tbody {
+    font-family: Poppins, sans-serif;
+    color: #7e7e7e;
+  }
 }
 .request-detail__actions {
   padding-left: 40px;
@@ -31,20 +36,20 @@
   ):not([colspan])::before {
   background-color: #fff !important;
 }
-.ant-tag-geekblue{
+.ant-tag-geekblue {
   color: #fff !important;
-  background-color: rgba(0, 0, 255, 0.844) !important;
-  font-size:10px !important;
+  background-color: #1ea8c5 !important;
+  font-size: 10px !important;
 }
-.ant-tag-green{
+.ant-tag-green {
   color: #fff !important;
-  background-color: rgba(0, 128, 0, 0.93) !important;
-  font-size:10px   !important;
+  background-color: #2ac155 !important;
+  font-size: 10px !important;
 }
-.ant-tag-volcano{
+.ant-tag-volcano {
   color: #fff !important;
-  background-color: rgba(223, 3, 3, 0.896) !important;
-  font-size:10px !important;
+  background-color: #ff6d4c !important;
+  font-size: 10px !important;
 }
 .card-container {
   width: 100%;
