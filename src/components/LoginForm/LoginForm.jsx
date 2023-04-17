@@ -74,16 +74,20 @@ function LoginForm() {
                   onFinishFailed={onFinishFailed}
                 >
                   <Form.Item
-                    name="username"
-                    label="Username"
+                    name="email"
+                    label="Email"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your username!",
+                        message: "Please input your email!",
+                      },
+                      {
+                        type: 'email',
+                        message: 'Input is not a valid email!',
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Input your username" />
+                    <Input size="large" placeholder="Input your email" />
                   </Form.Item>
 
                   <Form.Item
@@ -95,6 +99,10 @@ function LoginForm() {
                         required: true,
                         message: "Please input your password!",
                       },
+                      {
+                        min: 8,
+                        message: "Password must contain at least 8 characters!",
+                      }
                     ]}
                   >
                     <Input.Password
