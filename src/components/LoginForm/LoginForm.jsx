@@ -12,8 +12,6 @@ function LoginForm() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const img_src = "https://devplus.edu.vn/assets/images/devplus/Artboard_2.png";
-
   const formItemLayout = {
     labelCol: { span: 7 },
   };
