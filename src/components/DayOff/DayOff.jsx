@@ -1,8 +1,12 @@
 import React from 'react'
-
-const DayOff = () => {
+import DayOffTable from '../DayOffTable/DayOffTable'
+const DayOff = ({columns}) => {
   return (
-    <div>DayOff</div>
+    <div className="request">
+      <div className="requestContainer">
+        <DayOffTable columns={columns}/>
+      </div>
+    </div>
   )
 }
 

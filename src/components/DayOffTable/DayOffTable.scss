@@ -1,0 +1,85 @@
+.ant-table-content {
+    .ant-table-thead > tr > th {
+      background-color: #fff !important;
+      justify-content: center !important;
+      font-size: 17px;
+    }
+  }
+  .dayoff-detail__actions {
+    padding-left: 40px;
+    .dayoff-detail__icon2,
+    .dayoff-detail__icon3 {
+      padding-left: 10px;
+    }
+    .dayoff-detail__icon,
+    .dayoff-detail__icon2,
+    .dayoff-detail__icon3 {
+      color: #e97a9a;
+      font-size: 25px;
+      border-radius: 20px;
+    }
+    .dayoff-detail__icon,
+    .dayoff-detail__icon2,
+    .dayoff-detail__icon3:hover {
+      cursor: pointer;
+    }
+  }
+  .ant-table-thead
+    > tr
+    > th:not(:last-child):not(.ant-table-selection-column):not(
+      .ant-table-row-expand-icon-cell
+    ):not([colspan])::before {
+    background-color: #fff !important;
+  }
+  .ant-tag-geekblue{
+    color: #fff !important;
+    background-color: rgba(0, 0, 255, 0.844) !important;
+    font-size:10px !important;
+  }
+  .ant-tag-green{
+    color: #fff !important;
+    background-color: rgba(0, 128, 0, 0.93) !important;
+    font-size:10px   !important;
+  }
+  .ant-tag-volcano{
+    color: #fff !important;
+    background-color: rgba(223, 3, 3, 0.896) !important;
+    font-size:10px !important;
+  }
+  .card-container {
+    width: 100%;
+    border-radius: 15px !important;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    padding: 24px !important;
+    @media only screen and (max-width: 1367px) {
+      .dayoff-data-table {
+        max-width: 1366px;
+      }
+    }
+    @media only screen and (max-width: 1200px) {
+      .dayoff-data-table {
+        max-width: 1200px;
+      }
+    }
+    @media only screen and (max-width: 992px) {
+      .dayoff-data-table {
+        max-width: 960px;
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .dayoff-data-table {
+        max-width: 720px;
+      }
+    }
+    @media only screen and (max-width: 576px) {
+      .dayoff-data-table {
+        max-width: 540px;
+      }
+    }
+    @media only screen and (max-width: 390px) {
+      .dayoff-data-table {
+        max-width: 390px;
+      }
+    }
+  }
