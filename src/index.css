@@ -1,10 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900");
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+@import url("https://fonts.googleapis.com/css?family=Rubik:600,700,800");
+@import url("https://fonts.googleapis.com/css?family=Nunito:600,700,800");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800");
+
 body {
   margin: 0;
   font-family: "Rubik", sans-serif !important;
@@ -24,7 +21,3 @@ section {
 .ant-layout {
   height: 100vh !important;
 }
-/* .ant-layout-content {
-  max-height: 100vh;
-  overflow-y: auto;
-} */
