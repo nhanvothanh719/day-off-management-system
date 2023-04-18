@@ -21,9 +21,13 @@ import "./Header.scss";
 import { getAuth, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { app } from "../../config/FirebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 const auth = getAuth();
+
 function HeaderComponent(props) {
+  const navigate = useNavigate();
+
   const [currentUser, setCurrentUser] = useState({
     displayName: "",
     avatar: "",
@@ -43,6 +47,7 @@ function HeaderComponent(props) {
       localStorage.removeItem("user_email");
       localStorage.removeItem("user_avatar");
       localStorage.removeItem("user_name");
+      navigate('/login');
     });
   };
 

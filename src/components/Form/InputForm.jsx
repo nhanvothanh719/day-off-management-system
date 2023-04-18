@@ -19,7 +19,7 @@ function InputForm() {
   const [form] = Form.useForm();
 
   const [dayOffAmount, setDayOffAmount] = useState(0);
-  const [dayOffSession, setDayOffSession] = useState('morning');
+  const [dayOffSession, setDayOffSession] = useState("morning");
 
   const dateFormat = "YYYY/MM/DD";
 
@@ -34,20 +34,22 @@ function InputForm() {
   };
 
   const onDateRangeChange = (range) => {
-    const day_off_amount = (range[1]._d - range[0]._d)/3600/24/1000 + 1;
-    dayOffSession === "all_day" ? setDayOffAmount(day_off_amount) : setDayOffAmount(day_off_amount/2);
-  }
+    const day_off_amount = (range[1]._d - range[0]._d) / 3600 / 24 / 1000 + 1;
+    dayOffSession === "all_day"
+      ? setDayOffAmount(day_off_amount)
+      : setDayOffAmount(day_off_amount / 2);
+  };
 
   const onSessionChange = (option) => {
     const previous_session = dayOffSession;
     const day_off_amount = dayOffAmount;
     setDayOffSession(option);
-    if(previous_session === "all_day" && option !== "all_day") {
-      setDayOffAmount(day_off_amount/2);
-    } else if(previous_session !== "all_day" && option === "all_day") {
-      setDayOffAmount(day_off_amount*2);
+    if (previous_session === "all_day" && option !== "all_day") {
+      setDayOffAmount(day_off_amount / 2);
+    } else if (previous_session !== "all_day" && option === "all_day") {
+      setDayOffAmount(day_off_amount * 2);
     }
-  }
+  };
 
   return (
     <Form
@@ -56,8 +58,7 @@ function InputForm() {
       initialValues={initialValues}
       className="custom-form"
       layout="vertical"
-      >
-
+    >
       <Form.Item
         name="day_off_type"
         label="Types of day off"
@@ -76,20 +77,17 @@ function InputForm() {
         label="From - To"
         rules={[{ required: true }]}
       >
-        <DatePicker.RangePicker format={dateFormat} onChange={onDateRangeChange} />
+        <DatePicker.RangePicker
+          format={dateFormat}
+          onChange={onDateRangeChange}
+        />
       </Form.Item>
 
-      <Form.Item
-        label="Quantity"
-      >
+      <Form.Item label="Quantity">
         <InputNumber disabled value={dayOffAmount} />
       </Form.Item>
 
-      <Form.Item
-        name="session"
-        label="Session"
-        rules={[{ required: true }]}
-      >
+      <Form.Item name="session" label="Session" rules={[{ required: true }]}>
         <Select onChange={onSessionChange}>
           <Select.Option value="morning">Morning</Select.Option>
           <Select.Option value="afternoon">Afternoon</Select.Option>
@@ -97,11 +95,7 @@ function InputForm() {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        name="reason"
-        label="Reason"
-        rules={[{ required: true }]}
-      >
+      <Form.Item name="reason" label="Reason" rules={[{ required: true }]}>
         <TextArea rows={4} showCount maxLength={100} />
       </Form.Item>
 
