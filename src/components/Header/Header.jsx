@@ -44,9 +44,7 @@ function HeaderComponent(props) {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
-      localStorage.removeItem("user_email");
-      localStorage.removeItem("user_avatar");
-      localStorage.removeItem("user_name");
+      localStorage.clear();
       navigate('/login');
     });
   };

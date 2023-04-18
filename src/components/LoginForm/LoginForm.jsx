@@ -1,4 +1,8 @@
-import { GoogleOutlined, ImportOutlined, LoadingOutlined } from "@ant-design/icons";
+import {
+  GoogleOutlined,
+  ImportOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Spin, Typography, message } from "antd";
 import { signInWithPopup } from "firebase/auth";
 import React, { Fragment, useState } from "react";
@@ -35,22 +39,25 @@ function LoginForm() {
     axios
       .post("http://localhost:8000/api/auth/login", values)
       .then((res) => {
+        const { data } = res;
         setIsLoading(false);
-        if(res.data.success) {
+        if (data.success) {
           messageApi.open({
-            type: 'success',
-            content: res.data.message,
+            type: "success",
+            content: data.message,
           });
+          localStorage.setItem("access_token", data.accessToken);
+          localStorage.setItem("access_token_life_time", new Date().getTime() + 86400000);
           navigate("/account/dashboard");
         }
       })
       .catch((error) => {
         setIsLoading(false);
-          messageApi.open({
-            type: 'error',
-            content: 'Incorrect user or password',
-          });
-      })
+        messageApi.open({
+          type: "error",
+          content: "Incorrect user or password",
+        });
+      });
   };
 
   const handleLoginGg = () => {
@@ -134,10 +141,10 @@ function LoginForm() {
                           required: true,
                           message: "Please input your password!",
                         },
-                        {
-                          min: 8,
-                          message: "Password must contain at least 8 characters!",
-                        },
+                        // {
+                        //   min: 8,
+                        //   message: "Password must contain at least 8 characters!",
+                        // },
                       ]}
                     >
                       <Input.Password
@@ -146,18 +153,22 @@ function LoginForm() {
                       />
                     </Form.Item>
 
-                      <Form.Item>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
-                          size="large"
-                          icon={<ImportOutlined />}
-                          className="login__button"
-                          disabled={isLoading}
-                        >
-                          {isLoading === true ? <Spin indicator={loadingIcon} /> : 'Sign in'}
-                        </Button>
-                      </Form.Item>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        size="large"
+                        icon={<ImportOutlined />}
+                        className="login__button"
+                        disabled={isLoading}
+                      >
+                        {isLoading === true ? (
+                          <Spin indicator={loadingIcon} />
+                        ) : (
+                          "Sign in"
+                        )}
+                      </Button>
+                    </Form.Item>
                   </Form>
                 </Col>
               </Row>
