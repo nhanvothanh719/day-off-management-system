@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./InputForm.scss";
+import React, { Fragment, useState } from "react";
+import "./LogOffForm.scss";
 import {
   Button,
   Select,
@@ -8,15 +8,20 @@ import {
   Radio,
   InputNumber,
   Space,
+  message,
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import MyCard from "../Card/Card";
+import axiosClient from "../../utils/clientAxios";
+import moment from "moment";
 
 dayjs.extend(customParseFormat);
 
 function InputForm() {
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [dayOffAmount, setDayOffAmount] = useState(0);
   const [dayOffSession, setDayOffSession] = useState("morning");
@@ -29,8 +34,28 @@ function InputForm() {
   };
 
   const onFinish = (values) => {
-    form.resetFields();
-    setDayOffAmount(0);
+    const { day_off_range, day_off_type, reason, session} = values;
+    const new_request = {
+      reason: reason,
+      start_date: moment(day_off_range[0]._d).format('L'),
+      end_date:  moment(day_off_range[1]._d).format('L'),
+      quantity: dayOffAmount,
+      day_off_type: day_off_type,
+      day_off_time: session,
+      status: 'pending',
+      approvers_number: 2, //HARD CODE
+    }
+    axiosClient.post('requests/', new_request)
+    .then(() => {
+      form.resetFields();
+      setDayOffAmount(0);
+      messageApi
+      .open({
+        type: 'success',
+        content: 'Create new request successfully',
+      })
+    })
+    .catch((error) => console.log(error));
   };
 
   const onDateRangeChange = (range) => {
@@ -51,7 +76,7 @@ function InputForm() {
     }
   };
 
-  return (
+  const LogOffForm = (
     <Form
       form={form}
       onFinish={onFinish}
@@ -103,6 +128,14 @@ function InputForm() {
         <Button htmlType="submit">Submit</Button>
       </Form.Item>
     </Form>
+  );
+
+  return (
+    <Fragment>
+      {contextHolder}
+      <MyCard title="Log off" content={LogOffForm}>
+    </MyCard>
+    </Fragment>
   );
 }
 

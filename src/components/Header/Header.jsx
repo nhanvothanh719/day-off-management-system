@@ -93,7 +93,7 @@ function HeaderComponent(props) {
           />
         </Col>
         <Col xs={17} sm={17} md={17} lg={17} xl={17} className="badge">
-          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }}>
+          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }} onClick={() => navigate('/account/requests/details')}>
             <PlusCircleOutlined
               style={{
                 fontSize: "30px",
