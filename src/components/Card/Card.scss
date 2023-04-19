@@ -1,7 +1,13 @@
 .card-container {
   width: 100%;
-  border-radius: 15px !important;
+  border-radius: 20px !important;
   box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
   margin: 24px 0 !important;
   padding: 24px !important;
+  
+  .ant-card-head {
+    text-transform: uppercase;
+    padding-left: 100px !important;
+    font-size: 20px;
+  }
 }

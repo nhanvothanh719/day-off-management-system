@@ -3,8 +3,10 @@ import { Breadcrumb, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./Breadcrumb.scss";
+import { useNavigate } from "react-router-dom";
 
 const BreadcrumbComponent = (props) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
@@ -17,18 +19,18 @@ const BreadcrumbComponent = (props) => {
       const pathname = pathnames.slice(0, index + 1);
       const url = `/${pathname.join("/")}`;
       return (
-        <Breadcrumb.Item key={url} href={url}>
+        <Breadcrumb.Item key={url} onClick={() => navigate(url)}>
           <span>{new_pathnames[index]}</span>
         </Breadcrumb.Item>
       );
     });
     setBreadcrumbs(breadcrumb);
-  }, [location]);
+  }, [location, navigate]);
 
   return (
     <Row className="breadcrumb__container">
       <Breadcrumb>
-        <Breadcrumb.Item href="">
+        <Breadcrumb.Item onClick={() => navigate('/')}>
           <HomeOutlined />
         </Breadcrumb.Item>
         {breadcrumbs}

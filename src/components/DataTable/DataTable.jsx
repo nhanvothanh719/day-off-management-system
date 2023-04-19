@@ -162,7 +162,6 @@ const DataTable = () => {
       bordered={false}
       className="card-container"
     >
-      <div>
         <Row
           style={{
             marginBottom: 16,
@@ -205,7 +204,7 @@ const DataTable = () => {
               columns={columns}
               dataSource={filteredData}
               className="request-data-table"
-              scroll={{ x: "max-content" }}
+              //scroll={{ x: "max-content" }}
             />
           </Col>
         </Row>
@@ -225,7 +224,6 @@ const DataTable = () => {
         >
           <p>Are you sure reject this request?</p>
         </Modal>
-      </div>
     </Card>
   );
 };

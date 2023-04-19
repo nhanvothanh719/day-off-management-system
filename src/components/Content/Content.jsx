@@ -3,7 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import DayOff from "../DayOff/DayOff";
-import InputForm from "../Form/InputForm";
+import LogOffForm from "../LogOffForm/LogOffForm";
 import Groups from "../Groups/Groups";
 import Members from "../Members/Members";
 import Notifications from "../Notifications/Notifications";
@@ -20,10 +20,9 @@ const ContentConfig = () => {
   return (
     <Content className="site-layout-background">
       <Routes>
-        <Route exact path="/form" element={<InputForm />} />
-
         <Route exact path="/account/dashboard" element={<Dashboard />} />
         <Route exact path="/account/requests" element={<Requests />} />
+        <Route exact path="/account/requests/details" element={<LogOffForm />} />
         <Route
           exact
           path="/account/requests/request-detail"

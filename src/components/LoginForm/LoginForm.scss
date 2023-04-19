@@ -365,7 +365,7 @@ $gray: #7e7e7e;
         }
       }
 
-      &-btn-primary:hover {
+      &-btn-primary:hover, &-btn-primary:focus {
         background-color: $dark-pink !important;
         border-style: none;
       }
