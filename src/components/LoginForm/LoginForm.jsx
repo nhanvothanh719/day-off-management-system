@@ -12,14 +12,15 @@ import logo_text from "../../assets/images/logo_text2.png";
 import { auth, provider } from "../../config/FirebaseConfig";
 import "./LoginForm.scss";
 import axios from "axios";
-import GoogleLogin from "react-google-login";
+import { useDispatch } from "react-redux";
+import { updateUserPermissions } from "../../actions/auth";
 
 function LoginForm() {
   const navigate = useNavigate();
+  //const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const formItemLayout = {
@@ -59,7 +60,7 @@ function LoginForm() {
         setIsLoading(false);
         messageApi.open({
           type: "error",
-          content: "Incorrect user or password",
+          content: "Incorrect email or password",
         });
       });
   };
@@ -68,11 +69,19 @@ function LoginForm() {
     signInWithPopup(auth, provider).then((userCredential) => {
       const { accessToken, photoURL, displayName, email } =
         userCredential.user;
-      console.log(accessToken);
-      //axios.
+      
+      //Get user permission
+      const user_permissions = ['update_personal_details', 'view_requests'];
+      //dispatch(updateUserPermissions(user_permissions));
+      //
+
       const user_info = { accessToken };
       axios
-      .post('http://localhost:8000/api/auth/save-info-login-gg', user_info)
+      .post('http://localhost:8000/api/auth/login-with-google', user_info, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         localStorage.setItem("user_avatar", photoURL);
         localStorage.setItem("user_name", displayName);
@@ -132,16 +141,20 @@ function LoginForm() {
                     onFinish={onFinish}
                   >
                     <Form.Item
-                      name="username"
-                      label="Username"
+                      name="email"
+                      label="Email"
                       rules={[
                         {
                           required: true,
-                          message: "Please input your username!",
+                          message: "Please input your email!",
+                        },
+                        {
+                          type: 'email',
+                          message: "Provided email is not valid!",
                         },
                       ]}
                     >
-                      <Input size="large" placeholder="Input your username" />
+                      <Input size="large" placeholder="Input your email" />
                     </Form.Item>
 
                     <Form.Item
