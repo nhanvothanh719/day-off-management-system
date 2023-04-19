@@ -1,12 +1,33 @@
 const initialState = {
-  userPermissions: [],
+  isAuthenticated: false,
+  user: {
+    name: null,
+    role: null,
+    permissions: [],
+  },
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "UPDATE_USER_PERMISSIONS":
-      return { ...state, userPermissions: action.payload };
+    case "LOGIN_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: {
+          name: action.payload.name,
+          role: action.payload.role,
+          permissions: action.payload.permissions,
+        },
+      };
+    case "LOGOUT_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: initialState.user,
+      };
     default:
       return state;
   }
 };
+
+export default authReducer;

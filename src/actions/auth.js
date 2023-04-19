@@ -1,4 +1,8 @@
-export const updateUserPermissions = (permissions) => ({
-    type: 'UPDATE_USER_PERMISSIONS',
-    payload: permissions,
-  })
+export const loginSuccess = (user) => ({
+    type: 'LOGIN_SUCCESS',
+    payload: user,
+});
+
+export const logoutSuccess = () => ({
+  type: 'LOGOUT_SUCCESS',
+});

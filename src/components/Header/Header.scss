@@ -17,6 +17,12 @@
       display: flex;
       justify-content: center;
       padding-right: 10px;
+
+      .avatar {
+        color: #d4285e;
+        background-color: #FBE8EE;
+      }
+
       .avatar:hover {
         cursor: pointer;
       }

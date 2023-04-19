@@ -3,16 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import 'antd/dist/antd.css';
-
-//Prevent ResizeObserver loop limit exceeded
-import ResizeObserver from 'resize-observer-polyfill';
-window.ResizeObserver = ResizeObserver;
-
-
+import { Provider } from 'react-redux';
+import store from './store';
 
 ReactDOM.render(
+  <Provider store={store}>
   <React.StrictMode>
     <App/>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );

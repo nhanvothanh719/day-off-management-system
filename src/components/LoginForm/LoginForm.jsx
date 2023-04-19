@@ -13,11 +13,12 @@ import { auth, provider } from "../../config/FirebaseConfig";
 import "./LoginForm.scss";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { updateUserPermissions } from "../../actions/auth";
+import { loginSuccess } from "../../actions/auth";
 
 function LoginForm() {
+  const baseURL = "http://localhost:8000/api/";
   const navigate = useNavigate();
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
@@ -39,20 +40,18 @@ function LoginForm() {
   const onFinish = (values) => {
     setIsLoading(true);
     axios
-      .post("http://localhost:8000/api/auth/login", values)
+      .post(baseURL + "auth/login", values)
       .then((res) => {
-        const { data } = res;
+        const { role, permissions, success, message, accessToken, name }  = res.data;
         setIsLoading(false);
-        if (data.success) {
+        if (success) {
+          dispatch(loginSuccess({ role: role.role_name, permissions }));
           messageApi.open({
             type: "success",
-            content: data.message,
+            content: message,
           });
-          localStorage.setItem("access_token", data.accessToken);
-          localStorage.setItem(
-            "access_token_life_time",
-            new Date().getTime() + 86400000
-          );
+          localStorage.setItem("user_name", name);
+          localStorage.setItem("access_token", accessToken);
           navigate("/account/dashboard");
         }
       })
@@ -67,17 +66,9 @@ function LoginForm() {
 
   const handleLoginGg = () => {
     signInWithPopup(auth, provider).then((userCredential) => {
-      const { accessToken, photoURL, displayName, email } =
-        userCredential.user;
-      
-      //Get user permission
-      const user_permissions = ['update_personal_details', 'view_requests'];
-      //dispatch(updateUserPermissions(user_permissions));
-      //
-
-      const user_info = { accessToken };
+      const { photoURL, displayName, email } = userCredential.user;
       axios
-      .post('http://localhost:8000/api/auth/login-with-google', user_info, {
+      .post(baseURL + 'auth/login-with-google', { photoURL, displayName, email }, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -85,6 +76,7 @@ function LoginForm() {
       .then((res) => {
         localStorage.setItem("user_avatar", photoURL);
         localStorage.setItem("user_name", displayName);
+        localStorage.setItem("access_token", res.data.accessToken);
         navigate("/account/dashboard");
       });
     });

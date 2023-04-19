@@ -22,11 +22,14 @@ import { getAuth, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { app } from "../../config/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutSuccess } from "../../actions/auth";
 
 const auth = getAuth();
 
 function HeaderComponent(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [currentUser, setCurrentUser] = useState({
     displayName: "",
@@ -44,6 +47,7 @@ function HeaderComponent(props) {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
+      dispatch(logoutSuccess());
       localStorage.clear();
       navigate('/login');
     });
@@ -113,7 +117,7 @@ function HeaderComponent(props) {
             className="avatar-dropdown"
           >
             <div style={{ display: "flex" }}>
-              {currentUser ? (
+              {currentUser.avatar ? (
                 <Avatar
                   size={{ xs: 35, sm: 45, md: 45, lg: 45, xl: 45, xxl: 45 }}
                   src={currentUser.avatar}
