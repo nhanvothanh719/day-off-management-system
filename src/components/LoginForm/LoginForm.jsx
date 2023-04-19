@@ -12,6 +12,7 @@ import logo_text from "../../assets/images/logo_text2.png";
 import { auth, provider } from "../../config/FirebaseConfig";
 import "./LoginForm.scss";
 import axios from "axios";
+import GoogleLogin from "react-google-login";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -47,7 +48,10 @@ function LoginForm() {
             content: data.message,
           });
           localStorage.setItem("access_token", data.accessToken);
-          localStorage.setItem("access_token_life_time", new Date().getTime() + 86400000);
+          localStorage.setItem(
+            "access_token_life_time",
+            new Date().getTime() + 86400000
+          );
           navigate("/account/dashboard");
         }
       })
@@ -62,10 +66,18 @@ function LoginForm() {
 
   const handleLoginGg = () => {
     signInWithPopup(auth, provider).then((userCredential) => {
-      localStorage.setItem("user_username", userCredential.user.username);
-      localStorage.setItem("user_avatar", userCredential.user.photoURL);
-      localStorage.setItem("user_name", userCredential.user.displayName);
-      navigate("/account/dashboard");
+      const { accessToken, photoURL, displayName, email } =
+        userCredential.user;
+      console.log(accessToken);
+      //axios.
+      const user_info = { accessToken };
+      axios
+      .post('http://localhost:8000/api/auth/save-info-login-gg', user_info)
+      .then((res) => {
+        localStorage.setItem("user_avatar", photoURL);
+        localStorage.setItem("user_name", displayName);
+        navigate("/account/dashboard");
+      });
     });
   };
 

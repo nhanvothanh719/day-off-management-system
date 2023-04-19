@@ -45,6 +45,11 @@ function InputForm() {
       status: 'pending',
       approvers_number: 2, //HARD CODE
     }
+    storeRequest(new_request);
+    sendToSlack();
+  };
+
+  const storeRequest = (new_request) => {
     axiosClient.post('requests/', new_request)
     .then(() => {
       form.resetFields();
@@ -56,7 +61,11 @@ function InputForm() {
       })
     })
     .catch((error) => console.log(error));
-  };
+  }
+
+  const sendToSlack = () => {
+    //
+  }
 
   const onDateRangeChange = (range) => {
     const day_off_amount = (range[1]._d - range[0]._d) / 3600 / 24 / 1000 + 1;
