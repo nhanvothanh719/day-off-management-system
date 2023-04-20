@@ -46,7 +46,7 @@ function LoginForm() {
         setIsLoading(false);
         if (success) {
           if(role === undefined) { role = user_role.staff; }
-          store.dispatch(loginSuccess({ role: role.role_name, permissions }));
+          store.dispatch(loginSuccess({ role, permissions }));
           messageApi.open({
             type: "success",
             content: message,
@@ -75,6 +75,10 @@ function LoginForm() {
         },
       })
       .then((res) => {
+        let { role } = res.data;
+        const { permissions } = res.data;
+        if(role === undefined) { role = user_role.staff; }
+        store.dispatch(loginSuccess({ role, permissions }));
         localStorage.setItem("user_avatar", photoURL);
         localStorage.setItem("user_name", displayName);
         localStorage.setItem("access_token", res.data.accessToken);
