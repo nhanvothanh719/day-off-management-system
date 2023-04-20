@@ -1,5 +1,5 @@
 import { Button, Table, Tag, Row, Modal, Col, Card, Input } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DataTable.scss";
 import {
   CheckSquareFilled,
@@ -7,6 +7,7 @@ import {
   EditFilled,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const DataTable = () => {
   const navigate = useNavigate();
@@ -95,6 +96,7 @@ const DataTable = () => {
       align: "center",
       key: "actions",
       dataIndex: "actions",
+      width: "100px",
       render: () => {
         return (
           <>
@@ -119,6 +121,17 @@ const DataTable = () => {
   const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [request, setRequest] = useState("");
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/requests")
+      .then((res) => {
+        setRequest(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
   const handleSearch = (e) => {
     setSearchText(e.target.value);
   };
@@ -162,68 +175,75 @@ const DataTable = () => {
       bordered={false}
       className="card-container"
     >
-        <Row
-          style={{
-            marginBottom: 16,
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            type="primary"
-            onClick={start}
-            loading={loading}
-            style={{
-              borderRadius: "8px",
-              height: "40px",
-              fontWeight: "500",
-              fontSize: "16px ",
-              backgroundColor: "#ea7a9a",
-              border: "none",
-            }}
-          >
-            Create request
-          </Button>
-        </Row>
-        <Row
-          style={{
-            marginBottom: 16,
-            justifyContent: "flex-end",
-          }}
-        >
-          <Input.Search
-            placeholder="Search requester"
-            onChange={handleSearch}
-            style={{ maxWidth: "300px",minWidth:"150px", }}
-          />
-        </Row>
-
-        <Row>
-          <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-            <Table
-              rowSelection={rowSelection}
-              columns={columns}
-              dataSource={filteredData}
-              className="request-data-table"
-              //scroll={{ x: "max-content" }}
-            />
-          </Col>
-        </Row>
-        <Modal
-          title="Approved"
-          open={isModalApproveOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>Are you sure approve this request?</p>
-        </Modal>
-        <Modal
-          title="Rejected"
-          open={isModalRejectOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>Are you sure reject this request?</p>
-        </Modal>
+      <div> 
+        {request ? (
+          <>
+            <Row
+              style={{
+                marginBottom: 16,
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                type="primary"
+                onClick={start}
+                loading={loading}
+                style={{
+                  borderRadius: "8px",
+                  height: "40px",
+                  fontWeight: "500",
+                  fontSize: "16px ",
+                  backgroundColor: "#ea7a9a",
+                  border: "none",
+                }}
+              >
+                Create request
+              </Button>
+            </Row>
+            <Row
+              style={{
+                marginBottom: 16,
+                justifyContent: "flex-end",
+              }}
+            >
+              <Input.Search
+                placeholder="Search requester"
+                onChange={handleSearch}
+                style={{ maxWidth: "300px", minWidth: "150px" }}
+              />
+            </Row>
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Table
+                  rowSelection={rowSelection}
+                  columns={columns}
+                  dataSource={filteredData}
+                  className="request-data-table"
+                  // scroll={{ x: "max-content" }}
+                />
+              </Col>
+            </Row>
+            <Modal
+              title="Approved"
+              open={isModalApproveOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <p>Are you sure approve this request?</p>
+            </Modal>
+            <Modal
+              title="Rejected"
+              open={isModalRejectOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <p>Are you sure reject this request?</p>
+            </Modal>
+          </>
+        ) : (
+          <p>Loading data...</p>
+        )}
+      </div>
     </Card>
   );
 };

@@ -11,6 +11,7 @@
   }
 }
 .request-detail__actions {
+  width: max-content !important;
   padding-left: 40px;
   .request-detail__icon2,
   .request-detail__icon3 {
@@ -84,6 +85,7 @@
   @media only screen and (max-width: 576px) {
     .request-data-table {
       max-width: 540px;
+      overflow: auto;
     }
   }
   @media only screen and (max-width: 390px) {
