@@ -100,8 +100,7 @@ const DayOff = () => {
               rowSelection={rowSelection}
               columns={columns}
               dataSource={data}
-              className="request-data-table"
-              scroll={{ x: "max-content" }}
+              className="dayoff-data-table"
             />
           </Col>
         </Row>
