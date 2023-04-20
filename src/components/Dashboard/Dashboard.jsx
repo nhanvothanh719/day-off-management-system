@@ -8,6 +8,8 @@ import {
   MessageOutlined,
   LikeOutlined,
 } from "@ant-design/icons";
+import withAuthorization from "../../utils/withAuthorization";
+import { user_permission } from "../../const/permission";
 
 const Dashboard = () => {
   return (
@@ -38,4 +40,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuthorization([user_permission.view_dashboard])(Dashboard);

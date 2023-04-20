@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import store from "../store";
 
 const withAuthentication = (WrappedComponent) => {
   const AuthenticatedComponent = ({ isAuthenticated, ...props }) => {

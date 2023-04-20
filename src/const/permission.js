@@ -6,4 +6,5 @@ export const user_permission = {
   crud_user_group: "CRUD UG",
   crud_request: "CRUD request",
   accept_request: "accept request",
+  view_dashboard: "View dashboard",
 };

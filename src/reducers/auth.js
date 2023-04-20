@@ -1,10 +1,8 @@
 const initialState = {
   isAuthenticated: false,
-  user: {
-    name: '',
-    role: '',
-    permissions: [],
-  },
+  userName: '',
+  userRole: '',
+  userPermissions: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,18 +11,18 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: {
-          name: action.payload.name,
-          role: action.payload.role,
-          permissions: action.payload.permissions,
-        },
+        userName: action.payload.name,
+        userRole: action.payload.role,
+        userPermissions: action.payload.permissions,
       };
       
     case "LOGOUT_SUCCESS":
       return {
         ...state,
         isAuthenticated: false,
-        user: initialState.user,
+        userName: initialState.userName,
+        userRole: initialState.userRole,
+        userPermissions: initialState.userPermissions,
       };
     default:
       return state;
