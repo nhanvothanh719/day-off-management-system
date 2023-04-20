@@ -1,17 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CustomError from "./components/CustomError/CustomError";
+import Loader from "./components/Loader/Loader";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import Loader from "./components/Loader/Loader";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="/*" element={<Dashboard />} />
+        <Route exact path="login" element={<Login />} />
         <Route exact path="/loader" element={<Loader />} /> 
-        <Route path="*" element={<NotFound />} />
+        <Route path="/*" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

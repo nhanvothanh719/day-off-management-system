@@ -13,6 +13,7 @@ import Sync from "../Sync/Sync";
 import Workspaces from "../Workspaces/Workspaces";
 
 import "./Content.scss";
+import CustomError from "../CustomError/CustomError";
 
 const { Content } = Layout;
 
@@ -44,6 +45,13 @@ const ContentConfig = () => {
           path="/administrator/workspaces"
           element={<Workspaces />}
         />
+
+        <Route
+          exact
+          path="/error/:error_code"
+          element={<CustomError />}
+        />
+
       </Routes>
     </Content>
   );
