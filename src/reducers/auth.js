@@ -1,8 +1,8 @@
 const initialState = {
   isAuthenticated: false,
   user: {
-    name: null,
-    role: null,
+    name: '',
+    role: '',
     permissions: [],
   },
 };
@@ -19,6 +19,7 @@ const authReducer = (state = initialState, action) => {
           permissions: action.payload.permissions,
         },
       };
+      
     case "LOGOUT_SUCCESS":
       return {
         ...state,

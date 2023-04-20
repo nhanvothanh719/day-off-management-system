@@ -12,13 +12,12 @@ import logo_text from "../../assets/images/logo_text2.png";
 import { auth, provider } from "../../config/FirebaseConfig";
 import "./LoginForm.scss";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../actions/auth";
+import { user_role } from "../../const/role";
+import store from "../../store";
 
 function LoginForm() {
-  const baseURL = "http://localhost:8000/api/";
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
@@ -40,12 +39,14 @@ function LoginForm() {
   const onFinish = (values) => {
     setIsLoading(true);
     axios
-      .post(baseURL + "auth/login", values)
+      .post("http://localhost:8000/api/auth/login", values)
       .then((res) => {
-        const { role, permissions, success, message, accessToken, name }  = res.data;
+        let { role } = res.data;
+        const { permissions, success, message, accessToken, name }  = res.data;
         setIsLoading(false);
         if (success) {
-          dispatch(loginSuccess({ role: role.role_name, permissions }));
+          if(role === undefined) { role = user_role.staff; }
+          store.dispatch(loginSuccess({ role: role.role_name, permissions }));
           messageApi.open({
             type: "success",
             content: message,
@@ -68,7 +69,7 @@ function LoginForm() {
     signInWithPopup(auth, provider).then((userCredential) => {
       const { photoURL, displayName, email } = userCredential.user;
       axios
-      .post(baseURL + 'auth/login-with-google', { photoURL, displayName, email }, {
+      .post('http://localhost:8000/api/auth/login-with-google', { photoURL, displayName, email }, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -140,10 +141,10 @@ function LoginForm() {
                           required: true,
                           message: "Please input your email!",
                         },
-                        {
-                          type: 'email',
-                          message: "Provided email is not valid!",
-                        },
+                        // {
+                        //   type: 'email',
+                        //   message: "Provided email is not valid!",
+                        // },
                       ]}
                     >
                       <Input size="large" placeholder="Input your email" />

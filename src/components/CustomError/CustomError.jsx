@@ -27,6 +27,8 @@ function CustomError(props) {
       error_message = "You do not have permission to view this resource!";
       break;
     default:
+      error_name = "Page Not Found";
+      error_message = "Oops... Page does not exist!";
       break;
   }
 
