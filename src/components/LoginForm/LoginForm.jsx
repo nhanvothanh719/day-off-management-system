@@ -76,12 +76,12 @@ function LoginForm() {
       })
       .then((res) => {
         let { role } = res.data;
-        const { permissions } = res.data;
+        const { permissions, accessToken } = res.data;
         if(role === undefined) { role = user_role.staff; }
         store.dispatch(loginSuccess({ role, permissions }));
         localStorage.setItem("user_avatar", photoURL);
         localStorage.setItem("user_name", displayName);
-        localStorage.setItem("access_token", res.data.accessToken);
+        localStorage.setItem("access_token", accessToken);
         navigate("/account/dashboard");
       });
     });
