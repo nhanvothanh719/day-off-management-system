@@ -6,6 +6,8 @@ import {
     ArrowRightOutlined,
   } from "@ant-design/icons";
 import TextArea from 'antd/lib/input/TextArea';
+import "./DayOffDetail.scss"
+
 
 const DayOffDetail = () => {
   return (
@@ -117,23 +119,6 @@ const DayOffDetail = () => {
             </Space>
           </Col>
         </Row>
-        <Modal
-          title="Reason for change"
-        //   open={isModalEditOpen}
-        //   onOk={handleOk}
-
-        //   onCancel={handleCancel}
-        >
-          <TextArea
-            placeholder="Need more detail"
-            style={{
-              height: "200px",
-              border: "1px solid #F4B0C2",
-              borderRadius: "10px",
-              boxShadow: "0px 0px 5px #e97a9a",
-            }}
-          ></TextArea>
-        </Modal>
       </div>
     </Card>
   )
