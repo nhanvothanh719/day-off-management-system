@@ -1,0 +1,44 @@
+.card-container {
+    width: 100%;
+    border-radius: 15px !important;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    padding: 24px !important;
+    @media only screen and (max-width: 1367px) {
+      .dayoff-data-table {
+        max-width: 1366px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 1200px) {
+      .dayoff-data-table {
+        max-width: 1200px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 992px) {
+      .dayoff-data-table {
+        max-width: 960px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .dayoff-data-table {
+        max-width: 720px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 576px) {
+      .dayoff-data-table {
+        max-width: 540px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 390px) {
+      .dayoff-data-table {
+        max-width: 390px;
+        overflow: auto;
+      }
+    }
+  }
+  
