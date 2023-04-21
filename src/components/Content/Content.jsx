@@ -23,7 +23,7 @@ const ContentConfig = () => {
       <Routes>
         <Route exact path="/account/dashboard" element={<Dashboard />} />
         <Route exact path="/account/requests" element={<Requests />} />
-        <Route exact path="/account/requests/details" element={<LogOffForm />} />
+        <Route exact path="/account/requests/new" element={<LogOffForm />} />
         <Route
           exact
           path="/account/requests/request-detail"

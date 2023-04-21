@@ -5,7 +5,7 @@ import rootReducer from "./reducers/index";
 
 const persistConfig = {
     key: 'root',
-    storage, //lib/storage --> localstorage
+    storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

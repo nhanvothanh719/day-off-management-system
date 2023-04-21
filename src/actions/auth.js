@@ -1,6 +1,6 @@
-export const loginSuccess = (user) => ({
+export const loginSuccess = (userInfo) => ({
     type: 'LOGIN_SUCCESS',
-    payload: user,
+    payload: userInfo,
 });
 
 export const logoutSuccess = () => ({

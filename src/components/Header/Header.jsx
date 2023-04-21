@@ -22,14 +22,17 @@ import { getAuth, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { app } from "../../config/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { logoutSuccess } from "../../actions/auth";
+import store from "../../store";
+import { clearAccessToken } from "../../actions/accessToken";
+import { clearRefreshToken } from "../../actions/refreshToken";
+import { useSelector } from "react-redux";
 
 const auth = getAuth();
 
 function HeaderComponent(props) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const userRole = useSelector(state => state.auth.userRole);
 
   const [currentUser, setCurrentUser] = useState({
     displayName: "",
@@ -47,7 +50,9 @@ function HeaderComponent(props) {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
-      dispatch(logoutSuccess());
+      store.dispatch(logoutSuccess());
+      store.dispatch(clearAccessToken());
+      store.dispatch(clearRefreshToken());
       localStorage.clear();
       navigate('/login');
     });
@@ -97,7 +102,7 @@ function HeaderComponent(props) {
           />
         </Col>
         <Col xs={17} sm={17} md={17} lg={17} xl={17} className="badge">
-          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }} onClick={() => navigate('/account/requests/details')}>
+          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }} onClick={() => navigate('/account/requests/new')}>
             <PlusCircleOutlined
               style={{
                 fontSize: "30px",
@@ -136,10 +141,14 @@ function HeaderComponent(props) {
               >
                 {currentUser && (
                   <Typography.Text className="avatar-name">
-                    {currentUser.displayName}
+                    {currentUser.displayName ? currentUser.displayName : 'User'}
                   </Typography.Text>
                 )}
-                <Typography.Text className="avatar-role">Admin</Typography.Text>
+                  {userRole && (
+                    <Typography.Text className="avatar-role">
+                      {userRole ? userRole : 'Staff'}
+                    </Typography.Text>
+                  )}
               </Space>
             </div>
           </Dropdown>
