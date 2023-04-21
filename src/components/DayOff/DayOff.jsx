@@ -1,8 +1,18 @@
-import { Card, Col, Row, Table, Tag } from "antd";
+import { Button, Card, Col, Row, Table, Tag } from "antd";
 import React, { useState } from "react";
+import './DayOff.scss'
 
 const DayOff = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [loading, setLoading] = useState(false)
+  const start = () => {
+    setLoading(true);
+    // ajax request after empty completing
+    setTimeout(() => {
+      setSelectedRowKeys([]);
+      setLoading(false);
+    }, 1000);
+  };
   const data = [];
   for (let i = 0; i < 50; i++) {
     data.push({
@@ -59,10 +69,6 @@ const DayOff = () => {
       ),
       filters: [
         {
-          text: "Pending",
-          value: "Pending",
-        },
-        {
           text: "Approved",
           value: "Approved",
         },
@@ -71,7 +77,7 @@ const DayOff = () => {
           value: "Rejected",
         },
       ],
-      onFilter: (value, record) => record.address.startsWith(value),
+      onFilter: (value, record) => record.tags.includes(value),
       filterSearch: true,
     },
     {
@@ -89,11 +95,33 @@ const DayOff = () => {
   };
   return (
     <Card
-      title={<div>ALL REQUEST</div>}
+      title={<div>ALL Dayoff</div>}
       bordered={false}
       className="card-container"
     >
       <div>
+      <Row
+              style={{
+                marginBottom: 16,
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                type="primary"
+                onClick={start}
+                loading={loading}
+                style={{
+                  borderRadius: "8px",
+                  height: "40px",
+                  fontWeight: "500",
+                  fontSize: "16px ",
+                  backgroundColor: "#ea7a9a",
+                  border: "none",
+                }}
+              >
+                Revert request
+              </Button>
+            </Row>
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
             <Table
