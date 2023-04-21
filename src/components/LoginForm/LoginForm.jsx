@@ -12,12 +12,15 @@ import logo_text from "../../assets/images/logo_text2.png";
 import { auth, provider } from "../../config/FirebaseConfig";
 import "./LoginForm.scss";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { updateUserPermissions } from "../../actions/auth";
+import { loginSuccess } from "../../actions/auth";
+import { setAccessToken } from "../../actions/accessToken";
+import { setRefreshToken } from "../../actions/refreshToken";
+import { user_role } from "../../const/role";
+import store from "../../store";
+import { baseURL } from "../../utils/clientAxios";
 
 function LoginForm() {
   const navigate = useNavigate();
-  //const dispatch = useDispatch();
 
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
@@ -39,20 +42,21 @@ function LoginForm() {
   const onFinish = (values) => {
     setIsLoading(true);
     axios
-      .post("http://localhost:8000/api/auth/login", values)
+      .post( baseURL + "/auth/login", values)
       .then((res) => {
-        const { data } = res;
+        let { role } = res.data;
+        const { permissions, success, message, accessToken, accessTokenLifeTime, refreshToken, name }  = res.data;
         setIsLoading(false);
-        if (data.success) {
+        if (success) {
+          if(!role) { role = user_role.staff; }
+          store.dispatch(loginSuccess({ role, permissions }));
+          store.dispatch(setAccessToken({ token: accessToken, lifeTime: accessTokenLifeTime }));
+          store.dispatch(setRefreshToken(refreshToken));
           messageApi.open({
             type: "success",
-            content: data.message,
+            content: message,
           });
-          localStorage.setItem("access_token", data.accessToken);
-          localStorage.setItem(
-            "access_token_life_time",
-            new Date().getTime() + 86400000
-          );
+          localStorage.setItem("user_name", name);
           navigate("/account/dashboard");
         }
       })
@@ -67,22 +71,20 @@ function LoginForm() {
 
   const handleLoginGg = () => {
     signInWithPopup(auth, provider).then((userCredential) => {
-      const { accessToken, photoURL, displayName, email } =
-        userCredential.user;
-      
-      //Get user permission
-      const user_permissions = ['update_personal_details', 'view_requests'];
-      //dispatch(updateUserPermissions(user_permissions));
-      //
-
-      const user_info = { accessToken };
+      const { photoURL, displayName, email } = userCredential.user;
       axios
-      .post('http://localhost:8000/api/auth/login-with-google', user_info, {
+      .post(baseURL + '/auth/login-with-google', { photoURL, displayName, email }, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
       .then((res) => {
+        let { role } = res.data;
+        const { permissions, accessToken, accessTokenLifeTime, refreshToken } = res.data;
+        if(!role) { role = user_role.staff; }
+        store.dispatch(loginSuccess({ role, permissions }));
+        store.dispatch(setAccessToken({ token: accessToken, lifeTime: accessTokenLifeTime }));
+        store.dispatch(setRefreshToken(refreshToken));
         localStorage.setItem("user_avatar", photoURL);
         localStorage.setItem("user_name", displayName);
         navigate("/account/dashboard");
@@ -166,10 +168,10 @@ function LoginForm() {
                           required: true,
                           message: "Please input your password!",
                         },
-                        // {
-                        //   min: 8,
-                        //   message: "Password must contain at least 8 characters!",
-                        // },
+                        {
+                          min: 8,
+                          message: "Password must contain at least 8 characters!",
+                        },
                       ]}
                     >
                       <Input.Password

@@ -1,0 +1,58 @@
+$violet: #3E3F7A;
+$gray: #7E7E7E;
+$pink: #FA4687;
+
+@mixin text-custom($font_family, $font_size, $font_weight) {
+    font-family: $font_family, sans-serif;
+    font-size: $font_size;
+    font-weight: $font_weight;
+  }
+
+.error {
+
+    &__area {
+        width: 100%;
+        height: calc(800px - 390px);
+    }
+
+
+    &__container {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__wrapper {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__code {
+        @include text-custom(Rubik, 80px, 700);
+        color: $violet !important;
+
+        @media screen and (max-width: 550px) {
+            @include text-custom(Rubik, 60px, 500);
+        }
+    }
+
+    &__name {
+        @include text-custom(Nunito, 35px, 500);
+        color: $pink !important;
+
+        @media screen and (max-width: 550px) {
+            @include text-custom(Nunito, 20px, 500);
+        }
+    }
+
+    &__message {
+        @include text-custom(Poppins, 20px, 400);
+        color: $gray !important;
+
+        @media screen and (max-width: 550px) {
+            @include text-custom(Poppins, 14px, 400);
+        }
+    }
+   
+}

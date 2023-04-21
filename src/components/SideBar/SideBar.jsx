@@ -10,10 +10,13 @@ import "./SideBar.scss";
 import logo from "../../assets/images/logo.png";
 import logoText from "../../assets/images/logo_text2.png";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { user_role } from "../../const/role";
 const { Sider } = Layout;
 
 export const SideBar = (props) => {
   const navigate = useNavigate();
+  const userRole = useSelector((state) => state.auth.userRole);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [openKeys, setOpenKeys] = useState(["account"]);
@@ -83,12 +86,14 @@ export const SideBar = (props) => {
                   key="account"
                   title="Account"
                 >
-                  <Menu.Item
-                    key="dashboard"
-                    onClick={() => handleNavigate("/account/dashboard")}
-                  >
-                    Dashboard
-                  </Menu.Item>
+                  {userRole === user_role.admin ? (
+                    <Menu.Item
+                      key="dashboard"
+                      onClick={() => handleNavigate("/account/dashboard")}
+                    >
+                      Dashboard
+                    </Menu.Item>
+                  ) : null}
                   <Menu.Item
                     key="requests"
                     onClick={() => handleNavigate("/account/requests")}
@@ -107,42 +112,55 @@ export const SideBar = (props) => {
                   key="manager"
                   title="Manager"
                 >
-                  <Menu.Item
-                    key="members"
-                    onClick={() => handleNavigate("/manager/members")}
-                  >
-                    Members
-                  </Menu.Item>
-                  <Menu.Item
-                    key="groups"
-                    onClick={() => handleNavigate("/manager/groups")}
-                  >
-                    Groups
-                  </Menu.Item>
-                  <Menu.Item
-                    key="notifications"
-                    onClick={() => handleNavigate("/manager/notifications")}
-                  >
-                    Notifications
-                  </Menu.Item>
-                  <Menu.Item
-                    key="sync"
-                    onClick={() => handleNavigate("/manager/sync")}
-                  >
-                    Sync
-                  </Menu.Item>
+                  {userRole === user_role.manager ? (
+                    <Menu.Item
+                      key="members"
+                      onClick={() => handleNavigate("/manager/members")}
+                    >
+                      Members
+                    </Menu.Item>
+                  ) : null}
+                  {userRole === user_role.manager ? (
+                    <Menu.Item
+                      key="groups"
+                      onClick={() => handleNavigate("/manager/groups")}
+                    >
+                      Groups
+                    </Menu.Item>
+                  ) : null}
+                  {userRole === user_role.manager ? (
+                    <Menu.Item
+                      key="notifications"
+                      onClick={() => handleNavigate("/manager/notifications")}
+                    >
+                      Notifications
+                    </Menu.Item>
+                  ) : null}
+
+                  {userRole === user_role.admin ? (
+                    <Menu.Item
+                      key="sync"
+                      onClick={() => handleNavigate("/manager/sync")}
+                    >
+                      Sync
+                    </Menu.Item>
+                  ) : null}
                 </Menu.SubMenu>
                 <Menu.SubMenu
                   icon={<ApartmentOutlined className="icon-menu-color" />}
                   key="administrator"
                   title="Administrator"
                 >
-                  <Menu.Item
-                    key="workspaces"
-                    onClick={() => handleNavigate("/administrator/workspaces")}
-                  >
-                    Workspaces
-                  </Menu.Item>
+                  {userRole === user_role.admin ? (
+                    <Menu.Item
+                      key="workspaces"
+                      onClick={() =>
+                        handleNavigate("/administrator/workspaces")
+                      }
+                    >
+                      Workspaces
+                    </Menu.Item>
+                  ) : null}
                 </Menu.SubMenu>
               </Menu>
             </Col>

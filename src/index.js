@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import 'antd/dist/antd.css';
-
-//Prevent ResizeObserver loop limit exceeded
-import ResizeObserver from 'resize-observer-polyfill';
-window.ResizeObserver = ResizeObserver;
-
-
+import { Provider } from 'react-redux';
+import store, { persistor } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
   <React.StrictMode>
     <App/>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );

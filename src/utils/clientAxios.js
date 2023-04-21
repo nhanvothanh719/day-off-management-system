@@ -1,7 +1,11 @@
 import axios from "axios";
+import store from "../store";
+import { setAccessToken } from "../actions/accessToken";
+
+export const baseURL = "http://localhost:8000/api";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8000/api/",
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -9,8 +13,26 @@ const axiosClient = axios.create({
 
 //Set Bearer token
 axiosClient.interceptors.request.use(function (config) {
-  const access_token = localStorage.getItem("access_token");
-  config.headers.Authorization = access_token ? `Bearer ${access_token}` : "";
+  const state = store.getState();
+  const accessTokenLifeTime = state.accessToken.lifeTime;
+  const refreshToken = state.refreshToken;
+  if(accessTokenLifeTime * 1000 - Date.now()  <= 0) {
+    axios.post(baseURL + "/auth/get-new-access-token", {refreshToken}, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      const { accessToken, accessTokenLifeTime } = res.data;
+      store.dispatch(setAccessToken({ accessToken, accessTokenLifeTime }));
+    })
+    .catch((error) => {
+      console.log(error);
+      //Redirect user to login page --> Reset data from Redux
+    });
+  }
+  const accessToken = state.accessToken.token;
+  config.headers.Authorization = accessToken ? `Bearer ${accessToken}` : "";
   return config;
 });
 

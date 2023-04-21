@@ -4,7 +4,7 @@ import BreadcrumbComponent from '../components/Breadcrumb/Breadcrumb';
 import HeaderComponent from '../components/Header/Header';
 import { SideBar } from '../components/SideBar/SideBar';
 import ContentConfig from '../components/Content/Content';
-
+import withAuthentication from '../utils/withAuthentication';
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -22,4 +22,4 @@ const Dashboard = () => {
     </Fragment>
   );
 };
-export default Dashboard;
+export default withAuthentication(Dashboard);

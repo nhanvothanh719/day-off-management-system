@@ -22,11 +22,17 @@ import { getAuth, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { app } from "../../config/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { logoutSuccess } from "../../actions/auth";
+import store from "../../store";
+import { clearAccessToken } from "../../actions/accessToken";
+import { clearRefreshToken } from "../../actions/refreshToken";
+import { useSelector } from "react-redux";
 
 const auth = getAuth();
 
 function HeaderComponent(props) {
   const navigate = useNavigate();
+  const userRole = useSelector(state => state.auth.userRole);
 
   const [currentUser, setCurrentUser] = useState({
     displayName: "",
@@ -44,6 +50,9 @@ function HeaderComponent(props) {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
+      store.dispatch(logoutSuccess());
+      store.dispatch(clearAccessToken());
+      store.dispatch(clearRefreshToken());
       localStorage.clear();
       navigate('/login');
     });
@@ -93,7 +102,7 @@ function HeaderComponent(props) {
           />
         </Col>
         <Col xs={17} sm={17} md={17} lg={17} xl={17} className="badge">
-          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }} onClick={() => navigate('/account/requests/details')}>
+          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }} onClick={() => navigate('/account/requests/new')}>
             <PlusCircleOutlined
               style={{
                 fontSize: "30px",
@@ -113,7 +122,7 @@ function HeaderComponent(props) {
             className="avatar-dropdown"
           >
             <div style={{ display: "flex" }}>
-              {currentUser ? (
+              {currentUser.avatar ? (
                 <Avatar
                   size={{ xs: 35, sm: 45, md: 45, lg: 45, xl: 45, xxl: 45 }}
                   src={currentUser.avatar}
@@ -132,10 +141,14 @@ function HeaderComponent(props) {
               >
                 {currentUser && (
                   <Typography.Text className="avatar-name">
-                    {currentUser.displayName}
+                    {currentUser.displayName ? currentUser.displayName : 'User'}
                   </Typography.Text>
                 )}
-                <Typography.Text className="avatar-role">Admin</Typography.Text>
+                  {userRole && (
+                    <Typography.Text className="avatar-role">
+                      {userRole ? userRole : 'Staff'}
+                    </Typography.Text>
+                  )}
               </Space>
             </div>
           </Dropdown>
