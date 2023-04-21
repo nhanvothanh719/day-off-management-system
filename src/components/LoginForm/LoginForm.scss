@@ -208,6 +208,11 @@ $gray: #7e7e7e;
           }
         }
 
+        .ant-form-item-control-input-content {
+          display: flex;
+          justify-content: center;
+        }
+
         &__title {
           display: flex;
           align-items: center;
@@ -378,7 +383,7 @@ $gray: #7e7e7e;
   }
 
   &__button.ant-btn {
-    left: 30%;
+    //left: 30%;
     padding-inline: 70px;
     border-radius: 5px;
     background-color: $light-pink;

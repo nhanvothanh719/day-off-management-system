@@ -51,7 +51,7 @@ function InputForm() {
 
   const storeRequest = (new_request) => {
     axiosClient
-      .post("requests", new_request)
+      .post("/requests", new_request)
       .then(() => {
         form.resetFields();
         setDayOffAmount(0);
