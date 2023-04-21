@@ -14,6 +14,7 @@ import Workspaces from "../Workspaces/Workspaces";
 
 import "./Content.scss";
 import CustomError from "../CustomError/CustomError";
+import DayOffDetail from "../DayOffDetail/DayOffDetail";
 
 const { Content } = Layout;
 
@@ -30,6 +31,11 @@ const ContentConfig = () => {
           element={<RequestDetail />}
         />
         <Route exact path="/account/day-offs" element={<DayOff />} />
+        <Route
+          exact
+          path="/account/day-offs/dayOff-detail"
+          element={<DayOffDetail />}
+        />
 
         <Route exact path="/manager/members" element={<Members />} />
         <Route exact path="/manager/groups" element={<Groups />} />

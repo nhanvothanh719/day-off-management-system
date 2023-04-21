@@ -1,0 +1,45 @@
+.card-container {
+    width: 100%;
+    border-radius: 15px !important;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    padding: 24px !important;
+    @media only screen and (max-width: 1367px) {
+      .dayoff-detail-container {
+        max-width: 1366px;
+      }
+    }
+    @media only screen and (max-width: 1200px) {
+      .dayoff-detail-container {
+        max-width: 1200px;
+      }
+    }
+    @media only screen and (max-width: 992px) {
+      .dayoff-detail-container {
+        max-width: 960px;
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .dayoff-detail-container {
+        max-width: 720px;
+      }
+    }
+    @media only screen and (max-width: 576px) {
+      .dayoff-detail-container {
+        max-width: 540px;
+      }
+    }
+    @media only screen and (max-width: 390px) {
+      .dayoff-detail-container {
+        max-width: 390px;
+      }
+    }
+  }
+  .ant-descriptions-item-label {
+    width: 100px !important;
+  }
+  .ant-layout-content {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  
