@@ -34,7 +34,7 @@ const DataTable = () => {
 
   useEffect(() => {
     axiosClient
-      .get("requests")
+      .get("/requests")
       .then((res) => {
         setRequest(res.data);
       })
@@ -42,7 +42,6 @@ const DataTable = () => {
         console.error("Error fetching data: ", error);
       });
   }, []);
-  console.log(request.request);
   const handleSearch = (value) => {
     setSearchText(value);
   };
@@ -122,10 +121,10 @@ const DataTable = () => {
   ];
 
   const filteredData = request.request?.filter((item) =>
-  item.username?.toLowerCase().includes(searchText.toLowerCase())
+    item.username?.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  console.log(filteredData)
+  console.log(filteredData);
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
   };
@@ -206,11 +205,10 @@ const DataTable = () => {
               <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Table
                   columns={columns}
-                  dataSource={filteredData}
+                  dataSource={request.request}
                   className="request-data-table"
                   onRow={onRow}
                 />
-                {selectedRowId & <div>{`Details of row ${selectedRowId}`}</div>}
               </Col>
             </Row>
             <Modal
