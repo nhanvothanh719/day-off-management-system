@@ -147,7 +147,7 @@ const DataTable = () => {
     // ajax request after empty completing
     setTimeout(() => {
       setLoading(false);
-      navigate("/account/requests/details");
+      navigate("/account/requests/new");
     }, 1000);
   };
 
