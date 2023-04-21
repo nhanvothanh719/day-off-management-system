@@ -34,7 +34,7 @@ const DataTable = () => {
 
   useEffect(() => {
     axiosClient
-      .get("requests")
+      .get("/requests")
       .then((res) => {
         setRequest(res.data);
       })
@@ -121,10 +121,10 @@ const DataTable = () => {
   ];
 
   const filteredData = request.request?.filter((item) =>
-  item.username?.toLowerCase().includes(searchText.toLowerCase())
+    item.username?.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  console.log(filteredData)
+  console.log(filteredData);
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
   };
