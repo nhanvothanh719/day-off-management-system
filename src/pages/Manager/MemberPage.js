@@ -1,10 +1,10 @@
 import React from 'react';
 import Member from '../../components/Manager/member';
 
-const MemberPage = () => {
+function MemberPage(){
   return (
     <Member/>
   )
 }
 
-export default MemberPage
+export default MemberPage;
