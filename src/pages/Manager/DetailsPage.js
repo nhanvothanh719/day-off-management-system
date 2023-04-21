@@ -1,9 +1,9 @@
 import React from "react";
-import MemberDetails from "../../components/Manager/MemberDetails";
+import AddMember from "../../components/Manager/AddMember";
 
-const DetailsPage = () => {
+function DetailsPage () {
     return(
-        <MemberDetails/>
+        <AddMember/>
     )
 };
 
