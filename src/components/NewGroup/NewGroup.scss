@@ -1,0 +1,121 @@
+$white: #fff;
+$blue: #3c4562;
+$pink: #ed8a9f;
+$light-pink: #ea7a9a;
+$dark-pink: #e65980;
+$baby-pink: #fbe8ee;
+$gray: #7e7e7e;
+
+.card-container-new-group {
+    width: 100%;
+    border-radius: 15px !important;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    padding: 24px !important;
+
+    button {
+        border-radius: 8px !important;
+        height: 40px !important;
+        font-weight: 500 !important;
+        font-size: 16x !important;
+        background-color: #ea7a9a !important;
+        border: none;
+        float: right;
+        color: white !important;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    .canel-btn {
+        border-radius: 8px;
+        height: 40px;
+        font-weight: 500;
+        font-size: 16x;
+        background-color: #fbe8ee !important;
+        float: right;
+        color: black !important;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    .ant {
+        &-input {
+            border-radius: 15px;
+            color: black !important;
+
+            &:focus,
+            &-focused {
+                border-color: $pink !important;
+                box-shadow: 0 0 0 2px $baby-pink !important;
+                border-radius: 15px;
+            }
+
+            &:hover {
+                border-color: $pink !important;
+            }
+
+            &-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+                border-color: $pink !important;
+                border-radius: 15px;
+            }
+
+            &-affix-wrapper:focus,
+            &-affix-wrapper-focused {
+                border-color: $pink !important;
+                box-shadow: 0 0 0 2px $baby-pink !important;
+            }
+        }
+    }
+
+    .ant-select {
+        border-radius: 15px !important;
+    }
+
+    .ant-select-selector:hover {
+        border-color: $pink !important;
+    }
+
+    .ant-select-selector {
+        border-radius: 15px !important;
+        height: 200px;
+
+        .ant-select-selection-overflow {
+            padding: 12px !important;
+            height: 100%;
+            align-content: flex-start;
+
+            .ant-select-selection-item {
+                border-radius: 15px !important;
+                width: 100%;
+                background-color: #7e7e7e;
+
+                .ant-select-selection-item-content {
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                    color: rgb(255, 255, 255);
+                    font-weight: 500;
+                }
+            }
+
+            .ant-select-selection-item-content::before {
+                content: "\f007";
+                color: rgb(255, 255, 255);
+                padding: 0 6px;
+                display: inline-block;
+                font-family: fontawesome;
+            }
+        }
+    }
+
+    .ant-card-head-title {
+        color: black !important;
+        font-weight: bold !important;
+        font-size: 20px !important;
+    }
+
+    .ant-select-selection-placeholder {
+        height: 100%;
+        padding-top: 12px;
+    }
+}

@@ -10,7 +10,7 @@ const MyCard = ({ title, content, actions }) => {
       bordered={false}
       className="card-container"
     >
-      <p>{content}</p>
+      {content}
     </Card>
   );
 };

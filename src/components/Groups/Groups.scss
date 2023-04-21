@@ -1,0 +1,45 @@
+.groups-table {
+    width: 100%;
+    border-radius: 15px !important;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    padding: 24px !important;
+
+    .groups-table-button {
+        border-radius: 8px !important;
+        height: 40px !important;
+        font-weight: 500 !important;
+        font-size: 16x !important;
+        background-color: #ea7a9a !important;
+        border: none;
+        float: right;
+        color: white !important;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    .groups-table-nextpagebtn {
+        border-radius: 8px !important;
+        height: 40px !important;
+        font-weight: 500 !important;
+        font-size: 16px !important;
+        background-color: #ea7a9a !important;
+        border: none;
+        float: right;
+        color: white !important;
+    }
+
+    .ant-tag {
+        border-radius: 15px !important;
+        background-color: #7e7e7e;
+        color: rgb(255, 255, 255);
+        font-weight: 500;
+    }
+
+    .ant-tag::before {
+        content: "\f007";
+        padding: 0 4px;
+        font-family: fontawesome;
+        font-weight: 500;
+    }
+}
