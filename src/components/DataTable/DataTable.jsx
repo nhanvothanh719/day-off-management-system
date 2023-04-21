@@ -1,4 +1,14 @@
-import { Button, Table, Tag, Row, Modal, Col, Card, Input } from "antd";
+import {
+  Button,
+  Table,
+  Tag,
+  Row,
+  Modal,
+  Col,
+  Card,
+  Input,
+  Typography,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import "./DataTable.scss";
 import {
@@ -8,88 +18,82 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import axiosClient from "../../utils/clientAxios";
 
 const DataTable = () => {
+  const [loading, setLoading] = useState(false);
+  const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
+  const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [request, setRequest] = useState([]);
+  const [selectedRowId, setSelectedRowId] = useState(null);
   const navigate = useNavigate();
   const handleOnClick = () => {
     navigate("/account/requests/request-detail");
   };
 
-  const data = [];
-  for (let i = 0; i < 50; i++) {
-    data.push({
-      key: i,
-      dayOff: "14/04/2023-16/04/2023",
-      quantity: 2,
-      requester: `Phùng Tất Đạt ${i}`,
-      tags: ["Pending"],
-      requestTime: "Yesterday",
-      Actions: "",
-    });
-  }
+  useEffect(() => {
+    axiosClient
+      .get("requests")
+      .then((res) => {
+        setRequest(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+  console.log(request.request);
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
+
   const columns = [
     {
       title: "Request for date",
       align: "center",
-      dataIndex: "dayOff",
-      key: "dayOff",
+      key: "start_date",
+      dataIndex: "start_date",
+      render: (text, record, rowIndex) => {
+        return (
+          <Typography.Text>
+            {record?.start_date}-{record?.end_date}
+          </Typography.Text>
+        );
+      },
     },
     {
       title: "Quantity",
       align: "center",
       dataIndex: "quantity",
+      key: "quantity",
       sorter: (a, b) => a.quantity - b.quantity,
     },
     {
       title: "Requester",
       align: "center",
-      dataIndex: "requester",
+      dataIndex: "user_id",
+      key: "user_id",
+      render: (text, record, rowIndex) => {
+        return <Typography.Text>{text ? text.username : ""}</Typography.Text>;
+      },
     },
     {
       title: "Status",
       align: "center",
       key: "tags",
       dataIndex: "tags",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color;
-            if (tag === "Pending") {
-              color = "geekblue";
-            } else if (tag === "Approved") {
-              color = "green";
-            } else if (tag === "Rejected") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-      filters: [
-        {
-          text: "Pending",
-          value: "Pending",
-        },
-        {
-          text: "Approved",
-          value: "Approved",
-        },
-        {
-          text: "Rejected",
-          value: "Rejected",
-        },
-      ],
-      onFilter: (value, record) => record.address.startsWith(value),
-      filterSearch: true,
+      render: () => {
+        return <Tag className="ant-tag-geekblue">Pending</Tag>;
+      },
     },
     {
       title: "Request date",
       align: "center",
-      dataIndex: "requestTime",
+      dataIndex: "day_off_time",
+      key: "day_off_time",
+      render: (text, record, rowIndex) => {
+        return <Typography.Text>{record?.day_off_time}</Typography.Text>;
+      },
     },
     {
       title: "Action",
@@ -116,29 +120,12 @@ const DataTable = () => {
       },
     },
   ];
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
-  const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [request, setRequest] = useState("");
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/requests")
-      .then((res) => {
-        setRequest(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }, []);
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
-  };
 
-  const filteredData = data.filter((user) =>
-    user.requester.toLowerCase().includes(searchText.toLowerCase())
+  const filteredData = request.request?.filter((item) =>
+  item.username?.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  console.log(filteredData)
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
   };
@@ -150,24 +137,27 @@ const DataTable = () => {
     setIsModalApproveOpen(false);
     setIsModalRejectOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalApproveOpen(false);
     setIsModalRejectOpen(false);
   };
+
   const start = () => {
     setLoading(true);
     // ajax request after empty completing
     setTimeout(() => {
-      setSelectedRowKeys([]);
       setLoading(false);
+      navigate("/account/requests/details");
     }, 1000);
   };
-  const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
+
+  const onRow = (record) => {
+    return {
+      onClick: () => {
+        setSelectedRowId(record.id);
+      },
+    };
   };
   return (
     <Card
@@ -175,7 +165,7 @@ const DataTable = () => {
       bordered={false}
       className="card-container"
     >
-      <div> 
+      <div>
         {request ? (
           <>
             <Row
@@ -215,12 +205,12 @@ const DataTable = () => {
             <Row>
               <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Table
-                  rowSelection={rowSelection}
                   columns={columns}
                   dataSource={filteredData}
                   className="request-data-table"
-                  // scroll={{ x: "max-content" }}
+                  onRow={onRow}
                 />
+                {selectedRowId & <div>{`Details of row ${selectedRowId}`}</div>}
               </Col>
             </Row>
             <Modal
@@ -241,7 +231,7 @@ const DataTable = () => {
             </Modal>
           </>
         ) : (
-          <p>Loading data...</p>
+          <Table loading={{ indicator: loading, delay: 100 }}></Table>
         )}
       </div>
     </Card>
