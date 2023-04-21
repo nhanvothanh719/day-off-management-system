@@ -15,6 +15,8 @@ import Workspaces from "../Workspaces/Workspaces";
 import "./Content.scss";
 import CustomError from "../CustomError/CustomError";
 import DayOffDetail from "../DayOffDetail/DayOffDetail";
+import NewGroup from "../NewGroup/NewGroup";
+import GroupDetail from "../GroupDetail/GroupDetail";
 
 const { Content } = Layout;
 
@@ -39,12 +41,16 @@ const ContentConfig = () => {
 
         <Route exact path="/manager/members" element={<Members />} />
         <Route exact path="/manager/groups" element={<Groups />} />
+        <Route exact path="/manager/groups/new-group" element={<NewGroup />} />
+        <Route exact path="/manager/groups/:id/detail" element={<GroupDetail />} />
+
         <Route
           exact
           path="/manager/notifications"
           element={<Notifications />}
         />
         <Route exact path="/manager/sync" element={<Sync />} />
+
 
         <Route
           exact
