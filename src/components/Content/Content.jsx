@@ -5,7 +5,7 @@ import DashboardContent from "../DashboardContent/DashboardContent";
 import DayOff from "../DayOff/DayOff";
 import LogOffForm from "../LogOffForm/LogOffForm";
 import Groups from "../Groups/Groups";
-import Members from "../Members/Members";
+import NewMembers from "../NewMembers/NewMembers";
 import Notifications from "../Notifications/Notifications";
 import RequestDetail from "../RequestDetail/RequestDetail";
 import Requests from "../Requests/Requests";
@@ -13,7 +13,7 @@ import Sync from "../Sync/Sync";
 import Workspaces from "../Workspaces/Workspaces";
 
 import "./Content.scss";
-import CustomError from "../CustomError/CustomError";
+import CustomError from "../CustomError/CustomError"; 
 import DayOffDetail from "../DayOffDetail/DayOffDetail";
 import NewGroup from "../NewGroup/NewGroup";
 import GroupDetail from "../GroupDetail/GroupDetail";
@@ -39,7 +39,7 @@ const ContentConfig = () => {
           element={<DayOffDetail />}
         />
 
-        <Route exact path="/manager/members" element={<Members />} />
+        <Route exact path="/manager/new-members" element={<NewMembers />} />
         <Route exact path="/manager/groups" element={<Groups />} />
         <Route exact path="/manager/groups/new-group" element={<NewGroup />} />
         <Route exact path="/manager/groups/:id/detail" element={<GroupDetail />} />

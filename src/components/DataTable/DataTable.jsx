@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   Table,
@@ -25,6 +26,7 @@ const DataTable = () => {
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
+  const [requestDataSearch, setRequestDataSearch] = useState(request);
   const [selectedRowId, setSelectedRowId] = useState(null);
   const navigate = useNavigate();
   const handleOnClick = () => {
@@ -35,15 +37,32 @@ const DataTable = () => {
     axiosClient
       .get("/requests")
       .then((res) => {
-        setRequest(res.data);
+        setRequest(res.data?.request);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
   }, []);
+
   const handleSearch = (value) => {
     setSearchText(value);
   };
+
+  // const filteredData = () => {
+  //   const data = request?.filter((item) => {
+  //     return item?.user_id?.username.includes(searchText);
+  //   });
+  //   console.log(data, "asdasd");
+  //   setRequest(data);
+  // };
+
+  useEffect(() => {
+    const data = request?.filter((item) => {
+      return item?.user_id?.username.includes(searchText);
+    });
+    console.log(data, "asdasd");
+    setRequest(data);
+  }, [searchText]);
 
   const columns = [
     {
@@ -119,11 +138,6 @@ const DataTable = () => {
     },
   ];
 
-  const filteredData = request.request?.filter((item) =>
-    item.username?.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  console.log(filteredData);
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
   };
@@ -164,72 +178,69 @@ const DataTable = () => {
       className="card-container"
     >
       <div>
-        {request ? (
-          <>
-            <Row
+        <>
+          <Row
+            style={{
+              marginBottom: 16,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              type="primary"
+              onClick={start}
+              loading={loading}
               style={{
-                marginBottom: 16,
-                justifyContent: "flex-end",
+                borderRadius: "8px",
+                height: "40px",
+                fontWeight: "500",
+                fontSize: "16px ",
+                backgroundColor: "#ea7a9a",
+                border: "none",
               }}
             >
-              <Button
-                type="primary"
-                onClick={start}
-                loading={loading}
-                style={{
-                  borderRadius: "8px",
-                  height: "40px",
-                  fontWeight: "500",
-                  fontSize: "16px ",
-                  backgroundColor: "#ea7a9a",
-                  border: "none",
-                }}
-              >
-                Create request
-              </Button>
-            </Row>
-            <Row
-              style={{
-                marginBottom: 16,
-                justifyContent: "flex-end",
-              }}
-            >
-              <Input.Search
-                placeholder="Search requester"
-                onChange={handleSearch}
-                style={{ maxWidth: "300px", minWidth: "150px" }}
+              Create request
+            </Button>
+          </Row>
+          <Row
+            style={{
+              marginBottom: 16,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Input.Search
+              placeholder="Search requester"
+              onChange={handleSearch}
+              style={{ maxWidth: "300px", minWidth: "150px" }}
+            />
+          </Row>
+          <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+              <Table
+                columns={columns}
+                dataSource={request}
+                className="request-data-table"
+                onRow={onRow}
+                loading={!request ? true : false}
               />
-            </Row>
-            <Row>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Table
-                  columns={columns}
-                  dataSource={request.request}
-                  className="request-data-table"
-                  onRow={onRow}
-                />
-              </Col>
-            </Row>
-            <Modal
-              title="Approved"
-              open={isModalApproveOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Are you sure approve this request?</p>
-            </Modal>
-            <Modal
-              title="Rejected"
-              open={isModalRejectOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Are you sure reject this request?</p>
-            </Modal>
-          </>
-        ) : (
-          <Table loading={{ indicator: loading, delay: 100 }}></Table>
-        )}
+            </Col>
+          </Row>
+          <Modal
+            title="Approved"
+            open={isModalApproveOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <p>Are you sure approve this request?</p>
+          </Modal>
+          <Modal
+            title="Rejected"
+            open={isModalRejectOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <p>Are you sure reject this request?</p>
+          </Modal>
+        </>
       </div>
     </Card>
   );
