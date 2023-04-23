@@ -1,0 +1,199 @@
+$pink: #e97a9a;
+$gray: #7e7e7e;
+$nude: #f9c4b4;
+$baby-pink: #fbe8ee;
+$white: #fff;
+
+@mixin text-custom($font_family: Poppins, $font_size: 16px, $font_weight: 500) {
+  font-family: $font_family, sans-serif;
+  font-size: $font_size;
+  font-weight: $font_weight;
+}
+
+@mixin input-custom() {
+  border-radius: 15px;
+  height: 56px;
+}
+
+//Out side the form
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: $baby-pink !important;
+}
+
+.rc-virtual-list-holder {
+  max-height: auto;
+
+  .ant-select-item.ant-select-item-option {
+    @include text-custom();
+    line-height: 30px;
+  }
+}
+
+.custom-form.ant-form {
+
+  margin: 0 70px;
+
+  *::selection {
+    border-color: $pink !important;
+  }
+
+  *:where(:hover) {
+    border-color: $pink !important;
+  }
+
+  //Label
+  label {
+    @include text-custom();
+    color: $gray;
+  }
+
+  .ant {
+
+    &-radio {
+      &-input:focus + .ant-radio-inner,
+      &:hover .ant-radio-inner,
+      &-wrapper:hover .ant-radio,
+      &-checked .ant-radio-inner {
+        border-color: $pink;
+
+        &::after {
+          background-color: $pink;
+        }
+      }
+
+      &-input:focus + .ant-radio-inner {
+        box-shadow: 0 0 0 3px rgba(236, 98, 209, 0.12);
+        border: 1px solid $pink;
+      }
+
+      &-checked::after {
+        border: 1px solid $pink;
+      }
+
+      &-checked .ant-radio-inner::after {
+        transform: scale(0.7);
+      }
+
+      &-inner {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    //Day range select
+
+    &-picker-input > input {
+      @include text-custom();
+    }
+
+    &-picker {
+      width: 100%;
+      
+      &-range {
+        @include text-custom();
+        @include input-custom();
+      }
+
+      &-input {
+        @include text-custom();
+      }
+
+      &:hover,
+      &-focused {
+        border-color: $pink;
+      }
+
+      &-focused {
+        box-shadow: 0 0 0 2px $baby-pink;
+      }
+
+      &-range .ant-picker-active-bar {
+        background: #f4adac;
+      }
+    }
+
+    //Select option
+
+    &-select {
+
+      &-selection-item {
+        color: $gray;
+      }
+
+      &:not(.ant-select-disabled):hover .ant-select-selector {
+        border-color: $pink;
+      }
+
+      &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        box-shadow: 0 0 0 2px $baby-pink;
+        border-color: $pink;
+      }
+
+      //text inside
+      &-single.ant-select-show-arrow .ant-select-selection-item {
+        top: 20%;
+      }
+
+      &:not(.ant-select-customize-input) .ant-select-selector {
+        @include text-custom();
+        @include input-custom();
+      }
+    }
+
+    //Number
+
+    &-input {
+      @include text-custom();
+      @include input-custom();
+
+      &-number {
+        @include text-custom();
+        @include input-custom();
+
+        width: 100%;
+
+        &-input {
+          color: $gray;
+        }
+
+        &-focused {
+          box-shadow: 0 0 0 2px $baby-pink;
+          border-color: $pink;
+        }
+
+        &-input-wrap {
+          line-height: 56px;
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 2px $baby-pink;
+          border-color: $pink;
+        }
+      }
+    }
+
+    //TextArea
+
+    &-input:focus, &-input-focused {
+      box-shadow: 0 0 0 2px $baby-pink;
+      border-color: $pink;
+    }
+
+    //Button
+    &-btn {
+      padding: 10px 20px;
+      height: auto;
+      @include text-custom(Poppins, 18px, 500);
+      border-radius: 20px;
+      border-style: none;
+      background-color: $baby-pink;
+      color: $pink;
+
+      &:hover {
+        color: $white;
+        background-color: $pink;
+      }
+    }
+
+  }
+}
