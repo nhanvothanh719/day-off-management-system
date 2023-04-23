@@ -17,7 +17,6 @@ import {
   EditFilled,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import axiosClient from "../../utils/clientAxios";
 
 const DataTable = () => {

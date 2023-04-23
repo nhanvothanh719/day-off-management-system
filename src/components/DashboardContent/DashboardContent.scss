@@ -85,3 +85,15 @@ $light-pink: #E97A9A;
         }
     }
 }
+
+.custom-dashboard {
+    .charts-section {
+        .recharts-wrapper {
+            width: 100% !important;
+            height: 100% !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

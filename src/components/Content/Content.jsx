@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../Dashboard/Dashboard";
+import DashboardContent from "../DashboardContent/DashboardContent";
 import DayOff from "../DayOff/DayOff";
 import LogOffForm from "../LogOffForm/LogOffForm";
 import Groups from "../Groups/Groups";
@@ -24,7 +24,7 @@ const ContentConfig = () => {
   return (
     <Content className="site-layout-background">
       <Routes>
-        <Route exact path="/account/dashboard" element={<Dashboard />} />
+        <Route exact path="/account/dashboard" element={<DashboardContent />} />
         <Route exact path="/account/requests" element={<Requests />} />
         <Route exact path="/account/requests/new" element={<LogOffForm />} />
         <Route
