@@ -81,6 +81,7 @@ function LoginForm() {
         },
       })
       .then((res) => {
+       if(res.data.success) {
         let { role } = res.data;
         const { permissions, accessToken, accessTokenLifeTime, refreshToken } = res.data;
         if(!role) { role = user_role.staff; }
@@ -90,7 +91,13 @@ function LoginForm() {
         localStorage.setItem("user_avatar", photoURL);
         localStorage.setItem("user_name", displayName);
         navigate("/account/dashboard");
-      });
+       } else {
+        messageApi.open({
+          type: "error",
+          content: "Your email is not registered in this system",
+        });
+       }
+      })
     });
   };
 
