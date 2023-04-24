@@ -2,7 +2,7 @@ import { Card, Col, Descriptions, Modal, Row, Space, Timeline, Typography } from
 import React from 'react'
 import {
     ClockCircleOutlined,
-    EditFilled,
+    ClockCircleFilled,
     ArrowRightOutlined,
   } from "@ant-design/icons";
 import TextArea from 'antd/lib/input/TextArea';
@@ -40,7 +40,7 @@ const DayOffDetail = () => {
             </Descriptions>
             <Space direction="vertical">
               <Typography.Text>ACTIONS</Typography.Text>
-              <EditFilled
+              <ClockCircleFilled
                 style={{
                   color: " #e97a9a",
                   fontSize: "40px",
