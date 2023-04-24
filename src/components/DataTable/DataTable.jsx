@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   Table,
@@ -25,25 +26,32 @@ const DataTable = () => {
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
-  const [selectedRowId, setSelectedRowId] = useState(null);
+
+  const map = request.map(request => request._id)
+
   const navigate = useNavigate();
-  const handleOnClick = () => {
-    navigate("/account/requests/request-detail");
-  };
 
   useEffect(() => {
     axiosClient
       .get("/requests")
       .then((res) => {
-        setRequest(res.data);
+        setRequest(res.data?.request);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
   }, []);
+
   const handleSearch = (value) => {
     setSearchText(value);
   };
+
+  useEffect(() => {
+    const data = request?.filter((item) => {
+      return item?.user_id?.username.includes(searchText);
+    });
+    setRequest(data);
+  }, [searchText]);
 
   const columns = [
     {
@@ -99,7 +107,7 @@ const DataTable = () => {
       key: "actions",
       dataIndex: "actions",
       width: "100px",
-      render: () => {
+      render: (id, record) => {
         return (
           <>
             <Row className="request-detail__actions">
@@ -109,7 +117,15 @@ const DataTable = () => {
               <Col className="request-detail__icon2" onClick={showModalReject}>
                 <CloseSquareFilled />
               </Col>
-              <Col className="request-detail__icon3" onClick={handleOnClick}>
+              <Col
+                className="request-detail__icon3"
+                onRow={(record) => ({
+                  onClick: () => handleRowClick(record),
+                })}
+                // onClick={(key) => {
+                //   handleRowClick("request-detail", record.key, record);
+                // }}
+              >
                 <EditFilled />
               </Col>
             </Row>
@@ -119,11 +135,11 @@ const DataTable = () => {
     },
   ];
 
-  const filteredData = request.request?.filter((item) =>
-    item.username?.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const handleRowClick = (record) => {
+    const rowKey = record._id; // lấy rowKey của hàng được chọn
+    navigate(`/account/requests/${rowKey}/request-detail`); // chuyển đến route với rowKey được truyền vào
+  };
 
-  console.log(filteredData);
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
   };
@@ -150,13 +166,6 @@ const DataTable = () => {
     }, 1000);
   };
 
-  const onRow = (record) => {
-    return {
-      onClick: () => {
-        setSelectedRowId(record.id);
-      },
-    };
-  };
   return (
     <Card
       title={<div>ALL REQUEST</div>}
@@ -164,72 +173,72 @@ const DataTable = () => {
       className="card-container"
     >
       <div>
-        {request ? (
-          <>
-            <Row
+        <>
+          <Row
+            style={{
+              marginBottom: 16,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              type="primary"
+              onClick={start}
+              loading={loading}
               style={{
-                marginBottom: 16,
-                justifyContent: "flex-end",
+                borderRadius: "8px",
+                height: "40px",
+                fontWeight: "500",
+                fontSize: "16px ",
+                backgroundColor: "#ea7a9a",
+                border: "none",
               }}
             >
-              <Button
-                type="primary"
-                onClick={start}
-                loading={loading}
-                style={{
-                  borderRadius: "8px",
-                  height: "40px",
-                  fontWeight: "500",
-                  fontSize: "16px ",
-                  backgroundColor: "#ea7a9a",
-                  border: "none",
-                }}
-              >
-                Create request
-              </Button>
-            </Row>
-            <Row
-              style={{
-                marginBottom: 16,
-                justifyContent: "flex-end",
-              }}
-            >
-              <Input.Search
-                placeholder="Search requester"
-                onChange={handleSearch}
-                style={{ maxWidth: "300px", minWidth: "150px" }}
+              Create request
+            </Button>
+          </Row>
+          <Row
+            style={{
+              marginBottom: 16,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Input.Search
+              placeholder="Search requester"
+              onChange={handleSearch}
+              style={{ maxWidth: "300px", minWidth: "150px" }}
+            />
+          </Row>
+          <Row>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+              <Table
+                columns={columns}
+                rowKey={map}
+                dataSource={request}
+                className="request-data-table"
+                loading={!request ? true : false}
+                onRow={(record) => ({
+                  onClick: () => handleRowClick(record),
+                })}
               />
-            </Row>
-            <Row>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Table
-                  columns={columns}
-                  dataSource={request.request}
-                  className="request-data-table"
-                  onRow={onRow}
-                />
-              </Col>
-            </Row>
-            <Modal
-              title="Approved"
-              open={isModalApproveOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Are you sure approve this request?</p>
-            </Modal>
-            <Modal
-              title="Rejected"
-              open={isModalRejectOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Are you sure reject this request?</p>
-            </Modal>
-          </>
-        ) : (
-          <Table loading={{ indicator: loading, delay: 100 }}></Table>
-        )}
+            </Col>
+          </Row>
+          <Modal
+            title="Approved"
+            open={isModalApproveOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <p>Are you sure approve this request?</p>
+          </Modal>
+          <Modal
+            title="Rejected"
+            open={isModalRejectOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <p>Are you sure reject this request?</p>
+          </Modal>
+        </>
       </div>
     </Card>
   );

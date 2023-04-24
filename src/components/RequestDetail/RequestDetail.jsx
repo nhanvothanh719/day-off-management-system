@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Row,
   Col,
@@ -9,28 +10,49 @@ import {
   Typography,
   Card,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./RequestDetail.scss";
 import {
   ClockCircleOutlined,
   EditFilled,
   ArrowRightOutlined,
 } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
+import MyCard from "../Card/Card";
+import axiosClient from "../../utils/clientAxios";
 
 const RequestDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [requestDetail, setRequestDetail] = useState([]);
   const { TextArea } = Input;
+  const location = useLocation();
+  const id = location.pathname.split("/")[3];
+
+  useEffect(() => {
+    axiosClient
+      .get(`/requests/${id}`)
+      .then((res) => {
+        setRequestDetail(res.data.request);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
+  if (!requestDetail) {
+    return (
+      <MyCard title="Request detail" loading={!requestDetail ? true : false} />
+    );
+  }
   const handleOk = () => {
     setIsModalEditOpen(false);
   };
   const handleCancel = () => {
     setIsModalEditOpen(false);
   };
+
   return (
-    <Card
-      title="REQUEST DETAIL"
-      bordered={false}
-      className="card-container">
+    <Card title="REQUEST DETAIL" bordered={false} className="card-container">
       <div
         style={{ height: "100%", backgroundColor: "#fff" }}
         className="request-detail"
@@ -43,15 +65,17 @@ const RequestDetail = () => {
               colon={false}
               column={1}
             >
-              <Descriptions.Item label="From">14/04/2023</Descriptions.Item>
-              <Descriptions.Item label="To">16/04/2023</Descriptions.Item>
-              <Descriptions.Item label="Time">All day</Descriptions.Item>
-              <Descriptions.Item label="Quantity">2</Descriptions.Item>
+              <Descriptions.Item label="From">
+                {requestDetail.start_date}
+              </Descriptions.Item>
+              <Descriptions.Item label="To">{requestDetail.end_date}</Descriptions.Item>
+              <Descriptions.Item label="Time">{requestDetail.day_off_time}</Descriptions.Item>
+              <Descriptions.Item label="Quantity">{requestDetail.quantity}</Descriptions.Item>
               <Descriptions.Item label="Reason">
-                Personal Issue
+                {requestDetail.reason}
               </Descriptions.Item>
               <Descriptions.Item label="Status">
-                Approved (1/2)
+                {requestDetail.status}
               </Descriptions.Item>
             </Descriptions>
             <Space direction="vertical">
@@ -117,7 +141,11 @@ const RequestDetail = () => {
                     md={2}
                     sm={2}
                     xs={24}
-                    style={{ fontSize: "30px", margin: "50px 20px 0 0", color:"#e97a9a" }}
+                    style={{
+                      fontSize: "30px",
+                      margin: "50px 20px 0 0",
+                      color: "#e97a9a",
+                    }}
                   >
                     <ArrowRightOutlined />
                   </Col>

@@ -1,0 +1,98 @@
+.ant-table-content {
+    .ant-table-thead > tr > th {
+      background-color: #fff !important;
+      justify-content: center !important;
+      font-size: 17px;
+    }
+  
+    .ant-table-tbody {
+      font-family: Poppins, sans-serif;
+      color: #7e7e7e;
+    }
+  }
+  .request-detail__actions {
+    width: max-content !important;
+    padding-left: 40px;
+    .request-detail__icon2,
+    .request-detail__icon3 {
+      padding-left: 10px;
+    }
+    .request-detail__icon,
+    .request-detail__icon2,
+    .request-detail__icon3 {
+      color: #e97a9a;
+      font-size: 25px;
+      border-radius: 20px;
+    }
+    .request-detail__icon,
+    .request-detail__icon2,
+    .request-detail__icon3:hover {
+      cursor: pointer;
+    }
+  }
+  .ant-table-thead
+    > tr
+    > th:not(:last-child):not(.ant-table-selection-column):not(
+      .ant-table-row-expand-icon-cell
+    ):not([colspan])::before {
+    background-color: #fff !important;
+  }
+  .ant-tag-geekblue {
+    color: #fff !important;
+    background-color: #1ea8c5 !important;
+    font-size: 10px !important;
+  }
+  .ant-tag-green {
+    color: #fff !important;
+    background-color: #2ac155 !important;
+    font-size: 10px !important;
+  }
+  .ant-tag-volcano {
+    color: #fff !important;
+    background-color: #ff6d4c !important;
+    font-size: 10px !important;
+  }
+  .card-container {
+    width: 100%;
+    border-radius: 15px !important;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    padding: 24px !important;
+    @media only screen and (max-width: 1367px) {
+      .request-data-table {
+        max-width: 1366px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 1200px) {
+      .request-data-table {
+        max-width: 1200px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 992px) {
+      .request-data-table {
+        max-width: 960px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .request-data-table {
+        max-width: 720px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 576px) {
+      .request-data-table {
+        max-width: 540px;
+        overflow: auto;
+      }
+    }
+    @media only screen and (max-width: 390px) {
+      .request-data-table {
+        max-width: 390px;
+        overflow: auto;
+      }
+    }
+  }
+  
