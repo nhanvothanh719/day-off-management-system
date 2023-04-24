@@ -19,6 +19,15 @@ function TableMember({ users, onEdit, onDelete }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const columns = [
+     {
+      title: "ID",
+      align: "center",
+      key: "id",
+      dataIndex: "id",
+      render: (text, record, rowIndex) => {
+        return <Typography.Text>{record?._id}</Typography.Text>;
+      },
+    },
     {
       title: "Username",
       align: "center",
@@ -47,15 +56,6 @@ function TableMember({ users, onEdit, onDelete }) {
       },
     },
     {
-        title: "Permission",
-        align: "center",
-        dataIndex: "permission",
-        key: "permission",
-        render: (text, record, rowIndex) => {
-          return <Typography.Text>{record?.permission_id?.permission_name}</Typography.Text>;
-        },
-      },
-    {
       title: "Action",
       align: "center",
       key: "actions",
@@ -75,7 +75,7 @@ function TableMember({ users, onEdit, onDelete }) {
                   <DeleteFilled />
                 </Popconfirm>
               </Col>
-              <Col className="request-detail__icon3" onClick={() => handleEdit(record._id)} >
+              <Col className="request-detail__icon3" onClick={() => handleEdit(record)} >
                 <EditFilled />
               </Col>
             </Row>
@@ -118,7 +118,7 @@ function TableMember({ users, onEdit, onDelete }) {
         ]}
       >
         <Form form={form} onFinish={handleSave}>
-          <Form.Item
+          {/* <Form.Item
             label="Role"
             name="Role"
             rules={[{ required: true, message: "Choose role" }]}
@@ -131,7 +131,7 @@ function TableMember({ users, onEdit, onDelete }) {
             rules={[{ required: true, message: "Choose permission" }]}
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             label="Username"
             name="username"

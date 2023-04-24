@@ -30,7 +30,7 @@ const ContentConfig = () => {
         <Route exact path="/account/requests/new" element={<LogOffForm />} />
         <Route
           exact
-          path="/account/requests/request-detail"
+          path="/account/requests/:id/request-detail"
           element={<RequestDetail />}
         />
         <Route exact path="/account/day-offs" element={<DayOff />} />

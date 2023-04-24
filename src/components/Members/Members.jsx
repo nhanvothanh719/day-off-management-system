@@ -9,7 +9,6 @@ import TableMember from "../TableMember/TableMember";
 const UserTable = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [selectedRowId, setSelectedRowId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,17 +44,9 @@ const UserTable = () => {
       navigate("/manager/members/new-members");
     }, 1000);
   };
-
-  const onRow = (record) => {
-    return {
-      onClick: () => {
-        setSelectedRowId(record.id);
-      },
-    };
-  };
   return (
     <Card
-      title={<div>ALL REQUEST</div>}
+      title={<div>ALL MEMBER</div>}
       bordered={false}
       className="card-container"
     >
@@ -88,7 +79,6 @@ const UserTable = () => {
               <TableMember
                 users={users}
                 className="request-data-table"
-                onRow={onRow}
                 loading={!users ? true : false}
                 onDelete={onDelete}
                 onEdit={onEdit}

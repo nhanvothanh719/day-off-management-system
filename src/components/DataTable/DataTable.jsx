@@ -26,12 +26,10 @@ const DataTable = () => {
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
-  const [requestDataSearch, setRequestDataSearch] = useState(request);
-  const [selectedRowId, setSelectedRowId] = useState(null);
+
+  const map = request.map(request => request._id)
+
   const navigate = useNavigate();
-  const handleOnClick = () => {
-    navigate("/account/requests/request-detail");
-  };
 
   useEffect(() => {
     axiosClient
@@ -47,14 +45,6 @@ const DataTable = () => {
   const handleSearch = (value) => {
     setSearchText(value);
   };
-
-  // const filteredData = () => {
-  //   const data = request?.filter((item) => {
-  //     return item?.user_id?.username.includes(searchText);
-  //   });
-  //   console.log(data, "asdasd");
-  //   setRequest(data);
-  // };
 
   useEffect(() => {
     const data = request?.filter((item) => {
@@ -118,7 +108,7 @@ const DataTable = () => {
       key: "actions",
       dataIndex: "actions",
       width: "100px",
-      render: () => {
+      render: (id, record) => {
         return (
           <>
             <Row className="request-detail__actions">
@@ -128,7 +118,15 @@ const DataTable = () => {
               <Col className="request-detail__icon2" onClick={showModalReject}>
                 <CloseSquareFilled />
               </Col>
-              <Col className="request-detail__icon3" onClick={handleOnClick}>
+              <Col
+                className="request-detail__icon3"
+                onRow={(record) => ({
+                  onClick: () => handleRowClick(record),
+                })}
+                // onClick={(key) => {
+                //   handleRowClick("request-detail", record.key, record);
+                // }}
+              >
                 <EditFilled />
               </Col>
             </Row>
@@ -137,6 +135,12 @@ const DataTable = () => {
       },
     },
   ];
+
+  const handleRowClick = (record) => {
+    const rowKey = record._id; // lấy rowKey của hàng được chọn
+    console.log(rowKey);
+    navigate(`/account/requests/${rowKey}/request-detail`); // chuyển đến route với rowKey được truyền vào
+  };
 
   const showModalApprove = () => {
     setIsModalApproveOpen(true);
@@ -164,13 +168,6 @@ const DataTable = () => {
     }, 1000);
   };
 
-  const onRow = (record) => {
-    return {
-      onClick: () => {
-        setSelectedRowId(record.id);
-      },
-    };
-  };
   return (
     <Card
       title={<div>ALL REQUEST</div>}
@@ -217,10 +214,13 @@ const DataTable = () => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <Table
                 columns={columns}
+                rowKey={map}
                 dataSource={request}
                 className="request-data-table"
-                onRow={onRow}
                 loading={!request ? true : false}
+                onRow={(record) => ({
+                  onClick: () => handleRowClick(record),
+                })}
               />
             </Col>
           </Row>
