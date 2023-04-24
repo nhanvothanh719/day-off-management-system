@@ -50,7 +50,6 @@ const DataTable = () => {
     const data = request?.filter((item) => {
       return item?.user_id?.username.includes(searchText);
     });
-    console.log(data, "asdasd");
     setRequest(data);
   }, [searchText]);
 
@@ -138,7 +137,6 @@ const DataTable = () => {
 
   const handleRowClick = (record) => {
     const rowKey = record._id; // lấy rowKey của hàng được chọn
-    console.log(rowKey);
     navigate(`/account/requests/${rowKey}/request-detail`); // chuyển đến route với rowKey được truyền vào
   };
 
