@@ -54,13 +54,13 @@ const DayOffDetail = () => {
               <ClockCircleFilled
                 onClick={showModal}
                 className="clock"
-                
+
 
                 style={{
                   color: " #e97a9a",
                   fontSize: "40px",
                   borderRadius: "20px",
-                  
+
                 }}
               />
               <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -69,7 +69,7 @@ const DayOffDetail = () => {
             </Space>
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
-            
+
           </Col>
         </Row>
       </div>

@@ -8,6 +8,7 @@ const DayOff = () => {
   const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false)
+  
   const start = () => {
     setLoading(true);
     // ajax request after empty completing
