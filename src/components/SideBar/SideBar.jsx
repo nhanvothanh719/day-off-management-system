@@ -112,7 +112,7 @@ export const SideBar = (props) => {
                   key="manager"
                   title="Manager"
                 >
-                  {userRole === user_role.manager ? (
+                  {userRole !== user_role.staff ? (
                     <Menu.Item
                       key="members"
                       onClick={() => handleNavigate("/manager/members")}
@@ -120,7 +120,7 @@ export const SideBar = (props) => {
                       Members
                     </Menu.Item>
                   ) : null}
-                  {userRole === user_role.manager ? (
+                  {userRole !== user_role.staff ? (
                     <Menu.Item
                       key="groups"
                       onClick={() => handleNavigate("/manager/groups")}
@@ -128,7 +128,7 @@ export const SideBar = (props) => {
                       Groups
                     </Menu.Item>
                   ) : null}
-                  {userRole === user_role.manager ? (
+                  {userRole !== user_role.staff ? (
                     <Menu.Item
                       key="notifications"
                       onClick={() => handleNavigate("/manager/notifications")}
