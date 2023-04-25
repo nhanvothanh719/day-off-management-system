@@ -27,11 +27,17 @@
     @media only screen and (max-width: 576px) {
       .dayoff-detail-container {
         max-width: 540px;
+        .arrow-1{
+          transform: rotate(90deg);
+        }
       }
     }
     @media only screen and (max-width: 390px) {
       .dayoff-detail-container {
         max-width: 390px;
+        .arrow-1{
+          transform: rotate(90deg);
+        }
       }
     }
   }

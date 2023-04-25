@@ -8,24 +8,39 @@ import {
   Row,
   Col,
   Popconfirm,
+  Radio,
+  Space,
 } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import './TableMember.scss'
+import "./TableMember.scss";
+import axiosClient from "../../utils/clientAxios";
 
 function TableMember({ users, onEdit, onDelete }) {
   const [form] = Form.useForm();
 
   const [editingUser, setEditingUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [roles, setRoles] = useState({});
+
+  useEffect(() => {
+    axiosClient
+      .get("/auth/getAllRole")
+      .then((res) => {
+        setRoles(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
 
   const columns = [
-     {
-      title: 'STT',
-      dataIndex: 'stt',
+    {
+      title: "STT",
+      dataIndex: "stt",
       align: "center",
-      key: 'stt',
-      className: 'custom-index-column',
+      key: "stt",
+      className: "custom-index-column",
       render: (text, record, index) => index + 1,
     },
     {
@@ -75,7 +90,10 @@ function TableMember({ users, onEdit, onDelete }) {
                   <DeleteFilled />
                 </Popconfirm>
               </Col>
-              <Col className="request-detail__icon3" onClick={() => handleEdit(record)} >
+              <Col
+                className="request-detail__icon3"
+                onClick={() => handleEdit(record)}
+              >
                 <EditFilled />
               </Col>
             </Row>
@@ -102,7 +120,7 @@ function TableMember({ users, onEdit, onDelete }) {
 
   return (
     <div>
-      <Table dataSource={users} columns={columns} />
+      <Table dataSource={users} columns={columns} className="table-member" />
 
       <Modal
         title="Edit user"
@@ -118,14 +136,20 @@ function TableMember({ users, onEdit, onDelete }) {
         ]}
       >
         <Form form={form} onFinish={handleSave}>
-          {/* <Form.Item
+          <Form.Item
             label="Role"
             name="Role"
             rules={[{ required: true, message: "Choose role" }]}
           >
-            <Input />
+            <Radio.Group size="large">
+              <Space direction="vertical">
+                {roles?.role?.map((role) => (
+                  <Radio value={role._id}>{role.role_name}</Radio>
+                ))}
+              </Space>
+            </Radio.Group>
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Permission"
             name="Permission"
             rules={[{ required: true, message: "Choose permission" }]}

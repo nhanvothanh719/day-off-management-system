@@ -70,7 +70,7 @@ const Groups = () => {
       <Table dataSource={data} className='groups'>
         <Column title="Name" dataIndex="name" key="name" />
         <Column
-          title="Memb er(s)"
+          title="Member(s)"
           dataIndex="members"
           key="members"
           render={(members) => (

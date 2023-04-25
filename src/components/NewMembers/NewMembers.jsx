@@ -57,11 +57,6 @@ const Member = () => {
       });
   }, []);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
-  };
-
   const LogOffForm = (
     <Form
       form={form}
@@ -73,7 +68,7 @@ const Member = () => {
         <Radio.Group size="large">
           <Space direction="vertical">
             {roles?.role?.map((role) => (
-              <Radio value={role._id} onChange={handleChange}>
+              <Radio value={role._id}>
                 {role.role_name}
               </Radio>
             ))}
@@ -88,7 +83,7 @@ const Member = () => {
       >
         <Select mode="multiple" style={{ width: "100%" }}>
           {permissions?.permissions?.map((permission) => (
-            <Select.Option value={permission._id} onChange={handleChange}>
+            <Select.Option value={permission._id}>
               {permission.permission_detail}
             </Select.Option>
           ))}
@@ -97,7 +92,6 @@ const Member = () => {
       <Form.Item
         name="username"
         label="Username"
-        onChange={handleChange}
         rules={[{ required: true }]}
       >
         <Input style={{minHeight:"65.6px"}} placeholder="Username" />
