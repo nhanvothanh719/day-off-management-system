@@ -8,6 +8,9 @@
   .ant-table-tbody {
     font-family: Poppins, sans-serif;
     color: #7e7e7e;
+    tr:hover{
+      cursor: pointer;
+    }
   }
 }
 .request-detail__actions {

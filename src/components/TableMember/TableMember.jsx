@@ -10,6 +10,7 @@ import {
   Popconfirm,
   Radio,
   Space,
+  Select,
 } from "antd";
 import { useState, useEffect } from "react";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
@@ -22,6 +23,19 @@ function TableMember({ users, onEdit, onDelete }) {
   const [editingUser, setEditingUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [roles, setRoles] = useState({});
+  const [permissions, setPermissions] = useState({});
+
+  useEffect(() => {
+    axiosClient
+      .get("/permissions")
+      .then((res) => {
+        setPermissions(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
 
   useEffect(() => {
     axiosClient
@@ -149,13 +163,19 @@ function TableMember({ users, onEdit, onDelete }) {
               </Space>
             </Radio.Group>
           </Form.Item>
-          {/* <Form.Item
+          <Form.Item
             label="Permission"
             name="Permission"
             rules={[{ required: true, message: "Choose permission" }]}
           >
-            <Input />
-          </Form.Item> */}
+            <Select mode="multiple" style={{ width: "100%" }}>
+              {permissions?.permissions?.map((permission) => (
+                <Select.Option value={permission._id}>
+                  {permission.permission_detail}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item
             label="Username"
             name="username"

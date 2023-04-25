@@ -12,11 +12,6 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./DataTable.scss";
-import {
-  CheckSquareFilled,
-  CloseSquareFilled,
-  EditFilled,
-} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
 
@@ -27,7 +22,7 @@ const DataTable = () => {
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
 
-  const map = request.map(request => request._id)
+  const map = request.map((request) => request._id);
 
   const navigate = useNavigate();
 
@@ -101,50 +96,37 @@ const DataTable = () => {
         return <Typography.Text>{record?.day_off_time}</Typography.Text>;
       },
     },
-    {
-      title: "Action",
-      align: "center",
-      key: "actions",
-      dataIndex: "actions",
-      width: "100px",
-      render: (id, record) => {
-        return (
-          <>
-            <Row className="request-detail__actions">
-              <Col className="request-detail__icon" onClick={showModalApprove}>
-                <CheckSquareFilled />
-              </Col>
-              <Col className="request-detail__icon2" onClick={showModalReject}>
-                <CloseSquareFilled />
-              </Col>
-              <Col
-                className="request-detail__icon3"
-                onRow={(record) => ({
-                  onClick: () => handleRowClick(record),
-                })}
-                // onClick={(key) => {
-                //   handleRowClick("request-detail", record.key, record);
-                // }}
-              >
-                <EditFilled />
-              </Col>
-            </Row>
-          </>
-        );
-      },
-    },
+    // {
+    //   title: "Action",
+    //   align: "center",
+    //   key: "actions",
+    //   dataIndex: "actions",
+    //   width: "100px",
+    //   render: (id, record) => {
+    //     return (
+    //       <>
+    //         <Row className="request-detail__actions">
+    //           <Col className="request-detail__icon" onClick={showModalApprove}>
+    //             <CheckSquareFilled />
+    //           </Col>
+    //           <Col className="request-detail__icon2" onClick={showModalReject}>
+    //             <CloseSquareFilled />
+    //           </Col>
+    //           <Col
+    //             className="request-detail__icon3"
+    //           >
+    //             <EditFilled />
+    //           </Col>
+    //         </Row>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
 
   const handleRowClick = (record) => {
     const rowKey = record._id; // lấy rowKey của hàng được chọn
     navigate(`/account/requests/${rowKey}/request-detail`); // chuyển đến route với rowKey được truyền vào
-  };
-
-  const showModalApprove = () => {
-    setIsModalApproveOpen(true);
-  };
-  const showModalReject = () => {
-    setIsModalRejectOpen(true);
   };
 
   const handleOk = () => {
@@ -222,22 +204,6 @@ const DataTable = () => {
               />
             </Col>
           </Row>
-          <Modal
-            title="Approved"
-            open={isModalApproveOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <p>Are you sure approve this request?</p>
-          </Modal>
-          <Modal
-            title="Rejected"
-            open={isModalRejectOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <p>Are you sure reject this request?</p>
-          </Modal>
         </>
       </div>
     </Card>
