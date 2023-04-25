@@ -42,4 +42,40 @@
         font-family: fontawesome;
         font-weight: 500;
     }
+    @media only screen and (max-width: 1367px) {
+        .groups {
+          max-width: 1366px;
+          overflow: auto;
+        }
+      }
+      @media only screen and (max-width: 1200px) {
+        .groups {
+          max-width: 1200px;
+          overflow: auto;
+        }
+      }
+      @media only screen and (max-width: 992px) {   
+        .groups {
+          max-width: 960px;
+          overflow: auto;
+        }
+      }
+      @media only screen and (max-width: 768px) {
+        .groups {
+          max-width: 720px;
+          overflow: auto;
+        }
+      }
+      @media only screen and (max-width: 576px) {
+        .groups {
+          max-width: 540px;
+          overflow: auto;
+        }
+      }
+      @media only screen and (max-width: 390px) {
+        .groups {
+          max-width: 390px;
+          overflow: auto;
+        }
+      }
 }

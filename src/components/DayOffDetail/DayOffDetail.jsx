@@ -103,7 +103,7 @@ const DayOffDetail = () => {
                     xs={24}
                     style={{ fontSize: "30px", margin: "50px 20px 0 0", color:"#e97a9a" }}
                   >
-                    <ArrowRightOutlined />
+                    <ArrowRightOutlined className="arrow-1" />
                   </Col>
                   <Col xl={10} lg={10} md={10} sm={10} xs={24}>
                     <Row className="request-detail__history-text">dayoff</Row>

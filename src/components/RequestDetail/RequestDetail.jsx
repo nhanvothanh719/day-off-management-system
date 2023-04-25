@@ -91,7 +91,7 @@ const RequestDetail = () => {
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
             <Space direction="vertical">
-              <Typography.Text>HISTORIES</Typography.Text>
+              <Typography.Text style={{fontSize:"16px", fontWeight:"bold"}}>HISTORIES</Typography.Text>
               <Timeline.Item
                 dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
                 className="timeline-clock-icon"
@@ -147,7 +147,7 @@ const RequestDetail = () => {
                       color: "#e97a9a",
                     }}
                   >
-                    <ArrowRightOutlined />
+                    <ArrowRightOutlined className="arrow-1" />
                   </Col>
                   <Col xl={10} lg={10} md={10} sm={10} xs={24}>
                     <Row className="request-detail__history-text">Request</Row>

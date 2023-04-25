@@ -63,6 +63,7 @@ const Groups = () => {
     >
       <Button className='groups-table-button'
         onClick={() => handleOnClick("new-group")}
+        style ={{marginBottom: "10px"}}
       >
         + New Group
       </Button>

@@ -8,25 +8,40 @@ import {
   Row,
   Col,
   Popconfirm,
+  Radio,
+  Space,
 } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import "./TableMember.scss";
+import axiosClient from "../../utils/clientAxios";
 
 function TableMember({ users, onEdit, onDelete }) {
   const [form] = Form.useForm();
 
   const [editingUser, setEditingUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [roles, setRoles] = useState({});
+
+  useEffect(() => {
+    axiosClient
+      .get("/auth/getAllRole")
+      .then((res) => {
+        setRoles(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
 
   const columns = [
-     {
-      title: "ID",
+    {
+      title: "STT",
+      dataIndex: "stt",
       align: "center",
-      key: "id",
-      dataIndex: "id",
-      render: (text, record, rowIndex) => {
-        return <Typography.Text>{record?._id}</Typography.Text>;
-      },
+      key: "stt",
+      className: "custom-index-column",
+      render: (text, record, index) => index + 1,
     },
     {
       title: "Username",
@@ -75,7 +90,10 @@ function TableMember({ users, onEdit, onDelete }) {
                   <DeleteFilled />
                 </Popconfirm>
               </Col>
-              <Col className="request-detail__icon3" onClick={() => handleEdit(record)} >
+              <Col
+                className="request-detail__icon3"
+                onClick={() => handleEdit(record)}
+              >
                 <EditFilled />
               </Col>
             </Row>
@@ -102,7 +120,7 @@ function TableMember({ users, onEdit, onDelete }) {
 
   return (
     <div>
-      <Table dataSource={users} columns={columns} />
+      <Table dataSource={users} columns={columns} className="table-member" />
 
       <Modal
         title="Edit user"
@@ -118,14 +136,20 @@ function TableMember({ users, onEdit, onDelete }) {
         ]}
       >
         <Form form={form} onFinish={handleSave}>
-          {/* <Form.Item
+          <Form.Item
             label="Role"
             name="Role"
             rules={[{ required: true, message: "Choose role" }]}
           >
-            <Input />
+            <Radio.Group size="large">
+              <Space direction="vertical">
+                {roles?.role?.map((role) => (
+                  <Radio value={role._id}>{role.role_name}</Radio>
+                ))}
+              </Space>
+            </Radio.Group>
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Permission"
             name="Permission"
             rules={[{ required: true, message: "Choose permission" }]}
@@ -143,13 +167,6 @@ function TableMember({ users, onEdit, onDelete }) {
             label="Email"
             name="email"
             rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Enter password" }]}
           >
             <Input />
           </Form.Item>

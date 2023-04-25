@@ -20,20 +20,18 @@ const UserTable = () => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
+  }, [users]);
 
   const onDelete = async (id) => {
     await axiosClient.delete(`/users/${id}`);
     setUsers(users.filter((user) => user.id !== id));
-    window.location.reload();
   };
 
   const onEdit = async (updatedUser) => {
-    await axiosClient.put(`/users/${updatedUser}`)
+    await axiosClient.put(`/users/${updatedUser}`);
     setUsers(
       users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
     );
-    window.location.reload();
   };
 
   const start = () => {
@@ -71,14 +69,14 @@ const UserTable = () => {
                 border: "none",
               }}
             >
-              Add new member
+              New member
             </Button>
           </Row>
           <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <TableMember
                 users={users}
-                className="request-data-table"
+                className="member"
                 loading={!users ? true : false}
                 onDelete={onDelete}
                 onEdit={onEdit}
