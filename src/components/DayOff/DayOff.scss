@@ -5,7 +5,6 @@
     margin: 24px 0 !important;
     padding: 24px !important;
     @media only screen and (max-width: 1367px) {
-<<<<<<< HEAD
       .dayoff-data-table {
         max-width: 1366px;
         overflow: auto;
@@ -39,35 +38,6 @@
       .dayoff-data-table {
         max-width: 390px;
         overflow: auto;
-=======
-      .request-data-table {
-        max-width: 1366px;
-      }
-    }
-    @media only screen and (max-width: 1200px) {
-      .request-data-table {
-        max-width: 1200px;
-      }
-    }
-    @media only screen and (max-width: 992px) {
-      .request-data-table {
-        max-width: 960px;
-      }
-    }
-    @media only screen and (max-width: 768px) {
-      .request-data-table {
-        max-width: 720px;
-      }
-    }
-    @media only screen and (max-width: 576px) {
-      .request-data-table {
-        max-width: 540px;
-      }
-    }
-    @media only screen and (max-width: 390px) {
-      .request-data-table {
-        max-width: 390px;
->>>>>>> e09bff5 (feat: dpm-dayOff)
       }
     }
   }

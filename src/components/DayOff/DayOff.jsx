@@ -1,8 +1,11 @@
 import { Button, Card, Col, Row, Table, Tag } from "antd";
 import React, { useState } from "react";
 import './DayOff.scss'
+import { useNavigate } from "react-router-dom";
+
 
 const DayOff = () => {
+  const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false)
   const start = () => {
@@ -14,7 +17,7 @@ const DayOff = () => {
     }, 1000);
   };
   const data = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 1; i < 50; i++) {
     data.push({
       key: i,
       dayOff: "14/04/2023-16/04/2023",
@@ -27,6 +30,7 @@ const DayOff = () => {
   }
   const columns = [
     {
+      
       title: "Request for date",
       align: "center",
       dataIndex: "dayOff",
@@ -93,6 +97,10 @@ const DayOff = () => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+  const handleRowClick = (record) =>{
+    const rowKey = record.key
+    navigate(`/account/day-offs/${rowKey}/dayOff-detail`)
+  }
   return (
     <Card
       title={<div>ALL Dayoff</div>}
@@ -100,35 +108,38 @@ const DayOff = () => {
       className="card-container"
     >
       <div>
-      <Row
-              style={{
-                marginBottom: 16,
-                justifyContent: "flex-end",
-              }}
-            >
-              <Button
-                type="primary"
-                onClick={start}
-                loading={loading}
-                style={{
-                  borderRadius: "8px",
-                  height: "40px",
-                  fontWeight: "500",
-                  fontSize: "16px ",
-                  backgroundColor: "#ea7a9a",
-                  border: "none",
-                }}
-              >
-                Revert request
-              </Button>
-            </Row>
+        <Row
+          style={{
+            marginBottom: 16,
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            type="primary"
+            onClick={start}
+            loading={loading}
+            style={{
+              borderRadius: "8px",
+              height: "40px",
+              fontWeight: "500",
+              fontSize: "16px ",
+              backgroundColor: "#ea7a9a",
+              border: "none",
+            }}
+            
+          >
+            Revert request
+          </Button>
+        </Row>
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+          
             <Table
               rowSelection={rowSelection}
               columns={columns}
               dataSource={data}
               className="dayoff-data-table"
+              onRow={(record) => ({onClick:()=>handleRowClick(record),})}
             />
           </Col>
         </Row>
