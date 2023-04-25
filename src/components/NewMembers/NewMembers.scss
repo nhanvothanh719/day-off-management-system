@@ -30,7 +30,6 @@ $white: #fff;
 }
 
 .custom-form.ant-form {
-
   margin: 0 70px;
 
   *::selection {
@@ -48,7 +47,6 @@ $white: #fff;
   }
 
   .ant {
-
     &-radio {
       &-input:focus + .ant-radio-inner,
       &:hover .ant-radio-inner,
@@ -88,7 +86,7 @@ $white: #fff;
 
     &-picker {
       width: 100%;
-      
+
       &-range {
         @include text-custom();
         @include input-custom();
@@ -115,7 +113,6 @@ $white: #fff;
     //Select option
 
     &-select {
-
       &-selection-item {
         color: $gray;
       }
@@ -124,7 +121,10 @@ $white: #fff;
         border-color: $pink;
       }
 
-      &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      &-focused:not(.ant-select-disabled).ant-select:not(
+          .ant-select-customize-input
+        )
+        .ant-select-selector {
         box-shadow: 0 0 0 2px $baby-pink;
         border-color: $pink;
       }
@@ -174,7 +174,8 @@ $white: #fff;
 
     //TextArea
 
-    &-input:focus, &-input-focused {
+    &-input:focus,
+    &-input-focused {
       box-shadow: 0 0 0 2px $baby-pink;
       border-color: $pink;
     }
@@ -194,6 +195,35 @@ $white: #fff;
         background-color: $pink;
       }
     }
+  }
+}
 
+.ant-select-selector {
+  height: 200px !important;
+  .ant-select-selection-overflow {
+    padding: 12px !important;
+    height: 100%;
+    align-content: flex-start;
+    .ant-select-selection-item {
+      border-radius: 15px !important;
+      width: 100%;
+      background-color: #7e7e7e;
+
+      .ant-select-selection-item-content {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        color: rgb(255, 255, 255);
+        font-weight: 500;
+      }
+    }
+
+    .ant-select-selection-item-content::before {
+      content: "\f007";
+      color: rgb(255, 255, 255);
+      padding: 0 6px;
+      display: inline-block;
+      font-family: fontawesome;
+    }
   }
 }

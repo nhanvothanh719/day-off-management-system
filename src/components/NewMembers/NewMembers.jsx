@@ -117,7 +117,7 @@ const Member = () => {
   return (
     <Fragment>
       {contextHolder}
-      <MyCard title="New User" content={LogOffForm}></MyCard>
+      <MyCard title="New Member" content={LogOffForm}></MyCard>
     </Fragment>
   );
 };
