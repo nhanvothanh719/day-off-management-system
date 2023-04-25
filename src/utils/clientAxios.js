@@ -2,9 +2,9 @@ import axios from "axios";
 import store from "../store";
 import { setAccessToken } from "../actions/accessToken";
 
-//export const baseURL = "https://backend-logoff.onrender.com/api";
+export const baseURL = "https://backend-logoff.onrender.com/api";
 
-export const baseURL = "http://localhost:8000/api";
+// export const baseURL = "http://localhost:8000/api";
 
 const axiosClient = axios.create({
   baseURL: baseURL,
