@@ -44,21 +44,38 @@ function LoginForm() {
   const onFinish = (values) => {
     setIsLoading(true);
     axios
-      .post( baseURL + "/auth/login", values)
+      .post(baseURL + "/auth/login", values)
       .then((res) => {
         let { role } = res.data;
-        const { permissions, success, message, accessToken, accessTokenLifeTime, refreshToken, name }  = res.data;
+        const {
+          permissions,
+          success,
+          message,
+          accessToken,
+          accessTokenLifeTime,
+          refreshToken,
+          name,
+        } = res.data;
+        const { userId } = JSON.parse(atob(accessToken.split(".")[1]));
         setIsLoading(false);
         if (success) {
-          if(!role) { role = user_role.staff; }
+          if (!role) {
+            role = user_role.staff;
+          }
           store.dispatch(loginSuccess({ role, permissions }));
-          store.dispatch(setAccessToken({ token: accessToken, lifeTime: accessTokenLifeTime }));
+          store.dispatch(
+            setAccessToken({
+              token: accessToken,
+              lifeTime: accessTokenLifeTime,
+            })
+          );
           store.dispatch(setRefreshToken(refreshToken));
           messageApi.open({
             type: "success",
             content: message,
           });
           localStorage.setItem("user_name", name);
+          localStorage.setItem("userId", userId);
           navigate("/account/dashboard");
         }
       })
@@ -75,29 +92,45 @@ function LoginForm() {
     signInWithPopup(auth, provider).then((userCredential) => {
       const { photoURL, displayName, email } = userCredential.user;
       axios
-      .post(baseURL + '/auth/login-with-google', { photoURL, displayName, email }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => {
-       if(res.data.success) {
-        let { role } = res.data;
-        const { permissions, accessToken, accessTokenLifeTime, refreshToken } = res.data;
-        if(!role) { role = user_role.staff; }
-        store.dispatch(loginSuccess({ role, permissions }));
-        store.dispatch(setAccessToken({ token: accessToken, lifeTime: accessTokenLifeTime }));
-        store.dispatch(setRefreshToken(refreshToken));
-        localStorage.setItem("user_avatar", photoURL);
-        localStorage.setItem("user_name", displayName);
-        navigate("/account/dashboard");
-       } else {
-        messageApi.open({
-          type: "error",
-          content: "Your email is not registered in this system",
+        .post(
+          baseURL + "/auth/login-with-google",
+          { photoURL, displayName, email },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.success) {
+            let { role } = res.data;
+            const {
+              permissions,
+              accessToken,
+              accessTokenLifeTime,
+              refreshToken,
+            } = res.data;
+            if (!role) {
+              role = user_role.staff;
+            }
+            store.dispatch(loginSuccess({ role, permissions }));
+            store.dispatch(
+              setAccessToken({
+                token: accessToken,
+                lifeTime: accessTokenLifeTime,
+              })
+            );
+            store.dispatch(setRefreshToken(refreshToken));
+            localStorage.setItem("user_avatar", photoURL);
+            localStorage.setItem("user_name", displayName);
+            navigate("/account/dashboard");
+          } else {
+            messageApi.open({
+              type: "error",
+              content: "Your email is not registered in this system",
+            });
+          }
         });
-       }
-      })
     });
   };
 
@@ -160,7 +193,7 @@ function LoginForm() {
                           message: "Please input your email!",
                         },
                         {
-                          type: 'email',
+                          type: "email",
                           message: "Provided email is not valid!",
                         },
                       ]}
@@ -179,7 +212,8 @@ function LoginForm() {
                         },
                         {
                           min: 8,
-                          message: "Password must contain at least 8 characters!",
+                          message:
+                            "Password must contain at least 8 characters!",
                         },
                       ]}
                     >

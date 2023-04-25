@@ -32,8 +32,7 @@ const auth = getAuth();
 
 function HeaderComponent(props) {
   const navigate = useNavigate();
-  const userRole = useSelector(state => state.auth.userRole);
-
+  const userRole = useSelector((state) => state.auth.userRole);
   const [currentUser, setCurrentUser] = useState({
     displayName: "",
     avatar: "",
@@ -54,7 +53,7 @@ function HeaderComponent(props) {
       store.dispatch(clearAccessToken());
       store.dispatch(clearRefreshToken());
       localStorage.clear();
-      navigate('/login');
+      navigate("/login");
     });
   };
 
@@ -63,6 +62,7 @@ function HeaderComponent(props) {
       <Menu.Item
         key="1"
         icon={<UserOutlined style={{ color: "#ea7a9a", fontSize: "16px" }} />}
+        onClick={() => navigate("/profile")}
       >
         Profile
       </Menu.Item>
@@ -102,7 +102,10 @@ function HeaderComponent(props) {
           />
         </Col>
         <Col xs={17} sm={17} md={17} lg={17} xl={17} className="badge">
-          <Badge style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }} onClick={() => navigate('/account/requests/new')}>
+          <Badge
+            style={{ backgroundColor: "#ea7a9a", fontWeight: "bold" }}
+            onClick={() => navigate("/account/requests/new")}
+          >
             <PlusCircleOutlined
               style={{
                 fontSize: "30px",
@@ -112,7 +115,6 @@ function HeaderComponent(props) {
                 padding: "10px",
               }}
             />
-            
           </Badge>
         </Col>
         <Col xs={5} sm={5} md={5} lg={5} xl={5} className="avatar-container">
@@ -141,14 +143,14 @@ function HeaderComponent(props) {
               >
                 {currentUser && (
                   <Typography.Text className="avatar-name">
-                    {currentUser.displayName ? currentUser.displayName : 'User'}
+                    {currentUser.displayName ? currentUser.displayName : "User"}
                   </Typography.Text>
                 )}
-                  {userRole && (
-                    <Typography.Text className="avatar-role">
-                      {userRole ? userRole : 'Staff'}
-                    </Typography.Text>
-                  )}
+                {userRole && (
+                  <Typography.Text className="avatar-role">
+                    {userRole ? userRole : "Staff"}
+                  </Typography.Text>
+                )}
               </Space>
             </div>
           </Dropdown>
@@ -156,6 +158,6 @@ function HeaderComponent(props) {
       </Row>
     </Layout.Header>
   );
-};
+}
 
 export default HeaderComponent;

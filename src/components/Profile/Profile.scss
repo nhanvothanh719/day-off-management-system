@@ -1,0 +1,70 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+
+  .avatar-details {
+    height: 100%;
+    padding: 0 20px 0 12px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    @media only screen and (max-width: 390px) {
+      padding: 0 !important;
+      align-items: center !important;
+    }
+    .avatar-name {
+      font-family: Poppins, sans-serif;
+      font-weight: bold;
+      color: black;
+      font-size: 30px;
+      @media only screen and (max-width: 992px) {
+        font-size: 21px;
+      }
+      @media only screen and (max-width: 768px) {
+        font-size: 13px;
+      }
+    }
+    .avatar-role {
+      font-family: Poppins, sans-serif;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.689);
+      font-size: 16px;
+      @media only screen and (max-width: 992px) {
+        font-size: 14px;
+      }
+      @media only screen and (max-width: 768px) {
+        font-size: 10px;
+      }
+    }
+  }
+}
+.ant-input-group-wrapper {
+  .ant-input-group-addon {
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+  }
+  .ant-input-group .ant-input {
+    border-top-left-radius: 12px !important;
+    border-bottom-left-radius: 12px !important;
+  }
+}
+.email-input {
+  border-radius: 12px !important;
+}
+.text-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+.save-btn-profile {
+  border-radius: 12px !important;
+  background-color: #ea7a9a !important;
+  color: white !important;
+  border: unset !important;
+}
+.close-btn-profile {
+  border-radius: 12px !important;
+}
+.ant-popover-inner {
+  border-radius: 12px !important;
+}

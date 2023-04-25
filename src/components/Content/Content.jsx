@@ -18,6 +18,7 @@ import CustomError from "../CustomError/CustomError";
 import DayOffDetail from "../DayOffDetail/DayOffDetail";
 import NewGroup from "../NewGroup/NewGroup";
 import GroupDetail from "../GroupDetail/GroupDetail";
+import Profile from "../Profile/Profile";
 
 const { Content } = Layout;
 
@@ -40,7 +41,11 @@ const ContentConfig = () => {
           element={<DayOffDetail />}
         />
         <Route exact path="/manager/members" element={<Members />} />
-        <Route exact path="/manager/members/new-members" element={<NewMembers />} />
+        <Route
+          exact
+          path="/manager/members/new-members"
+          element={<NewMembers />}
+        />
         <Route exact path="/manager/groups" element={<Groups />} />
         <Route exact path="/manager/groups/new-group" element={<NewGroup />} />
         <Route
@@ -62,6 +67,7 @@ const ContentConfig = () => {
           element={<Workspaces />}
         />
 
+        <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/error/:error_code" element={<CustomError />} />
       </Routes>
     </Content>
