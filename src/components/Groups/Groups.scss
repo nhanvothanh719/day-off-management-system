@@ -18,21 +18,36 @@
         margin-right: 10px;
     }
 
-    .groups-table-nextpagebtn {
+    .groups-table-btn {
         border-radius: 8px !important;
-        height: 40px !important;
+        height: 35px !important;
+        width: 35px !important;
         font-weight: 500 !important;
         font-size: 16px !important;
-        background-color: #ea7a9a !important;
         border: none;
         float: right;
-        color: white !important;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.edit-button {
+            background-color: #E97A9A !important;
+            color: white !important;
+        }
+
+        &.delete-button {
+            background-color: #f1508b !important;
+            color: white !important;
+        }
     }
 
     .ant-tag {
         border-radius: 15px !important;
-        background-color: #7e7e7e;
-        color: rgb(255, 255, 255);
+        background-color: #fff;
+        color: #313261;
+        border-color: #313261;
+        margin: 5px 2px;
         font-weight: 500;
     }
 

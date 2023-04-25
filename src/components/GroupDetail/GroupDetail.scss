@@ -16,19 +16,16 @@ $gray: #7e7e7e;
   .ant {
     &-input {
       border-radius: 15px;
-      color: black !important;
+      color: $dark-pink !important;
+      font-size: 18px;
+      font-family: "Nunito", sans-serif;
 
       &:focus,
       &-focused {
         border-color: $pink !important;
         box-shadow: 0 0 0 2px $baby-pink !important;
         border-radius: 15px;
-
       }
-
-      // &:hover {
-      //   border-color: $pink !important;
-      // }
 
       &-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
         border-color: $pink !important;
@@ -56,27 +53,33 @@ $gray: #7e7e7e;
       height: 100%;
       align-content: flex-start;
 
-      .ant-select-selection-item {
-        border-radius: 15px !important;
-        width: 100%;
-        background-color: #7e7e7e;
-
-        .ant-select-selection-item-content {
-          display: flex;
-          justify-content: center;
-          width: 100%;
-          color: rgb(255, 255, 255);
-          font-weight: 500;
-        }
+      &-item {
+        margin: 7px 5px;
       }
 
-      .ant-select-selection-item-content::before {
-        content: "\f007";
-        color: rgb(255, 255, 255);
-        padding: 0 6px;
-        display: inline-block;
-        font-family: fontawesome;
-        font-weight: 500;
+      .ant-select-selection-overflow-item {
+        margin: 5px 2px !important;
+
+        .ant-tag {
+          border-radius: 15px !important;
+          border-color: $dark-pink !important;
+          background-color: $white !important;
+          color: $dark-pink !important;
+          font-size: 14px;
+
+          &::before {
+            content: "\f007";
+            color: $light-pink;
+            padding: 0 6px;
+            display: inline-block;
+            font-family: fontawesome;
+            font-weight: 500;
+          }
+
+          .ant-tag-close-icon {
+            color: $dark-pink;
+          }
+        }
       }
     }
   }
@@ -96,5 +99,30 @@ $gray: #7e7e7e;
     float: right !important;
     color: white !important;
     border: none !important;
+  }
+
+  .update-btn__area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 10px;
+  }
+
+  .update-group__button {
+    background-color: $baby-pink;
+    color: $dark-pink;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 200px;
+    height: 40px;
+
+    &:hover {
+      background-color: $light-pink;
+      color: $white;
+      border: none;
+    }
   }
 }

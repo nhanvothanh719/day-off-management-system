@@ -4,22 +4,20 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Spin, Typography, message } from "antd";
+import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setAccessToken } from "../../actions/accessToken";
+import { loginSuccess } from "../../actions/auth";
+import { setRefreshToken } from "../../actions/refreshToken";
 import logo from "../../assets/images/logo.png";
 import logo_text from "../../assets/images/logo_text2.png";
 import { auth, provider } from "../../config/FirebaseConfig";
-import "./LoginForm.scss";
-import axios from "axios";
-import { loginSuccess } from "../../actions/auth";
-import { setAccessToken } from "../../actions/accessToken";
-import { setRefreshToken } from "../../actions/refreshToken";
 import { user_role } from "../../const/role";
 import store from "../../store";
 import { baseURL } from "../../utils/clientAxios";
-//import { useDispatch } from "react-redux";
-//import { updateUserPermissions } from "../../actions/auth";
+import "./LoginForm.scss";
 
 function LoginForm() {
   const navigate = useNavigate();
