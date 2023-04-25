@@ -47,5 +47,53 @@
   .ant-layout-content {
     max-height: 100vh;
     overflow-y: auto;
+    
   }
+  .ant-modal-footer button {
+    background-color: #f9f6f7;
+    border-color: #e97a9a;
+    color: rgb(5, 0, 0);
+
+  }
+  .ant-modal-footer button:last-child {
+    background-color: #e97a9a;
+  }
+  .ant-modal-footer button:hover{
+    background-color: rgb(254, 254, 254);
+    color: rgb(4, 0, 0);
+    animation: pulse 1s infinite;
+    border-color: #e97a9a;
+  }
+  .ant-modal-footer button:last-child:hover {
+    background-color: #e7275d;
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .clock:hover {
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  
+
+  
   

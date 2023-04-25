@@ -37,7 +37,7 @@ const ContentConfig = () => {
         <Route exact path="/account/day-offs" element={<DayOff />} />
         <Route
           exact
-          path="/account/day-offs/dayOff-detail"
+          path="/account/day-offs/:id/dayOff-detail"
           element={<DayOffDetail />}
         />
         <Route exact path="/manager/members" element={<Members />} />
