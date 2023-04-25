@@ -59,8 +59,8 @@ const Member = () => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value)
-  }
+    console.log(e.target.value);
+  };
 
   const LogOffForm = (
     <Form
@@ -100,13 +100,39 @@ const Member = () => {
         onChange={handleChange}
         rules={[{ required: true }]}
       >
-        <Input placeholder="Username" />
+        <Input style={{minHeight:"65.6px"}} placeholder="Username" />
       </Form.Item>
-      <Form.Item name="email" label="Email" rules={[{ required: true }]}>
-        <Input placeholder="Email" />
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={[
+          {
+            required: true,
+            message: "Please input your email!",
+          },
+          {
+            type: "email",
+            message: "Provided email is not valid!",
+          },
+        ]}
+      >
+        <Input style={{minHeight:"65.6px"}} placeholder="Email" />
       </Form.Item>
-      <Form.Item name="password" label="Password" rules={[{ required: true }]}>
-        <Input placeholder="Password" />
+      <Form.Item
+        name="password"
+        label="Password"
+        rules={[
+          {
+            required: true,
+            message: "Please input your password!",
+          },
+          {
+            min: 8,
+            message: "Password must contain at least 8 characters!",
+          },
+        ]}
+      >
+        <Input.Password style ={{borderRadius:"20px"}} placeholder="Password" />
       </Form.Item>
       <Form.Item>
         <Button htmlType="submit">Submit</Button>
