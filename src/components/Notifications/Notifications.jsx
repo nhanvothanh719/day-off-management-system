@@ -1,7 +1,7 @@
 import { Space, Button, Card, Row, Col, Typography, Input, Select,Form,Switch } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Notification.scss"
-export default  Notification = () => {
+const  Notification = () => {
   const onFinish = (values) => {
     console.log("Form values:", values);
     
@@ -62,3 +62,5 @@ export default  Notification = () => {
 </Card>
   );
 };
+
+export default Notification
