@@ -69,7 +69,59 @@ const DayOffDetail = () => {
             </Space>
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
-
+            <Space>
+              <Timeline.Item
+                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
+                className="timeline-clock-icon"
+              >
+                <Row className="dayoff-detail__history-text">Approved</Row>
+                <Row>Hoang Pham Approved</Row>
+              </Timeline.Item>
+              <Timeline.Item
+                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
+                className="timeline-clock-icon"
+              >
+                <Row className="dayoff-detail__history-text">
+                  Request change
+                </Row>
+                <Row>Vinh Bui requested for change</Row>
+              </Timeline.Item>
+              <Timeline.Item
+                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
+                className="timeline-clock-icon"
+              >
+                <Row>
+                  <Col xl={10} lg={10} md={10} sm={10} xs={24}>
+                    <Row className="request-detail__history-text">dayoff</Row>
+                    <Row>Khoa Nguyen updated request</Row>
+                    <Row>From: 14/04/2023</Row>
+                    <Row>To: 16/04/2023</Row>
+                    <Row>Time: All day</Row>
+                    <Row>Quantity: 4</Row>
+                    <Row>Reason: Personal Issue</Row>
+                  </Col>
+                  <Col
+                    xl={2}
+                    lg={2}
+                    md={2}
+                    sm={2}
+                    xs={24}
+                    style={{ fontSize: "30px", margin: "50px 20px 0 0", color: "#e97a9a" }}
+                  >
+                    <ArrowRightOutlined className="arrow-1" />
+                  </Col>
+                  <Col xl={10} lg={10} md={10} sm={10} xs={24}>
+                    <Row className="request-detail__history-text">dayoff</Row>
+                    <Row>Khoa Nguyen updated request</Row>
+                    <Row>From: 14/04/2023</Row>
+                    <Row>To: 16/04/2023</Row>
+                    <Row>Time: All day</Row>
+                    <Row>Quantity: 4</Row>
+                    <Row>Reason: Personal Issue</Row>
+                  </Col>
+                </Row>
+              </Timeline.Item>
+            </Space>
           </Col>
         </Row>
       </div>
