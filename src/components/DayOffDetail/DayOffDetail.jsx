@@ -1,15 +1,26 @@
 import { Card, Col, Descriptions, Modal, Row, Space, Timeline, Typography } from 'antd'
 import React from 'react'
 import {
-    ClockCircleOutlined,
-    ClockCircleFilled,
-    ArrowRightOutlined,
-  } from "@ant-design/icons";
+  ClockCircleOutlined,
+  ClockCircleFilled,
+  ArrowRightOutlined,
+} from "@ant-design/icons";
 import TextArea from 'antd/lib/input/TextArea';
 import "./DayOffDetail.scss"
+import { useState } from 'react';
 
 
 const DayOffDetail = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <Card
       title="DAY OFF DETAIL"
@@ -41,12 +52,20 @@ const DayOffDetail = () => {
             <Space direction="vertical">
               <Typography.Text>ACTIONS</Typography.Text>
               <ClockCircleFilled
+                onClick={showModal}
+                className="clock"
+                
+
                 style={{
                   color: " #e97a9a",
                   fontSize: "40px",
                   borderRadius: "20px",
+                  
                 }}
               />
+              <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>Are you sure you want to revert the activity ?</p>
+              </Modal>
             </Space>
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
@@ -101,7 +120,7 @@ const DayOffDetail = () => {
                     md={2}
                     sm={2}
                     xs={24}
-                    style={{ fontSize: "30px", margin: "50px 20px 0 0", color:"#e97a9a" }}
+                    style={{ fontSize: "30px", margin: "50px 20px 0 0", color: "#e97a9a" }}
                   >
                     <ArrowRightOutlined className="arrow-1" />
                   </Col>
