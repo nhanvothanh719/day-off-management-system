@@ -26,6 +26,31 @@ $gray: #7e7e7e;
         margin-right: 10px;
     }
 
+    .ant-select-selection-overflow-item {
+        margin: 5px 2px !important;
+
+        .ant-tag {
+          border-radius: 15px !important;
+          border-color: $dark-pink !important;
+          background-color: $white !important;
+          color: $dark-pink !important;
+          font-size: 14px;
+
+          &::before {
+            content: "\f007";
+            color: $light-pink;
+            padding: 0 6px;
+            display: inline-block;
+            font-family: fontawesome;
+            font-weight: 500;
+          }
+
+          .ant-tag-close-icon {
+            color: $dark-pink;
+          }
+        }
+      }
+
     .canel-btn {
         border-radius: 8px;
         height: 40px;

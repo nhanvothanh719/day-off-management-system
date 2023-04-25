@@ -4,7 +4,7 @@ import { setAccessToken } from "../actions/accessToken";
 
 export const baseURL = "https://backend-logoff.onrender.com/api";
 
-// export const baseURL = "http://localhost:8000/api";
+//export const baseURL = "http://localhost:8000/api";
 
 const axiosClient = axios.create({
   baseURL: baseURL,
@@ -12,7 +12,6 @@ const axiosClient = axios.create({
     "Content-Type": "application/json",
   },
 });
-
 
 //Set Bearer token
 axiosClient.interceptors.request.use(async function (config) {

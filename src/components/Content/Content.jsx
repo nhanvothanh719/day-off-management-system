@@ -48,11 +48,7 @@ const ContentConfig = () => {
         />
         <Route exact path="/manager/groups" element={<Groups />} />
         <Route exact path="/manager/groups/new-group" element={<NewGroup />} />
-        <Route
-          exact
-          path="/manager/groups/:id/detail"
-          element={<GroupDetail />}
-        />
+        <Route exact path="/manager/groups/:id" element={<GroupDetail />} />
 
         <Route
           exact
