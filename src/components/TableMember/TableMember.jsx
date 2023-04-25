@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import './TableMember.scss'
 
 function TableMember({ users, onEdit, onDelete }) {
   const [form] = Form.useForm();
@@ -20,13 +21,12 @@ function TableMember({ users, onEdit, onDelete }) {
 
   const columns = [
      {
-      title: "ID",
+      title: 'STT',
+      dataIndex: 'stt',
       align: "center",
-      key: "id",
-      dataIndex: "id",
-      render: (text, record, rowIndex) => {
-        return <Typography.Text>{record?._id}</Typography.Text>;
-      },
+      key: 'stt',
+      className: 'custom-index-column',
+      render: (text, record, index) => index + 1,
     },
     {
       title: "Username",
@@ -143,13 +143,6 @@ function TableMember({ users, onEdit, onDelete }) {
             label="Email"
             name="email"
             rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Enter password" }]}
           >
             <Input />
           </Form.Item>

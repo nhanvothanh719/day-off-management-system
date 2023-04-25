@@ -20,12 +20,11 @@ const UserTable = () => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
+  }, [users]);
 
   const onDelete = async (id) => {
-    await axiosClient.delete(`/users/${id}`);
+    await axiosClient.delete(`/users/${id}`)
     setUsers(users.filter((user) => user.id !== id));
-    window.location.reload();
   };
 
   const onEdit = async (updatedUser) => {
@@ -33,7 +32,6 @@ const UserTable = () => {
     setUsers(
       users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
     );
-    window.location.reload();
   };
 
   const start = () => {
