@@ -73,6 +73,7 @@ const Profile = () => {
                 <EditOutlined onClick={() => setIsDisable(false)} />
               ) : (
                 <Popover
+                  getPopupContainer={(trigger) => trigger.parentElement}
                   content={
                     <>
                       <Space size={30} direction="horization">
@@ -90,8 +91,8 @@ const Profile = () => {
                   }
                   title="Are you sure ?"
                   trigger="click"
-                  open={open}
-                  onOpenChange={handleOpenChange}
+                  visible={open}
+                  onVisibleChange={handleOpenChange}
                 >
                   <CheckOutlined
                     style={{

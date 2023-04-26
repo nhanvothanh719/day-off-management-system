@@ -19,6 +19,8 @@ import DayOffDetail from "../DayOffDetail/DayOffDetail";
 import NewGroup from "../NewGroup/NewGroup";
 import GroupDetail from "../GroupDetail/GroupDetail";
 import Profile from "../Profile/Profile";
+import WorkspacesDetail from "../Workspaces/WorkspacesDetail";
+import NewWorkspaces from "../Workspaces/NewWorkspaces";
 
 const { Content } = Layout;
 
@@ -61,6 +63,16 @@ const ContentConfig = () => {
           exact
           path="/administrator/workspaces"
           element={<Workspaces />}
+        />
+        <Route
+          exact
+          path="/administrator/workspaces/:id/detail"
+          element={<WorkspacesDetail />}
+        />
+        <Route
+          exact
+          path="/administrator/workspaces/new"
+          element={<NewWorkspaces />}
         />
 
         <Route exact path="/profile" element={<Profile />} />
