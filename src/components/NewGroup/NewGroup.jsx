@@ -99,7 +99,6 @@ const GroupDetail = (props) => {
         masters_id: groupMasters.map((master) => master._id),
       };
       axiosClient.post("/groups/", group).then((res) => {
-        console.log(res);
         if(res.data.success) {
           messageApi.open({
             type: "success",
