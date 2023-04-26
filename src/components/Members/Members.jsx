@@ -6,12 +6,22 @@ import { useNavigate } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
 import TableMember from "../TableMember/TableMember";
 
-const UserTable = () => {
+const UserTable = (values) => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchUsers();
+  }, []);
+  const fetchUsers = () => {
+    axiosClient.get("/users").then((res) => {
+      setUsers(res.data);
+    });
+  };
+  const onDelete = async (id) => {
+    await axiosClient.delete(`/users/${id}`);
+    setUsers(users.filter((user) => user.id !== id));
     axiosClient
       .get("/users")
       .then((res) => {
@@ -20,18 +30,12 @@ const UserTable = () => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, [users]);
-
-  const onDelete = async (id) => {
-    await axiosClient.delete(`/users/${id}`);
-    setUsers(users.filter((user) => user.id !== id));
   };
 
   const onEdit = async (updatedUser) => {
-    await axiosClient.put(`/users/${updatedUser}`);
-    setUsers(
-      users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
-    );
+    await axiosClient
+      .put(`/users/${updatedUser._id}`, updatedUser)
+      .then((res) => fetchUsers());
   };
 
   const start = () => {

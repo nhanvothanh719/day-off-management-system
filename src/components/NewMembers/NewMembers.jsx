@@ -61,7 +61,7 @@ const Member = () => {
     <Form
       form={form}
       onFinish={onFinish}
-      className="custom-form"
+      className="custom-form-member"
       layout="vertical"
     >
       <Form.Item name="role" label="Role of user" rules={[{ required: true }]}>

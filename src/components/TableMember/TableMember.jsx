@@ -22,20 +22,20 @@ function TableMember({ users, onEdit, onDelete }) {
 
   const [editingUser, setEditingUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [roles, setRoles] = useState({});
-  const [permissions, setPermissions] = useState({});
+  const [roles, setRoles] = useState([]);
+  const [permissions, setPermissions] = useState();
+  const [currentPermissions, setCurrentPermissions] = useState([]);
 
   useEffect(() => {
     axiosClient
       .get("/permissions")
       .then((res) => {
-        setPermissions(res.data);
+        setPermissions(res.data.permissions);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
   }, []);
-
 
   useEffect(() => {
     axiosClient
@@ -117,7 +117,24 @@ function TableMember({ users, onEdit, onDelete }) {
     },
   ];
 
+  // const { username, email, role, password, permission } = values;
+  // const update_user = {
+  //   role_id: role,
+  //   permission_id: permission,
+  //   username: username,
+  //   email: email,
+  //   password: password,
+  // };
+  const addMember = (id) => {
+    setCurrentPermissions([...currentPermissions, id]);
+  };
+
+  const removeMember = (perId) => {
+    setCurrentPermissions(currentPermissions.filter((per) => per !== perId));
+  };
+
   const handleEdit = (user) => {
+    setCurrentPermissions(user.permission_id.map((per) => per._id));
     setEditingUser(user);
     setIsModalVisible(true);
     form.setFieldsValue(user);
@@ -131,67 +148,102 @@ function TableMember({ users, onEdit, onDelete }) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  // const addNewMaster = (staffId) => {
+  //   setCurrentPermissions([
+  //     ...currentPermissions,
+  //     { _id: staffId, name: findNameById(staffId) },
+  //   ]);
+  //   setGroupStaffs(groupStaffs.filter((staff) => staff._id !== staffId));
+  // };
 
+  // const removeMaster = (masterId) => {
+  //   setGroupStaffs([
+  //     ...groupStaffs,
+  //     { _id: masterId, name: findNameById(masterId) },
+  //   ]);
+  //   setGroupMasters(groupMasters.filter((master) => master._id !== masterId));
+  // };
+  console.log(editingUser?.role_id?._id, "editingUser");
   return (
     <div>
       <Table dataSource={users} columns={columns} className="table-member" />
 
-      <Modal
-        title="Edit user"
-        open={isModalVisible}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Hủy
-          </Button>,
-          <Button key="save" type="primary" onClick={() => form.submit()}>
-            Lưu
-          </Button>,
-        ]}
-      >
-        <Form form={form} onFinish={handleSave}>
-          <Form.Item
-            label="Role"
-            name="Role"
-            rules={[{ required: true, message: "Choose role" }]}
+      {editingUser && (
+        <Modal
+          title="Edit user"
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="cancel" onClick={handleCancel}>
+              Hủy
+            </Button>,
+            <Button key="save" type="primary" onClick={() => form.submit()}>
+              Lưu
+            </Button>,
+          ]}
+        >
+          <Form
+            form={form}
+            onFinish={handleSave}
+            initialValue={{ role: editingUser?.role_id?._id }}
           >
-            <Radio.Group size="large">
-              <Space direction="vertical">
-                {roles?.role?.map((role) => (
-                  <Radio value={role._id}>{role.role_name}</Radio>
+            <Form.Item
+              label="Role"
+              name="role"
+              rules={[{ required: true, message: "Choose role" }]}
+            >
+              <Radio.Group
+                size="large"
+                defaultChecked={"643d0d0c7ca86b1b36b6092c"}
+                defaultValue={"643d0d0c7ca86b1b36b6092c"}
+              >
+                <Space direction="vertical">
+                  {roles?.role?.map((role) => {
+                    return (
+                      <Radio key={role._id} value={role._id}>
+                        {role.role_name.toUpperCase()}
+                      </Radio>
+                    );
+                  })}
+                </Space>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              label="Permission"
+              // name="permission_id"
+              rules={[{ required: true, message: "Choose permission" }]}
+            >
+              <Select
+                mode="multiple"
+                style={{ width: "100%" }}
+                value={currentPermissions}
+                onDeselect={removeMember}
+                onSelect={addMember}
+              >
+                {permissions?.map((per) => (
+                  <Select.Option key={per._id} value={per._id}>
+                    {per.permission_detail}
+                  </Select.Option>
                 ))}
-              </Space>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item
-            label="Permission"
-            name="Permission"
-            rules={[{ required: true, message: "Choose permission" }]}
-          >
-            <Select mode="multiple" style={{ width: "100%" }}>
-              {permissions?.permissions?.map((permission) => (
-                <Select.Option value={permission._id}>
-                  {permission.permission_detail}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Enter username" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[{ required: true, message: "Enter username" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, message: "Enter email" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
     </div>
   );
 }
