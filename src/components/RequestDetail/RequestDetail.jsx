@@ -9,6 +9,13 @@ import {
   Space,
   Typography,
   Card,
+  Form,
+  Radio,
+  DatePicker,
+  InputNumber,
+  message,
+  Select,
+  Button,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./RequestDetail.scss";
@@ -22,15 +29,84 @@ import {
 import { useLocation } from "react-router-dom";
 import MyCard from "../Card/Card";
 import axiosClient from "../../utils/clientAxios";
+import moment from "moment";
 
 const RequestDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [requestDetail, setRequestDetail] = useState([]);
   const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
+
+  const [dayOffAmount, setDayOffAmount] = useState(0);
+  const [dayOffSession, setDayOffSession] = useState("morning");
+
+  const [messageApi, contextHolder] = message.useMessage();
+  const dateFormat = "YYYY/MM/DD";
   const { TextArea } = Input;
+  const [form] = Form.useForm();
   const location = useLocation();
   const id = location.pathname.split("/")[3];
+
+  const initialValues = {
+    day_off_type: "off",
+    session: "morning",
+  };
+
+  const onFinish = (values) => {
+    const { day_off_range, day_off_type, reason, session } = values;
+    const update_request = {
+      reason: reason,
+      start_date: moment(day_off_range[0]._d).format("L"),
+      end_date: moment(day_off_range[1]._d).format("L"),
+      quantity: dayOffAmount,
+      day_off_type: day_off_type,
+      day_off_time: session,
+      status: "pending",
+      approvers_number: 2, //HARD CODE
+    };
+    updateRequest(update_request);
+    setIsModalEditOpen(false);
+    axiosClient
+      .get(`/requests/${id}`)
+      .then((res) => {
+        setRequestDetail(res.data.request);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  };
+
+  const onDateRangeChange = (range) => {
+    const day_off_amount = (range[1]._d - range[0]._d) / 3600 / 24 / 1000 + 1;
+    dayOffSession === "all_day"
+      ? setDayOffAmount(day_off_amount)
+      : setDayOffAmount(day_off_amount / 2);
+  };
+
+  const onSessionChange = (option) => {
+    const previous_session = dayOffSession;
+    const day_off_amount = dayOffAmount;
+    setDayOffSession(option);
+    if (previous_session === "all_day" && option !== "all_day") {
+      setDayOffAmount(day_off_amount / 2);
+    } else if (previous_session !== "all_day" && option === "all_day") {
+      setDayOffAmount(day_off_amount * 2);
+    }
+  };
+
+  const updateRequest = (update_request) => {
+    axiosClient
+      .put(`/requests/${id}`, update_request)
+      .then(() => {
+        form.resetFields();
+        setDayOffAmount(0);
+        messageApi.open({
+          type: "success",
+          content: "Update request successfully",
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   useEffect(() => {
     axiosClient
@@ -43,22 +119,18 @@ const RequestDetail = () => {
       });
   }, [id]);
 
-  console.log(requestDetail)
-
   if (!requestDetail) {
     return (
       <MyCard title="Request detail" loading={!requestDetail ? true : false} />
     );
   }
   const handleOk = () => {
-    setIsModalEditOpen(false);
     setIsModalApproveOpen(false);
-    setIsModalRejectOpen(false)
+    setIsModalRejectOpen(false);
   };
   const handleCancel = () => {
-    setIsModalEditOpen(false);
     setIsModalApproveOpen(false);
-    setIsModalRejectOpen(false)
+    setIsModalRejectOpen(false);
   };
 
   const showModalApprove = () => {
@@ -67,41 +139,92 @@ const RequestDetail = () => {
   const showModalReject = () => {
     setIsModalRejectOpen(true);
   };
+  const showModalEdit = () => {
+    setIsModalEditOpen(true);
+  };
 
   return (
     <Card title="REQUEST DETAIL" bordered={false} className="card-container">
+      {contextHolder}
       <Modal
-          title="Reason for change"
-          open={isModalEditOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
+        title="Edit user"
+        open={isModalEditOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <Form
+          form={form}
+          onFinish={onFinish}
+          initialValues={initialValues}
+          className="custom-form"
+          layout="vertical"
         >
-          <TextArea
-            placeholder="Need more detail"
-            style={{
-              height: "200px",
-              border: "1px solid #F4B0C2",
-              borderRadius: "10px",
-              boxShadow: "0px 0px 5px #e97a9a",
-            }}
-          ></TextArea>
-        </Modal>
-        <Modal
-          title="Approved"
-          open={isModalApproveOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>Are you sure approve this request?</p>
-        </Modal>
-        <Modal
-          title="Rejected"
-          open={isModalRejectOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>Are you sure reject this request?</p>
-        </Modal>
+          <Form.Item
+            name="day_off_type"
+            label="Types of day off"
+            rules={[{ required: true }]}
+          >
+            <Radio.Group size="large">
+              <Space direction="vertical">
+                <Radio value="off">Off</Radio>
+                <Radio value="wfh">Work from home</Radio>
+              </Space>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            name="day_off_range"
+            label="From - To"
+            rules={[{ required: true }]}
+          >
+            <DatePicker.RangePicker
+              format={dateFormat}
+              onChange={onDateRangeChange}
+            />
+          </Form.Item>
+
+          <Form.Item label="Quantity">
+            <InputNumber disabled value={dayOffAmount} />
+          </Form.Item>
+
+          <Form.Item
+            name="session"
+            label="Session"
+            rules={[{ required: true }]}
+          >
+            <Select onChange={onSessionChange}>
+              <Select.Option value="morning">Morning</Select.Option>
+              <Select.Option value="afternoon">Afternoon</Select.Option>
+              <Select.Option value="all_day">All day</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="reason" label="Reason" rules={[{ required: true }]}>
+            <TextArea rows={4} showCount maxLength={100} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button htmlType="submit">Submit</Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="Approved"
+        open={isModalApproveOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Are you sure approve this request?</p>
+      </Modal>
+      <Modal
+        title="Rejected"
+        open={isModalRejectOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Are you sure reject this request?</p>
+      </Modal>
       <div
         style={{ height: "100%", backgroundColor: "#fff" }}
         className="request-detail"
@@ -162,6 +285,7 @@ const RequestDetail = () => {
                     fontSize: "40px",
                     borderRadius: "20px",
                   }}
+                  onClick={showModalEdit}
                 />
               </Row>
             </Space>
@@ -229,7 +353,9 @@ const RequestDetail = () => {
                     <ArrowRightOutlined className="arrow-1" />
                   </Col>
                   <Col xl={10} lg={10} md={10} sm={10} xs={24}>
-                    <Row className="request-detail__history-text">Request revert</Row>
+                    <Row className="request-detail__history-text">
+                      Request revert
+                    </Row>
                     <Row>Khoa Nguyen updated request</Row>
                     <Row>From: 14/04/2023</Row>
                     <Row>To: 16/04/2023</Row>

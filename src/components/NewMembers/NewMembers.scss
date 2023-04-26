@@ -29,7 +29,7 @@ $white: #fff;
   }
 }
 
-.custom-form.ant-form {
+.custom-form-member.ant-form {
   margin: 0 70px;
 
   *::selection {
@@ -196,34 +196,34 @@ $white: #fff;
       }
     }
   }
-}
-
-.ant-select-selector {
-  height: 200px !important;
-  .ant-select-selection-overflow {
-    padding: 12px !important;
-    height: 100%;
-    align-content: flex-start;
-    .ant-select-selection-item {
-      border-radius: 15px !important;
-      width: 100%;
-      background-color: #7e7e7e;
-
-      .ant-select-selection-item-content {
-        display: flex;
-        justify-content: center;
+  .ant-select-selector {
+    height: 200px !important;
+    .ant-select-selection-overflow {
+      padding: 12px !important;
+      height: 100%;
+      align-content: flex-start;
+      .ant-select-selection-item {
+        border-radius: 15px !important;
         width: 100%;
-        color: rgb(255, 255, 255);
-        font-weight: 500;
+        background-color: #7e7e7e;
+  
+        .ant-select-selection-item-content {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          color: rgb(255, 255, 255);
+          font-weight: 500;
+        }
       }
-    }
-
-    .ant-select-selection-item-content::before {
-      content: "\f007";
-      color: rgb(255, 255, 255);
-      padding: 0 6px;
-      display: inline-block;
-      font-family: fontawesome;
+  
+      .ant-select-selection-item-content::before {
+        content: "\f007";
+        color: rgb(255, 255, 255);
+        padding: 0 6px;
+        display: inline-block;
+        font-family: fontawesome;
+      }
     }
   }
 }
+

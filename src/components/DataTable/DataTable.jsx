@@ -4,7 +4,6 @@ import {
   Table,
   Tag,
   Row,
-  Modal,
   Col,
   Card,
   Input,
@@ -17,8 +16,6 @@ import axiosClient from "../../utils/clientAxios";
 
 const DataTable = () => {
   const [loading, setLoading] = useState(false);
-  const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
-  const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
 
@@ -37,16 +34,13 @@ const DataTable = () => {
       });
   }, []);
 
-  const handleSearch = (value) => {
-    setSearchText(value);
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
   };
 
-  useEffect(() => {
     const data = request?.filter((item) => {
-      return item?.user_id?.username.includes(searchText);
+      return item?.user_id?.username.toLowerCase().includes(searchText.toLowerCase())
     });
-    setRequest(data);
-  }, [searchText]);
 
   const columns = [
     {
@@ -84,7 +78,7 @@ const DataTable = () => {
       key: "tags",
       dataIndex: "tags",
       render: () => {
-        return <Tag className="ant-tag-geekblue">Pending</Tag>;
+        return <Tag className="ant-tag-geekblue" >PENDING</Tag>;
       },
     },
     {
@@ -96,47 +90,11 @@ const DataTable = () => {
         return <Typography.Text>{record?.day_off_time}</Typography.Text>;
       },
     },
-    // {
-    //   title: "Action",
-    //   align: "center",
-    //   key: "actions",
-    //   dataIndex: "actions",
-    //   width: "100px",
-    //   render: (id, record) => {
-    //     return (
-    //       <>
-    //         <Row className="request-detail__actions">
-    //           <Col className="request-detail__icon" onClick={showModalApprove}>
-    //             <CheckSquareFilled />
-    //           </Col>
-    //           <Col className="request-detail__icon2" onClick={showModalReject}>
-    //             <CloseSquareFilled />
-    //           </Col>
-    //           <Col
-    //             className="request-detail__icon3"
-    //           >
-    //             <EditFilled />
-    //           </Col>
-    //         </Row>
-    //       </>
-    //     );
-    //   },
-    // },
   ];
 
   const handleRowClick = (record) => {
     const rowKey = record._id; // lấy rowKey của hàng được chọn
     navigate(`/account/requests/${rowKey}/request-detail`); // chuyển đến route với rowKey được truyền vào
-  };
-
-  const handleOk = () => {
-    setIsModalApproveOpen(false);
-    setIsModalRejectOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalApproveOpen(false);
-    setIsModalRejectOpen(false);
   };
 
   const start = () => {
@@ -195,9 +153,9 @@ const DataTable = () => {
               <Table
                 columns={columns}
                 rowKey={map}
-                dataSource={request}
+                dataSource={data}
                 className="request-data-table"
-                loading={!request ? true : false}
+                loading={!data ? true : false}
                 onRow={(record) => ({
                   onClick: () => handleRowClick(record),
                 })}
