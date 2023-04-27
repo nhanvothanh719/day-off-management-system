@@ -117,7 +117,7 @@ const DayOff = () => {
             }}
 
           >
-    ƒ        Revert request
+    Revert request
           </Button>
         </Row>
         <Row>
