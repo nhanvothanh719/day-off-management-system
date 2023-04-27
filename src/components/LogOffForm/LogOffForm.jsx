@@ -125,7 +125,7 @@ function InputForm() {
       ],
     };
     axios.post(
-      "https://hooks.slack.com/services/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",
+      "https://hooks.slack.com/services/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",
       JSON.stringify(data),
       {
         withCredentials: false,
