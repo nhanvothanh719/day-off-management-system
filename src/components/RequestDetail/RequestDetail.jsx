@@ -186,7 +186,7 @@ const RequestDetail = () => {
       ],
     };
     axios.post(
-      "https://hooks.slack.com/services/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",
+      "https://hooks.slack.com/services/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",
       JSON.stringify(data),
       {
         withCredentials: false,
