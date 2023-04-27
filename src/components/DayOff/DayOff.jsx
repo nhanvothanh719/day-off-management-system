@@ -2,9 +2,10 @@ import { Button, Card, Col, Row, Table, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import "./DayOff.scss";
 import { useNavigate } from "react-router-dom";
-import axiosClient from "../../utils/clientAxios";
 
-import { CSVLink } from "react-csv";
+import axiosClient from "../../utils/clientAxios"
+
+import { CSVLink } from 'react-csv';
 
 const DayOff = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const DayOff = () => {
       setLoading(false);
     }, 1000);
   };
-
+  
   useEffect(() => {
     axiosClient
       .get("/dayOff")
@@ -123,24 +124,19 @@ const DayOff = () => {
             justifyContent: "flex-end",
           }}
         >
-          <CSVLink
-            data={data1}
-            filename={"day-offs-file.csv"}
-            target="_blank"
-            headers={headers1}
+          <CSVLink data={data1} filename={"day-offs-file.csv"} target="_blank" headers={headers1}>
+          <Button
+            type="primary"
+            //onClick={}
+            style={{
+              borderRadius: "8px",
+              height: "40px",
+              fontWeight: "500",
+              fontSize: "16px ",
+              backgroundColor: "#ea7a9a",
+              border: "none",
+            }}
           >
-            <Button
-              type="primary"
-              //onClick={}
-              style={{
-                borderRadius: "8px",
-                height: "40px",
-                fontWeight: "500",
-                fontSize: "16px ",
-                backgroundColor: "#ea7a9a",
-                border: "none",
-              }}
-            >
               Export CSV
             </Button>
           </CSVLink>

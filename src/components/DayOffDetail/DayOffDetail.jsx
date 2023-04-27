@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {
   ClockCircleOutlined,
   ClockCircleFilled,
+  DeleteFilled,
   ArrowRightOutlined,
 } from "@ant-design/icons";
 import "./DayOffDetail.scss"
@@ -25,6 +26,20 @@ const DayOffDetail = () => {
   const dateFormat = "YYYY/MM/DD";
   const { TextArea } = Input;
   const [form] = Form.useForm();
+  const onDelete = async () => {
+    await axiosClient.delete(`/dayOff/${id}`);
+    (setDayOffDetail.filter((dayOff) => dayOff.id !== id));
+    navigate("/account/day-offs")
+    axiosClient
+      .get("/dayOff")
+      .then((res) => {
+        setDayOffDetail(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  };
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -217,6 +232,7 @@ const DayOffDetail = () => {
             </Descriptions>
             <Space direction="vertical">
               <Typography.Text style ={{fontSize: "16px", fontWeight: "bold"}}>ACTIONS</Typography.Text>
+              <Row>
               <ClockCircleFilled
                 onClick={showModal}
                 className="clock"
@@ -226,6 +242,15 @@ const DayOffDetail = () => {
                   borderRadius: "20px",
                 }}
               />
+              <DeleteFilled className="clock"
+              onClick={onDelete}
+                style={{
+                  color: " #e97a9a",
+                  fontSize: "40px",
+                  marginLeft:"20px"
+                }}
+              />
+              </Row>
             </Space>
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
