@@ -1,17 +1,18 @@
 import { Button, Card, Col, Row, Table, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-import './DayOff.scss'
+import "./DayOff.scss";
 import { useNavigate } from "react-router-dom";
+
 import axiosClient from "../../utils/clientAxios"
 
 import { CSVLink } from 'react-csv';
 
 const DayOff = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
-  const [dayOff, setDayOff] = useState()
+  const [loading, setLoading] = useState(false);
+  const [dayOff, setDayOff] = useState();
 
-  const map = dayOff?.map(dayOff => dayOff._id)
+  const map = dayOff?.map((dayOff) => dayOff._id);
 
   const start = () => {
     setLoading(true);
@@ -25,7 +26,7 @@ const DayOff = () => {
     axiosClient
       .get("/dayOff")
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setDayOff(res.data?.request);
       })
       .catch((error) => {
@@ -48,8 +49,12 @@ const DayOff = () => {
       dataIndex: "dayOff",
       key: "dayOff",
       render: (text, record) => {
-        return <Typography.Text>{record?.start_date}-{record?.end_date}</Typography.Text>
-      }
+        return (
+          <Typography.Text>
+            {record?.start_date}-{record?.end_date}
+          </Typography.Text>
+        );
+      },
     },
     {
       title: "Quantity",
@@ -62,8 +67,8 @@ const DayOff = () => {
       align: "center",
       dataIndex: "requester",
       render: (text, record) => {
-        return <Typography.Text>{record?.user_id?.username}</Typography.Text>
-      }
+        return <Typography.Text>{record?.user_id?.username}</Typography.Text>;
+      },
     },
     {
       title: "Status",
@@ -71,7 +76,7 @@ const DayOff = () => {
       key: "status",
       dataIndex: "status",
       render: (text, record) => {
-        return <Typography.Text>{record.status}</Typography.Text>
+        return <Typography.Text>{record.status}</Typography.Text>;
       },
       filters: [
         {
@@ -89,26 +94,22 @@ const DayOff = () => {
   ];
 
   const handleRowClick = (record) => {
-    const rowKey = record._id
-    navigate(`/account/day-offs/${rowKey}/dayOff-detail`)
-  }
+    const rowKey = record._id;
+    navigate(`/account/day-offs/${rowKey}/dayOff-detail`);
+  };
 
   const data1 = [
-    { id: 1, name: 'John Doe', age: 25, email: 'john.doe@example.com' },
-    { id: 2, name: 'Jane Smith', age: 32, email: 'jane.smith@example.com' },
+    { id: 1, name: "John Doe", age: 25, email: "john.doe@example.com" },
+    { id: 2, name: "Jane Smith", age: 32, email: "jane.smith@example.com" },
     // add more data...
   ];
-  
+
   const headers1 = [
-    { label: 'ID', key: 'id' },
-    { label: 'Name', key: 'name' },
-    { label: 'Age', key: 'age' },
-    { label: 'Email', key: 'email' },
+    { label: "ID", key: "id" },
+    { label: "Name", key: "name" },
+    { label: "Age", key: "age" },
+    { label: "Email", key: "email" },
   ];
-
-  const exportCSVFile = () => {
-
-  }
 
   return (
     <Card
@@ -135,10 +136,9 @@ const DayOff = () => {
               backgroundColor: "#ea7a9a",
               border: "none",
             }}
-            
           >
-            Export CSV
-          </Button>
+              Export CSV
+            </Button>
           </CSVLink>
           <Button
             type="primary"
@@ -152,22 +152,20 @@ const DayOff = () => {
               backgroundColor: "#ea7a9a",
               border: "none",
             }}
-            
           >
             Revert request
           </Button>
         </Row>
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-
             <Table
               columns={columns}
               rowKey={map}
               dataSource={dayOff}
               className="dayoff-data-table"
               onRow={(record) => ({
-                  onClick: () => handleRowClick(record),
-                })}
+                onClick: () => handleRowClick(record),
+              })}
             />
           </Col>
         </Row>
