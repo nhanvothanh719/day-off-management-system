@@ -1,6 +1,6 @@
 import axios from "axios";
-const tokenBot  = "xoxb-5169513343826-5169554102002-qqBN2lYRRZW5SMPQBpBaq9Mc"
-const tokenAdmin = "xoxp-5169513343826-5169380876243-5170403007958-7f4d3e0ccc425d09792fbf1ac06c22de"
+const tokenBot  = "xoxb-5169513343826-5169554102002-JRdkA9oXrarPHP4epJDOslrj"
+const tokenAdmin = "xoxp-5169513343826-5169380876243-5189669810737-c8ce1639f44347d035bafe967e3e1c70"
 export const publicChannel = async () => {
         try {
           const response = await axios({
