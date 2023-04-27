@@ -42,8 +42,6 @@ function InputForm() {
       quantity: dayOffAmount,
       day_off_type: day_off_type,
       day_off_time: session,
-      status: "pending",
-      approvers_number: 2, //HARD CODE
     };
     storeRequest(new_request);
     sendToSlack();

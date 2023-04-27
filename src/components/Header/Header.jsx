@@ -148,7 +148,7 @@ function HeaderComponent(props) {
                 )}
                 {userRole && (
                   <Typography.Text className="avatar-role">
-                    {userRole ? userRole : "Staff"}
+                    {userRole ? userRole.charAt(0).toUpperCase() + userRole.slice(1) : "Staff"}
                   </Typography.Text>
                 )}
               </Space>

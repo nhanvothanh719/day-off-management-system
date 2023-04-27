@@ -10,7 +10,7 @@ import {
 import MyCard from "../../Card/Card";
 import axiosClient from "../../../utils/clientAxios";
 
-const RequestAmountByMonth = () => {
+export const RequestAmountByMonth = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -49,10 +49,9 @@ const RequestAmountByMonth = () => {
   return (
     <Fragment>
       {
-        data && <MyCard title="Chart 3" content={RequestAmountByMonthComponent} />
+        data && <MyCard title="Total requests in month" content={RequestAmountByMonthComponent} />
       }
     </Fragment>
   );
 };
 
-export default RequestAmountByMonth;

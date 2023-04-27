@@ -4,12 +4,7 @@
   box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1) !important;
   margin: 24px 0 !important;
   padding: 24px !important;
-  .request-detail__history-text{
-    color: #e97a9a;
-  }
-  .ant-row{
-    
-  }
+
   @media only screen and (max-width: 1367px) {
     .request-detail-container {
       max-width: 1366px;
@@ -54,4 +49,12 @@
 .ant-layout-content {
   max-height: 100vh;
   overflow-y: auto;
+}
+
+.request-status {
+  font-weight: 600;
+}
+
+.ant-row.request-detail__history-text {
+  color: #E97A9A !important;
 }

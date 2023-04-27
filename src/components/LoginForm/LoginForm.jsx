@@ -74,7 +74,7 @@ function LoginForm() {
           });
           localStorage.setItem("user_name", name);
           localStorage.setItem("userId", userId);
-          navigate("/account/dashboard");
+          navigate("/account/requests");
         }
       })
       .catch((error) => {
@@ -121,7 +121,7 @@ function LoginForm() {
             store.dispatch(setRefreshToken(refreshToken));
             localStorage.setItem("user_avatar", photoURL);
             localStorage.setItem("user_name", displayName);
-            navigate("/account/dashboard");
+            navigate("/account/requests");
           } else {
             messageApi.open({
               type: "error",

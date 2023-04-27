@@ -109,7 +109,13 @@ const GroupDetail = () => {
         staffs_id: groupStaffs.map((staff) => staff._id),
         masters_id: groupMasters.map((master) => master._id),
     }
-    axiosClient.put("/groups/" + id, updatedGroup).then((res) => {
+    if(groupName.length <= 0) {
+      messageApi.open({
+        type: "error",
+        content: 'Name of group is required!',
+    });
+    } else {
+      axiosClient.put("/groups/" + id, updatedGroup).then((res) => {
         if(res.data.success) {
             messageApi.open({
                 type: "success",
@@ -117,6 +123,7 @@ const GroupDetail = () => {
             });
         }
     })
+    }
   }
 
   useEffect(() => {
