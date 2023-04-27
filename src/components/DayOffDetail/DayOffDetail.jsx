@@ -55,7 +55,7 @@ const DayOffDetail = () => {
       day_off_type: day_off_type,
       day_off_time: session,
     };
-    updateRequest(revert_request);
+    revertRequest(revert_request);
     setIsModalRevertOpen(false);
     axiosClient
       .get(`/requests/${id}`)
@@ -67,9 +67,9 @@ const DayOffDetail = () => {
       });
   };
 
-  const updateRequest = (revert_request) => {
+  const revertRequest = (revert_request) => {
     axiosClient
-      .put(`/dayOff/${id}`, revert_request)
+      .post(`/dayOff/${id}`, revert_request)
       .then(() => {
         form.resetFields();
         setDayOffAmount(0);
@@ -122,6 +122,7 @@ const DayOffDetail = () => {
       title="DAY OFF DETAIL"
       bordered={false}
       className="card-container">
+      {contextHolder}
       <div
         style={{ height: "100%", backgroundColor: "#fff" }}
         className="dayoff-detail"
