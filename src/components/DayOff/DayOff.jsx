@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row, Table, Tag, Typography } from "antd";
+import { Button, Card, Col, Row, Table, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import "./DayOff.scss";
 import { useNavigate } from "react-router-dom";
@@ -9,24 +9,20 @@ import { CSVLink } from 'react-csv';
 
 const DayOff = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [dayOff, setDayOff] = useState();
 
-  const map = dayOff?.map((dayOff) => dayOff._id);
+  const gg_sheet_url = 'https://docs.google.com/spreadsheets/d/1vnax6diaaHR2t5vA1X93q_glrMz1GpjTj3RImN2eQhc/edit#gid=0';
 
-  const start = () => {
-    setLoading(true);
-    // ajax request after empty completing
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+  const goToGoogleSheet = () => {
+    window.open(gg_sheet_url, '_blank');
+  }
+
+  const map = dayOff?.map((dayOff) => dayOff._id);
   
   useEffect(() => {
     axiosClient
       .get("/dayOff")
       .then((res) => {
-        console.log(res);
         setDayOff(res.data?.request);
       })
       .catch((error) => {
@@ -51,7 +47,7 @@ const DayOff = () => {
       render: (text, record) => {
         return (
           <Typography.Text>
-            {record?.start_date}-{record?.end_date}
+            {record?.start_date} - {record?.end_date}
           </Typography.Text>
         );
       },
@@ -76,7 +72,7 @@ const DayOff = () => {
       key: "status",
       dataIndex: "status",
       render: (text, record) => {
-        return <Typography.Text>{record.status}</Typography.Text>;
+        return <Typography.Text className="day-off__status">{record?.status.charAt(0).toUpperCase() + record?.status.slice(1)}</Typography.Text>;
       },
       filters: [
         {
@@ -98,22 +94,9 @@ const DayOff = () => {
     navigate(`/account/day-offs/${rowKey}/dayOff-detail`);
   };
 
-  const data1 = [
-    { id: 1, name: "John Doe", age: 25, email: "john.doe@example.com" },
-    { id: 2, name: "Jane Smith", age: 32, email: "jane.smith@example.com" },
-    // add more data...
-  ];
-
-  const headers1 = [
-    { label: "ID", key: "id" },
-    { label: "Name", key: "name" },
-    { label: "Age", key: "age" },
-    { label: "Email", key: "email" },
-  ];
-
   return (
     <Card
-      title={<div>ALL Dayoff</div>}
+      title={<div>All Day off</div>}
       bordered={false}
       className="card-container"
     >
@@ -124,26 +107,28 @@ const DayOff = () => {
             justifyContent: "flex-end",
           }}
         >
-          <CSVLink data={data1} filename={"day-offs-file.csv"} target="_blank" headers={headers1}>
-          <Button
-            type="primary"
-            //onClick={}
+          {
+            dayOff &&
+            <CSVLink data={dayOff} filename={"day-offs-file.csv"} target="_blank">
+            <Button
             style={{
               borderRadius: "8px",
               height: "40px",
               fontWeight: "500",
               fontSize: "16px ",
-              backgroundColor: "#ea7a9a",
+              backgroundColor: "#fbe8ee",
+              color: "#e97a9a",
               border: "none",
+              margin: "0 40px 0 0"
             }}
           >
               Export CSV
             </Button>
           </CSVLink>
+          }
           <Button
             type="primary"
-            onClick={start}
-            loading={loading}
+            onClick={goToGoogleSheet}
             style={{
               borderRadius: "8px",
               height: "40px",
@@ -153,7 +138,7 @@ const DayOff = () => {
               border: "none",
             }}
           >
-            Revert request
+            Google Sheet
           </Button>
         </Row>
         <Row>

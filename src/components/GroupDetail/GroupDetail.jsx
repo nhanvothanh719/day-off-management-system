@@ -15,6 +15,8 @@ import {
 import "./GroupDetail.scss";
 import { useParams } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
+import withAuthorization from "../../utils/withAuthorization";
+import { user_permission } from "../../const/permission";
 
 const GroupDetail = () => {
   const { id } = useParams();
@@ -247,4 +249,7 @@ const GroupDetail = () => {
     </Card>
   );
 };
-export default GroupDetail;
+
+export default withAuthorization([user_permission.crud_user_group])(
+  GroupDetail
+);

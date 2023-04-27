@@ -18,6 +18,8 @@ import axiosClient from "../../utils/clientAxios";
 
 import "./Profile.scss";
 import MyCard from "../Card/Card";
+import withAuthorization from "../../utils/withAuthorization";
+import { user_permission } from "../../const/permission";
 const Profile = () => {
   const userId = localStorage.getItem("userId");
 
@@ -181,4 +183,7 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuthorization([user_permission.manage_self_details])(
+  Profile
+);
+
