@@ -30,7 +30,7 @@ import MyCard from "../Card/Card";
 import axiosClient from "../../utils/clientAxios";
 import moment from "moment";
 import { googleSheetURL } from "../../const/googleSheetConnection";
-import axios from 'axios';
+import axios from "axios";
 
 const RequestDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -45,7 +45,7 @@ const RequestDetail = () => {
   const [dayOffSession, setDayOffSession] = useState("morning");
 
   const [messageApi, contextHolder] = message.useMessage();
-  
+
   const dateFormat = "YYYY/MM/DD";
   const { TextArea } = Input;
   const [form] = Form.useForm();
@@ -102,6 +102,7 @@ const RequestDetail = () => {
     axiosClient
       .put(`/requests/${id}`, update_request)
       .then(() => {
+        sendToDayOffChannel();
         form.resetFields();
         setDayOffAmount(0);
         messageApi.open({
@@ -116,7 +117,6 @@ const RequestDetail = () => {
     axiosClient
       .get(`/requests/${id}`)
       .then((res) => {
-        console.log(res.data.request);
         setRequestDetail(res.data.request);
       })
       .catch((error) => {
@@ -126,7 +126,7 @@ const RequestDetail = () => {
 
   const handleOk = () => {
     setIsModalEditOpen(false);
-  }
+  };
 
   if (!requestDetail) {
     return (
@@ -145,18 +145,81 @@ const RequestDetail = () => {
   };
 
   const sendToDayOffChannel = () => {
-    
+    const data = {
+      blocks: [
+        {
+          type: "header",
+          text: {
+            type: "plain_text",
+            text: "New request",
+            emoji: true,
+          },
+        },
+        {
+          type: "section",
+          fields: [
+            {
+              type: "mrkdwn",
+              text: `*Type:*\n${requestDetail.day_off_type}`,
+            },
+            {
+              type: "mrkdwn",
+              text: `*Created by:*\n ${localStorage.getItem("user_name")}`,
+            },
+          ],
+        },
+        {
+          type: "section",
+          fields: [
+            {
+              type: "mrkdwn",
+              text: `*When:*\n${requestDetail.start_date} - ${requestDetail.end_date}`,
+            },
+          ],
+        },
+      ],
+    };
+    axios.post(
+      "https://hooks.slack.com/services/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",
+      JSON.stringify(data),
+      {
+        withCredentials: false,
+        transformRequest: [
+          (data, headers) => {
+            return data;
+          },
+        ],
+      }
+    );
   };
 
   const sendToGoogleSheet = () => {
-    const { day_off_time, day_off_type, start_date, end_date, quantity, reason, status } = requestDetail; 
-    axios.post(googleSheetURL, { day_off_time, day_off_type, start_date, end_date, quantity, reason, status})
-    .then((res) => {
-      messageApi.open({
-        type: "success",
-        content: "Send to Google Sheet successfully!",
-      });
-    }).catch((error) => console.log(error))
+    const {
+      day_off_time,
+      day_off_type,
+      start_date,
+      end_date,
+      quantity,
+      reason,
+      status,
+    } = requestDetail;
+    axios
+      .post(googleSheetURL, {
+        day_off_time,
+        day_off_type,
+        start_date,
+        end_date,
+        quantity,
+        reason,
+        status,
+      })
+      .then((res) => {
+        messageApi.open({
+          type: "success",
+          content: "Send to Google Sheet successfully!",
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleApprove = () => {
@@ -169,14 +232,13 @@ const RequestDetail = () => {
         messageApi.open({
           type: "success",
           content: res.data.message,
-      });
+        });
 
-      if (res.data.send_to_slack) {
-        sendToDayOffChannel();
-        sendToGoogleSheet();
-      }
+        if (res.data.send_to_slack) {
+          sendToDayOffChannel();
+          sendToGoogleSheet();
+        }
         setIsRefresh(true);
-        
       } else {
         messageApi.open({
           type: "error",
@@ -210,7 +272,7 @@ const RequestDetail = () => {
   const handleCancel = () => {
     setIsModalApproveOpen(false);
     setIsModalRejectOpen(false);
-    setIsModalEditOpen(false)
+    setIsModalEditOpen(false);
   };
 
   const showModalApprove = () => {
@@ -236,8 +298,8 @@ const RequestDetail = () => {
       setRequestHistories(res.data.request_histories);
     });
 
-    if(isRefresh) {
-      setIsRefresh(false)
+    if (isRefresh) {
+      setIsRefresh(false);
     }
   }, [id, isRefresh]);
 
@@ -412,7 +474,10 @@ const RequestDetail = () => {
                   dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
                   className="timeline-clock-icon"
                 >
-                  <Row className="request-detail__history-text">{history.action?.charAt(0).toUpperCase() + history.action?.slice(1)}</Row>
+                  <Row className="request-detail__history-text">
+                    {history.action?.charAt(0).toUpperCase() +
+                      history.action?.slice(1)}
+                  </Row>
                   <div
                     dangerouslySetInnerHTML={{ __html: history.description }}
                   />
