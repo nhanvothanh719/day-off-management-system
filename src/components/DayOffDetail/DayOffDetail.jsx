@@ -6,11 +6,10 @@ import {
   ArrowRightOutlined,
 } from "@ant-design/icons";
 import "./DayOffDetail.scss"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
 import MyCard from '../Card/Card';
 import moment from 'moment';
-
 
 const DayOffDetail = () => {
   const [dayOffDetail, setDayOffDetail] = useState()
@@ -21,7 +20,8 @@ const DayOffDetail = () => {
   const [dayOffSession, setDayOffSession] = useState("morning");
 
   const [messageApi, contextHolder] = message.useMessage();
-  
+  const navigate = useNavigate()
+
   const dateFormat = "YYYY/MM/DD";
   const { TextArea } = Input;
   const [form] = Form.useForm();
@@ -45,6 +45,17 @@ const DayOffDetail = () => {
     session: "morning",
   };
 
+  useEffect(() => {
+    axiosClient
+      .get(`/requests/${id}`)
+      .then((res) => {
+        setDayOffDetail(res.data.request);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
   const onFinish = (values) => {
     const { day_off_range, day_off_type, reason, session } = values;
     const revert_request = {
@@ -61,15 +72,15 @@ const DayOffDetail = () => {
       .get(`/requests/${id}`)
       .then((res) => {
         setDayOffDetail(res.data.request);
+
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
   };
-
   const revertRequest = (revert_request) => {
     axiosClient
-      .post(`/dayOff/${id}`, revert_request)
+      .post(`/dayOff/${id}`, {...revert_request})
       .then(() => {
         form.resetFields();
         setDayOffAmount(0);
@@ -77,6 +88,8 @@ const DayOffDetail = () => {
           type: "success",
           content: "Revert request successfully",
         });
+      navigate("/account/requests")
+
       })
       .catch((error) => console.log(error));
   };
@@ -100,16 +113,6 @@ const DayOffDetail = () => {
     }
   };
 
-  useEffect(() => {
-    axiosClient
-      .get(`/requests/${id}`)
-      .then((res) => {
-        setDayOffDetail(res.data.request);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }, []);
 
   if (!dayOffDetail) {
     return (
@@ -131,68 +134,68 @@ const DayOffDetail = () => {
           <p>Are you sure you want to revert the request ?</p>
         </Modal>
         <Modal
-        title="Revert request"
-        open={isModalRevertOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Form
-          form={form}
-          onFinish={onFinish}
-          initialValues={initialValues}
-          className="custom-form"
-          layout="vertical"
+          title="Revert request"
+          open={isModalRevertOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={null}
         >
-          <Form.Item
-            name="day_off_type"
-            label="Types of day off"
-            rules={[{ required: true }]}
+          <Form
+            form={form}
+            onFinish={onFinish}
+            initialValues={initialValues}
+            className="custom-form"
+            layout="vertical"
           >
-            <Radio.Group size="large">
-              <Space direction="vertical">
-                <Radio value="off">Off</Radio>
-                <Radio value="wfh">Work from home</Radio>
-              </Space>
-            </Radio.Group>
-          </Form.Item>
+            <Form.Item
+              name="day_off_type"
+              label="Types of day off"
+              rules={[{ required: true }]}
+            >
+              <Radio.Group size="large">
+                <Space direction="vertical">
+                  <Radio value="off">Off</Radio>
+                  <Radio value="wfh">Work from home</Radio>
+                </Space>
+              </Radio.Group>
+            </Form.Item>
 
-          <Form.Item
-            name="day_off_range"
-            label="From - To"
-            rules={[{ required: true }]}
-          >
-            <DatePicker.RangePicker
-              format={dateFormat}
-              onChange={onDateRangeChange}
-            />
-          </Form.Item>
+            <Form.Item
+              name="day_off_range"
+              label="From - To"
+              rules={[{ required: true }]}
+            >
+              <DatePicker.RangePicker
+                format={dateFormat}
+                onChange={onDateRangeChange}
+              />
+            </Form.Item>
 
-          <Form.Item label="Quantity">
-            <InputNumber disabled value={dayOffAmount} />
-          </Form.Item>
+            <Form.Item label="Quantity">
+              <InputNumber disabled value={dayOffAmount} />
+            </Form.Item>
 
-          <Form.Item
-            name="session"
-            label="Session"
-            rules={[{ required: true }]}
-          >
-            <Select onChange={onSessionChange}>
-              <Select.Option value="morning">Morning</Select.Option>
-              <Select.Option value="afternoon">Afternoon</Select.Option>
-              <Select.Option value="all_day">All day</Select.Option>
-            </Select>
-          </Form.Item>
+            <Form.Item
+              name="session"
+              label="Session"
+              rules={[{ required: true }]}
+            >
+              <Select onChange={onSessionChange}>
+                <Select.Option value="morning">Morning</Select.Option>
+                <Select.Option value="afternoon">Afternoon</Select.Option>
+                <Select.Option value="all_day">All day</Select.Option>
+              </Select>
+            </Form.Item>
 
-          <Form.Item name="reason" label="Reason" rules={[{ required: true }]}>
-            <TextArea rows={4} showCount maxLength={100} />
-          </Form.Item>
+            <Form.Item name="reason" label="Reason" rules={[{ required: true }]}>
+              <TextArea rows={4} showCount maxLength={100} />
+            </Form.Item>
 
-          <Form.Item>
-            <Button htmlType="submit">Submit</Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+            <Form.Item>
+              <Button htmlType="submit">Submit</Button>
+            </Form.Item>
+          </Form>
+        </Modal>
         <Row gutter={[24, 24]} className="dayoff-detail-container">
           <Col Col xl={8} lg={8} md={8} sm={24} xs={24} className="col-thu1">
             <Descriptions
@@ -204,7 +207,7 @@ const DayOffDetail = () => {
               <Descriptions.Item label="From">{dayOffDetail.start_date}</Descriptions.Item>
               <Descriptions.Item label="To">{dayOffDetail.end_date}</Descriptions.Item>
               <Descriptions.Item label="Time">{dayOffDetail.day_off_time}</Descriptions.Item>
-              <Descriptions.Item label="Quantity">{dayOffDetail.quantiy}</Descriptions.Item>
+              <Descriptions.Item label="Quantity">{dayOffDetail.quantity}</Descriptions.Item>
               <Descriptions.Item label="Reason">
                 {dayOffDetail.reason}
               </Descriptions.Item>
@@ -241,57 +244,6 @@ const DayOffDetail = () => {
                 <Row>Reason: {dayOffDetail.reason}</Row>
               </Timeline.Item>
 
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row className="dayoff-detail__history-text">Approved</Row>
-                <Row>Hoang Pham Approved</Row>
-              </Timeline.Item>
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row className="dayoff-detail__history-text">
-                  Request change
-                </Row>
-                <Row>Vinh Bui requested for change</Row>
-              </Timeline.Item>
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row>
-                  <Col xl={10} lg={10} md={10} sm={10} xs={24}>
-                    <Row className="request-detail__history-text">dayoff</Row>
-                    <Row>Khoa Nguyen updated request</Row>
-                    <Row>From: 14/04/2023</Row>
-                    <Row>To: 16/04/2023</Row>
-                    <Row>Time: All day</Row>
-                    <Row>Quantity: 4</Row>
-                    <Row>Reason: Personal Issue</Row>
-                  </Col>
-                  <Col
-                    xl={2}
-                    lg={2}
-                    md={2}
-                    sm={2}
-                    xs={24}
-                    style={{ fontSize: "30px", margin: "50px 20px 0 0", color: "#e97a9a" }}
-                  >
-                    <ArrowRightOutlined className="arrow-1" />
-                  </Col>
-                  <Col xl={10} lg={10} md={10} sm={10} xs={24}>
-                    <Row className="request-detail__history-text">dayoff</Row>
-                    <Row>Khoa Nguyen updated request</Row>
-                    <Row>From: 14/04/2023</Row>
-                    <Row>To: 16/04/2023</Row>
-                    <Row>Time: All day</Row>
-                    <Row>Quantity: 4</Row>
-                    <Row>Reason: Personal Issue</Row>
-                  </Col>
-                </Row>
-              </Timeline.Item>
             </Space>
           </Col>
         </Row>

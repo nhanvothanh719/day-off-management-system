@@ -24,6 +24,7 @@ const DayOff = () => {
     axiosClient
       .get("/dayOff")
       .then((res) => {
+        console.log(res)
         setDayOff(res.data?.request);
       })
       .catch((error) => {

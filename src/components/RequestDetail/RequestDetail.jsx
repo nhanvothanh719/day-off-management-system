@@ -71,6 +71,7 @@ const RequestDetail = () => {
       .get(`/requests/${id}`)
       .then((res) => {
         setRequestDetail(res.data.request);
+        setIsRefresh(true);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
