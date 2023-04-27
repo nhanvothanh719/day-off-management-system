@@ -23,7 +23,7 @@ const DayOff = () => {
       setLoading(false);
     }, 1000);
   };
-
+  
   useEffect(() => {
     axiosClient
       .get("/dayOff")
