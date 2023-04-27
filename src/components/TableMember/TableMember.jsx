@@ -117,14 +117,6 @@ function TableMember({ users, onEdit, onDelete }) {
     },
   ];
 
-  // const { username, email, role, password, permission } = values;
-  // const update_user = {
-  //   role_id: role,
-  //   permission_id: permission,
-  //   username: username,
-  //   email: email,
-  //   password: password,
-  // };
   const addMember = (id) => {
     setCurrentPermissions([...currentPermissions, id]);
   };
@@ -148,22 +140,7 @@ function TableMember({ users, onEdit, onDelete }) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  // const addNewMaster = (staffId) => {
-  //   setCurrentPermissions([
-  //     ...currentPermissions,
-  //     { _id: staffId, name: findNameById(staffId) },
-  //   ]);
-  //   setGroupStaffs(groupStaffs.filter((staff) => staff._id !== staffId));
-  // };
 
-  // const removeMaster = (masterId) => {
-  //   setGroupStaffs([
-  //     ...groupStaffs,
-  //     { _id: masterId, name: findNameById(masterId) },
-  //   ]);
-  //   setGroupMasters(groupMasters.filter((master) => master._id !== masterId));
-  // };
-  console.log(editingUser?.role_id?._id, "editingUser");
   return (
     <div>
       <Table dataSource={users} columns={columns} className="table-member" />
