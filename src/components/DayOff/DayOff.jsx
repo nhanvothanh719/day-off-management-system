@@ -2,12 +2,9 @@ import { Button, Card, Col, Row, Table, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import './DayOff.scss'
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import axiosClient from "../../utils/clientAxios"
 
-=======
 import { CSVLink } from 'react-csv';
->>>>>>> feat: dpm-update-to-google-sheet
 
 const DayOff = () => {
   const navigate = useNavigate();
@@ -126,8 +123,6 @@ const DayOff = () => {
             justifyContent: "flex-end",
           }}
         >
-<<<<<<< HEAD
-=======
           <CSVLink data={data1} filename={"day-offs-file.csv"} target="_blank" headers={headers1}>
           <Button
             type="primary"
@@ -161,7 +156,6 @@ const DayOff = () => {
           >
             Revert request
           </Button>
->>>>>>> feat: dpm-update-to-google-sheet
         </Row>
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
