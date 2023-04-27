@@ -28,7 +28,7 @@ const DataTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const get_request_url = userRole === user_role.admin ? "/requests" : "/requests/get-all-requests-in-user-groups";
+    const get_request_url = userRole === user_role.admin || user_role.manager ? "/requests" : "/requests/get-all-requests-in-user-groups";
     axiosClient
       .get(get_request_url)
       .then((res) => {
