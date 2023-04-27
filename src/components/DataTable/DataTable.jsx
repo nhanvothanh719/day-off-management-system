@@ -23,7 +23,7 @@ const DataTable = () => {
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
 
-  const map = request.map((request) => request._id);
+  const map = request?.map((request) => request._id);
 
   const navigate = useNavigate();
 
