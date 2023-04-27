@@ -31,6 +31,12 @@ $white: #fff;
 
 .custom-form.ant-form {
 
+  @media screen and (max-width: 800px) {
+    & {
+      margin: 0 !important;
+    }
+  }
+
   margin: 0 70px;
 
   *::selection {
@@ -45,6 +51,12 @@ $white: #fff;
   label {
     @include text-custom();
     color: $gray;
+
+    @media screen and (max-width: 680px) {
+      & {
+        font-size: 12px !important;
+      }
+    }
   }
 
   .ant {
@@ -84,6 +96,12 @@ $white: #fff;
 
     &-picker-input > input {
       @include text-custom();
+
+      @media screen and (max-width: 680px) {
+        & {
+          font-size: 12px !important;
+        }
+      }
     }
 
     &-picker {
@@ -92,10 +110,22 @@ $white: #fff;
       &-range {
         @include text-custom();
         @include input-custom();
+
+        @media screen and (max-width: 680px) {
+          & {
+            font-size: 12px !important;
+          }
+        }
       }
 
       &-input {
         @include text-custom();
+
+        @media screen and (max-width: 680px) {
+          & {
+            font-size: 12px !important;
+          }
+        }
       }
 
       &:hover,
@@ -137,6 +167,12 @@ $white: #fff;
       &:not(.ant-select-customize-input) .ant-select-selector {
         @include text-custom();
         @include input-custom();
+
+        @media screen and (max-width: 680px) {
+          & {
+            font-size: 12px !important;
+          }
+        }
       }
     }
 
@@ -146,9 +182,21 @@ $white: #fff;
       @include text-custom();
       @include input-custom();
 
+      @media screen and (max-width: 680px) {
+        & {
+          font-size: 12px !important;
+        }
+      }
+
       &-number {
         @include text-custom();
         @include input-custom();
+
+        @media screen and (max-width: 680px) {
+      & {
+        font-size: 12px !important;
+      }
+    }
 
         width: 100%;
 

@@ -15,9 +15,12 @@ const axiosClient = axios.create({
 
 //Set Bearer token
 axiosClient.interceptors.request.use(async function (config) {
+
   const state = store.getState();
+
   const accessTokenLifeTime = state.accessToken.lifeTime;
   const accessTokenLifeTimeRemain = accessTokenLifeTime * 1000 - Date.now();
+
   if(accessTokenLifeTimeRemain  <= 0) {
     const refreshToken = state.refreshToken;
     await axios.post(baseURL + "/auth/get-new-access-token", {refreshToken}, {
@@ -33,9 +36,11 @@ axiosClient.interceptors.request.use(async function (config) {
       alert('Your session is timeout. Please logout and login again!');
     });
   }
+
   const accessToken = state.accessToken.token;
   config.headers.Authorization = accessToken ? `Bearer ${accessToken}` : "";
   return config;
+  
 });
 
 export default axiosClient;

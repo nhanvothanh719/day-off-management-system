@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Row,
   Col,
@@ -122,7 +121,14 @@ const RequestDetail = () => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, [id]);
+    axiosClient.get(`/histories/${id}`).then((res) => {
+      setRequestHistories(res.data.request_histories);
+    });
+
+    if (isRefresh) {
+      setIsRefresh(false);
+    }
+  }, [id, isRefresh]);
 
   const handleOk = () => {
     setIsModalEditOpen(false);
@@ -284,24 +290,6 @@ const RequestDetail = () => {
   const showModalEdit = () => {
     setIsModalEditOpen(true);
   };
-
-  useEffect(() => {
-    axiosClient
-      .get(`/requests/${id}`)
-      .then((res) => {
-        setRequestDetail(res.data.request);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-    axiosClient.get(`/histories/${id}`).then((res) => {
-      setRequestHistories(res.data.request_histories);
-    });
-
-    if (isRefresh) {
-      setIsRefresh(false);
-    }
-  }, [id, isRefresh]);
 
   return (
     <Card title="REQUEST DETAIL" bordered={false} className="card-container">

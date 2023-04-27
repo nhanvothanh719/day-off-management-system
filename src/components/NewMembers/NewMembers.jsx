@@ -3,6 +3,8 @@ import "./NewMembers.scss";
 import MyCard from "../Card/Card";
 import axiosClient from "../../utils/clientAxios";
 import { Button, Form, Input, Radio, Select, Space, message } from "antd";
+import withAuthorization from "../../utils/withAuthorization";
+import { user_permission } from "../../const/permission";
 
 const Member = () => {
   const [form] = Form.useForm();
@@ -57,7 +59,7 @@ const Member = () => {
       });
   }, []);
 
-  const LogOffForm = (
+  const NewMemberForm = (
     <Form
       form={form}
       onFinish={onFinish}
@@ -137,9 +139,11 @@ const Member = () => {
   return (
     <Fragment>
       {contextHolder}
-      <MyCard title="New Member" content={LogOffForm}></MyCard>
+      <MyCard title="New Member" content={NewMemberForm}></MyCard>
     </Fragment>
   );
 };
 
-export default Member;
+export default withAuthorization([user_permission.crud_staff])(
+  Member
+);

@@ -19,6 +19,7 @@ const UserTable = (values) => {
       setUsers(res.data);
     });
   };
+  
   const onDelete = async (id) => {
     await axiosClient.delete(`/users/${id}`);
     setUsers(users.filter((user) => user.id !== id));
