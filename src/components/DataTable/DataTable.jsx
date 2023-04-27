@@ -82,15 +82,10 @@ const DataTable = () => {
       align: "center",
       key: "tags",
       dataIndex: "tags",
-<<<<<<< HEAD
-      render: () => {
-        return <Tag className="ant-tag-geekblue" >PENDING</Tag>;
-=======
       render: (text, record) => {
         return <Tag className={`status-tag ${record.status}-status-tag`}>
           {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
           </Tag>;
->>>>>>> feat: dpm-finish-display-request-history
       },
     },
     {
