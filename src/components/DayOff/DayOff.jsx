@@ -1,41 +1,54 @@
-import { Button, Card, Col, Row, Table, Tag } from "antd";
-import React, { useState } from "react";
+import { Button, Card, Col, Row, Table, Tag, Typography } from "antd";
+import React, { useEffect, useState } from "react";
 import './DayOff.scss'
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../../utils/clientAxios"
 
 
 const DayOff = () => {
   const navigate = useNavigate();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false)
-  
+  const [dayOff, setDayOff] = useState()
+
+  const map = dayOff?.map(dayOff => dayOff._id)
+  console.log(map)
+
   const start = () => {
     setLoading(true);
     // ajax request after empty completing
     setTimeout(() => {
-      setSelectedRowKeys([]);
       setLoading(false);
     }, 1000);
   };
-  const data = [];
-  for (let i = 1; i < 50; i++) {
-    data.push({
-      key: i,
-      dayOff: "14/04/2023-16/04/2023",
-      quantity: 2,
-      requester: `Lê Quang Túng ${i}`,
-      tags: ["Approved"],
-      requestTime: "Yesterday",
-      Actions: "",
-    });
-  }
+
+  useEffect(() => {
+    axiosClient
+      .get("/dayOff")
+      .then((res) => {
+        setDayOff(res.data?.request);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
   const columns = [
     {
-      
+      title: "STT",
+      dataIndex: "stt",
+      align: "center",
+      key: "stt",
+      className: "custom-index-column",
+      render: (text, record, index) => index + 1,
+    },
+    {
       title: "Request for date",
       align: "center",
       dataIndex: "dayOff",
       key: "dayOff",
+      render: (text, record) => {
+        return <Typography.Text>{record?.start_date}-{record?.end_date}</Typography.Text>
+      }
     },
     {
       title: "Quantity",
@@ -47,59 +60,35 @@ const DayOff = () => {
       title: "Requester",
       align: "center",
       dataIndex: "requester",
+      render: (text, record) => {
+        return <Typography.Text>{record?.user_id?.username}</Typography.Text>
+      }
     },
     {
       title: "Status",
       align: "center",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color;
-            if (tag === "Pending") {
-              color = "geekblue";
-            } else if (tag === "Approved") {
-              color = "green";
-            } else if (tag === "Rejected") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
+      key: "status",
+      dataIndex: "status",
+      render: (text, record) => {
+        return <Typography.Text>{record.status}</Typography.Text>
+      },
       filters: [
         {
-          text: "Approved",
-          value: "Approved",
+          text: "approved",
+          value: "approved",
         },
         {
-          text: "Rejected",
-          value: "Rejected",
+          text: "rejected",
+          value: "rejected",
         },
       ],
-      onFilter: (value, record) => record.tags.includes(value),
+      onFilter: (value, record) => record.status.includes(value),
       filterSearch: true,
     },
-    {
-      title: "Request date",
-      align: "center",
-      dataIndex: "requestTime",
-    },
   ];
-  const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const handleRowClick = (record) =>{
-    const rowKey = record.key
+
+  const handleRowClick = (record) => {
+    const rowKey = record._id
     navigate(`/account/day-offs/${rowKey}/dayOff-detail`)
   }
   return (
@@ -127,20 +116,22 @@ const DayOff = () => {
               backgroundColor: "#ea7a9a",
               border: "none",
             }}
-            
+
           >
-            Revert request
+    ƒ        Revert request
           </Button>
         </Row>
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-          
+
             <Table
-              rowSelection={rowSelection}
               columns={columns}
-              dataSource={data}
+              rowKey={map}
+              dataSource={dayOff}
               className="dayoff-data-table"
-              onRow={(record) => ({onClick:()=>handleRowClick(record),})}
+              onRow={(record) => ({
+                  onClick: () => handleRowClick(record),
+                })}
             />
           </Col>
         </Row>

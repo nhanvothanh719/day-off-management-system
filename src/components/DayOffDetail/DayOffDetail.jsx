@@ -1,17 +1,20 @@
 import { Card, Col, Descriptions, Modal, Row, Space, Timeline, Typography } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ClockCircleOutlined,
   ClockCircleFilled,
   ArrowRightOutlined,
 } from "@ant-design/icons";
-import TextArea from 'antd/lib/input/TextArea';
 import "./DayOffDetail.scss"
-import { useState } from 'react';
+import { useLocation } from "react-router-dom";
+import axiosClient from "../../utils/clientAxios";
+import MyCard from '../Card/Card';
 
 
 const DayOffDetail = () => {
+  const [dayOffDetail, setDayOffDetail] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -21,6 +24,26 @@ const DayOffDetail = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const location = useLocation();
+  const id = location.pathname.split("/")[3];
+
+  useEffect(() => {
+    axiosClient
+      .get(`/requests/${id}`)
+      .then((res) => {
+        setDayOffDetail(res.data.request);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
+  if (!dayOffDetail) {
+    return (
+      <MyCard title="Day Off detail" loading={!dayOffDetail ? true : false} />
+    );
+  }
+
   return (
     <Card
       title="DAY OFF DETAIL"
@@ -30,6 +53,9 @@ const DayOffDetail = () => {
         style={{ height: "100%", backgroundColor: "#fff" }}
         className="dayoff-detail"
       >
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <p>Are you sure you want to revert the activity ?</p>
+        </Modal>
         <Row gutter={[24, 24]} className="dayoff-detail-container">
           <Col Col xl={8} lg={8} md={8} sm={24} xs={24} className="col-thu1">
             <Descriptions
@@ -38,15 +64,15 @@ const DayOffDetail = () => {
               colon={false}
               column={1}
             >
-              <Descriptions.Item label="From">14/04/2023</Descriptions.Item>
-              <Descriptions.Item label="To">16/04/2023</Descriptions.Item>
-              <Descriptions.Item label="Time">All day</Descriptions.Item>
-              <Descriptions.Item label="Quantity">2</Descriptions.Item>
+              <Descriptions.Item label="From">{dayOffDetail.start_date}</Descriptions.Item>
+              <Descriptions.Item label="To">{dayOffDetail.end_date}</Descriptions.Item>
+              <Descriptions.Item label="Time">{dayOffDetail.day_off_time}</Descriptions.Item>
+              <Descriptions.Item label="Quantity">{dayOffDetail.quantiy}</Descriptions.Item>
               <Descriptions.Item label="Reason">
-                Personal Issue
+                {dayOffDetail.reason}
               </Descriptions.Item>
               <Descriptions.Item label="Status">
-                Approved (1/2)
+                {dayOffDetail.status}
               </Descriptions.Item>
             </Descriptions>
             <Space direction="vertical">
@@ -54,22 +80,30 @@ const DayOffDetail = () => {
               <ClockCircleFilled
                 onClick={showModal}
                 className="clock"
-
-
                 style={{
                   color: " #e97a9a",
                   fontSize: "40px",
                   borderRadius: "20px",
-
                 }}
               />
-              <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Are you sure you want to revert the activity ?</p>
-              </Modal>
             </Space>
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
-            <Space>
+            <Space direction="vertical">
+              <Typography.Text>HISTORIES</Typography.Text>
+              <Timeline.Item
+                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
+                className="timeline-clock-icon"
+              >
+                <Row className="dayoff-detail__history-text">Day Off</Row>
+                <Row>{dayOffDetail?.user_id?.username} requested</Row>
+                <Row>From : {dayOffDetail.start_date}</Row>
+                <Row>To : {dayOffDetail.end_date}</Row>
+                <Row>Time: {dayOffDetail.day_off_time}</Row>
+                <Row>Quantity: {dayOffDetail.quantity}</Row>
+                <Row>Reason: {dayOffDetail.reason}</Row>
+              </Timeline.Item>
+
               <Timeline.Item
                 dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
                 className="timeline-clock-icon"
