@@ -216,7 +216,7 @@ const DayOffDetail = () => {
               </Descriptions.Item>
             </Descriptions>
             <Space direction="vertical">
-              <Typography.Text>ACTIONS</Typography.Text>
+              <Typography.Text style ={{fontSize: "16px", fontWeight: "bold"}}>ACTIONS</Typography.Text>
               <ClockCircleFilled
                 onClick={showModal}
                 className="clock"
@@ -230,7 +230,7 @@ const DayOffDetail = () => {
           </Col>
           <Col xl={16} lg={16} md={16} sm={24} xs={24} className="col-thu1">
             <Space direction="vertical">
-              <Typography.Text>HISTORIES</Typography.Text>
+              <Typography.Text style ={{fontSize: "16px", fontWeight: "bold"}}>HISTORIES</Typography.Text>
               <Timeline.Item
                 dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
                 className="timeline-clock-icon"

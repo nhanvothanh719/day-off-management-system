@@ -104,22 +104,6 @@ const DayOff = () => {
             justifyContent: "flex-end",
           }}
         >
-          <Button
-            type="primary"
-            onClick={start}
-            loading={loading}
-            style={{
-              borderRadius: "8px",
-              height: "40px",
-              fontWeight: "500",
-              fontSize: "16px ",
-              backgroundColor: "#ea7a9a",
-              border: "none",
-            }}
-
-          >
-    Revert request
-          </Button>
         </Row>
         <Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
