@@ -1,0 +1,14 @@
+.sync_img {
+    max-width: 100% !important;
+    height: auto !important;
+
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
+}
+
+.constructed__text {
+    @media screen and (max-width: 600px) {
+        font-size: 12px !important;
+    }
+}

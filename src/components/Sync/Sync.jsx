@@ -9,10 +9,11 @@ const Sync = (props) => {
         <Space direction="vertical">
           <Typography.Text
             style={{ display: "flex", justifyContent: "center" }}
+            className="constructed__text"
           >
             - This function is being constructed. -
           </Typography.Text>
-          <img src={not_completed} alt="not_completed" />
+          <img src={not_completed} alt="not_completed" style={{ maxWidth: '100%', height: 'auto' }}/>
         </Space>
       </Col>
     </Row>

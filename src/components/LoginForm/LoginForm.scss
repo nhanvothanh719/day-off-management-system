@@ -29,6 +29,10 @@ $gray: #7e7e7e;
 
     .ant {
       &-input {
+        @media screen and (max-width: 600px) {
+          font-size: 10px !important;
+        }
+
         &:focus,
         &-focused {
           border-color: $pink !important;
