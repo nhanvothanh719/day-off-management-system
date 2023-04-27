@@ -81,7 +81,7 @@ function TableMember({ users, onEdit, onDelete }) {
       dataIndex: "role",
       key: "role",
       render: (text, record, rowIndex) => {
-        return <Typography.Text>{record?.role_id?.role_name}</Typography.Text>;
+        return <Typography.Text className={`role-tag ${record?.role_id?.role_name}-tag`}>{record?.role_id?.role_name.charAt(0).toUpperCase() + record?.role_id?.role_name.slice(1)}</Typography.Text>;
       },
     },
     {
@@ -96,10 +96,10 @@ function TableMember({ users, onEdit, onDelete }) {
             <Row className="request-detail__actions">
               <Col className="request-detail__icon">
                 <Popconfirm
-                  title="Bạn có chắc muốn xóa user này?"
+                  title="You want to delete this user?"
                   onConfirm={() => onDelete(record._id)}
-                  okText="Có"
-                  cancelText="Không"
+                  okText="Yes"
+                  cancelText="No"
                 >
                   <DeleteFilled />
                 </Popconfirm>
@@ -133,7 +133,8 @@ function TableMember({ users, onEdit, onDelete }) {
   };
 
   const handleSave = (values) => {
-    onEdit({ ...editingUser, ...values });
+    const valueData = {...values, role_id: values.role}
+    onEdit({ ...editingUser, ...valueData });
     setIsModalVisible(false);
   };
 
@@ -152,17 +153,17 @@ function TableMember({ users, onEdit, onDelete }) {
           onCancel={handleCancel}
           footer={[
             <Button key="cancel" onClick={handleCancel}>
-              Hủy
+              Cancel
             </Button>,
             <Button key="save" type="primary" onClick={() => form.submit()}>
-              Lưu
+              Save
             </Button>,
           ]}
         >
           <Form
             form={form}
             onFinish={handleSave}
-            initialValue={{ role: editingUser?.role_id?._id }}
+            initialValue={{role: editingUser?.role_id?._id}}
           >
             <Form.Item
               label="Role"
@@ -171,8 +172,8 @@ function TableMember({ users, onEdit, onDelete }) {
             >
               <Radio.Group
                 size="large"
-                defaultChecked={"643d0d0c7ca86b1b36b6092c"}
-                defaultValue={"643d0d0c7ca86b1b36b6092c"}
+                defaultValue={editingUser?.role_id?._id}
+                
               >
                 <Space direction="vertical">
                   {roles?.role?.map((role) => {

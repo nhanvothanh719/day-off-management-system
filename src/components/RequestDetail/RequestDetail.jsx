@@ -29,6 +29,8 @@ import { useLocation } from "react-router-dom";
 import MyCard from "../Card/Card";
 import axiosClient from "../../utils/clientAxios";
 import moment from "moment";
+import { googleSheetURL } from "../../const/googleSheetConnection";
+import axios from 'axios';
 
 const RequestDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -114,6 +116,7 @@ const RequestDetail = () => {
     axiosClient
       .get(`/requests/${id}`)
       .then((res) => {
+        console.log(res.data.request);
         setRequestDetail(res.data.request);
       })
       .catch((error) => {
@@ -141,6 +144,21 @@ const RequestDetail = () => {
     return count;
   };
 
+  const sendToDayOffChannel = () => {
+    
+  };
+
+  const sendToGoogleSheet = () => {
+    const { day_off_time, day_off_type, start_date, end_date, quantity, reason, status } = requestDetail; 
+    axios.post(googleSheetURL, { day_off_time, day_off_type, start_date, end_date, quantity, reason, status})
+    .then((res) => {
+      messageApi.open({
+        type: "success",
+        content: "Send to Google Sheet successfully!",
+      });
+    }).catch((error) => console.log(error))
+  };
+
   const handleApprove = () => {
     setIsModalEditOpen(false);
     setIsModalApproveOpen(false);
@@ -151,8 +169,14 @@ const RequestDetail = () => {
         messageApi.open({
           type: "success",
           content: res.data.message,
-        });
+      });
+
+      if (res.data.send_to_slack) {
+        sendToDayOffChannel();
+        sendToGoogleSheet();
+      }
         setIsRefresh(true);
+        
       } else {
         messageApi.open({
           type: "error",

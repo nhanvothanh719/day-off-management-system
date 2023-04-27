@@ -20,7 +20,7 @@ export const RequestStatusChart = () => {
     fetchData();
   }, []);
 
-  const COLORS = ["#FEA0B9", "#FEEEE9", "#313261"];
+  const COLORS = ["#FEA0B9", "#FEEEE9", "#FB376E"];
 
   const RequestStatusChartComponent = (
     <PieChart width={300} height={300}>
