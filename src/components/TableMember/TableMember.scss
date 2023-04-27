@@ -1,46 +1,59 @@
-
-.ant-table-content{
-    
-    .ant-table-filter-trigger,
-    .ant-table-column-sorter-full{
-        color: #fff !important;
-    }
+.ant-table-content {
+  .ant-table-filter-trigger,
+  .ant-table-column-sorter-full {
+    color: #fff !important;
+  }
 }
-.table-member{
-    @media only screen and (max-width: 1367px) {
-        .table-member {
-          max-width: 1366px;
-          overflow: auto;
-        }
-      }
-      @media only screen and (max-width: 1200px) {
-        .table-member {
-          max-width: 1200px;
-          overflow: auto;
-        }
-      }
-      @media only screen and (max-width: 992px) {   
-        .table-member {
-          max-width: 960px;
-          overflow: auto;
-        }
-      }
-      @media only screen and (max-width: 768px) {
-        .table-member {
-          max-width: 720px;
-          overflow: auto;
-        }
-      }
-      @media only screen and (max-width: 576px) {
-        .table-member {
-          max-width: 540px;
-          overflow: auto;
-        }
-      }
-      @media only screen and (max-width: 390px) {
-        .table-member {
-          max-width: 390px;
-          overflow: auto;
-        }
-      }
+.table-member {
+  @media only screen and (max-width: 1367px) {
+    .table-member {
+      max-width: 1366px;
+      overflow: auto;
+    }
+  }
+  @media only screen and (max-width: 1200px) {
+    .table-member {
+      max-width: 1200px;
+      overflow: auto;
+    }
+  }
+  @media only screen and (max-width: 992px) {
+    .table-member {
+      max-width: 960px;
+      overflow: auto;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .table-member {
+      max-width: 720px;
+      overflow: auto;
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    .table-member {
+      max-width: 540px;
+      overflow: auto;
+    }
+  }
+  @media only screen and (max-width: 390px) {
+    .table-member {
+      max-width: 390px;
+      overflow: auto;
+    }
+  }
+
+  .role-tag.admin-tag {
+    color: #1EA8C5 !important;
+    background-color: #A4E2F1 !important;
+  }
+
+  .role-tag.manager-tag {
+    color: #2AC155 !important;
+    background-color: #E3F9E9 !important;
+  }
+
+  .role-tag.staff-tag {
+    color: #E97A9A !important;
+    background-color: #FBE8EE !important;
+  }
 }

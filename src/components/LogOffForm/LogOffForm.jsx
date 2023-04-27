@@ -44,7 +44,11 @@ function InputForm() {
       day_off_time: session,
     };
     storeRequest(new_request);
-    sendToSlack();
+    sendToHRAndMasterChannels();
+  };
+
+  const sendToHRAndMasterChannels = () => {
+    //
   };
 
   const storeRequest = (new_request) => {
@@ -59,10 +63,6 @@ function InputForm() {
         });
       })
       .catch((error) => console.log(error));
-  };
-
-  const sendToSlack = () => {
-    //
   };
 
   const onDateRangeChange = (range) => {

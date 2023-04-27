@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CustomError from "./components/CustomError/CustomError";
 import Loader from "./components/Loader/Loader";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import 'semantic-ui-css/semantic.min.css';
 
 function App() {
   return (
