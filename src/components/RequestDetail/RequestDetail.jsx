@@ -185,6 +185,7 @@ const RequestDetail = () => {
   const handleCancel = () => {
     setIsModalApproveOpen(false);
     setIsModalRejectOpen(false);
+    setIsModalEditOpen(false)
   };
 
   const showModalApprove = () => {
@@ -280,21 +281,6 @@ const RequestDetail = () => {
             <Button htmlType="submit">Submit</Button>
           </Form.Item>
         </Form>
-      </Modal>
-      <Modal
-        title="Reason for change"
-        open={isModalEditOpen}
-        onCancel={handleCancel}
-      >
-        <TextArea
-          placeholder="Need more detail"
-          style={{
-            height: "200px",
-            border: "1px solid #F4B0C2",
-            borderRadius: "10px",
-            boxShadow: "0px 0px 5px #e97a9a",
-          }}
-        ></TextArea>
       </Modal>
       <Modal
         title="Approved"

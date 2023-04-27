@@ -11,7 +11,6 @@ const DayOff = () => {
   const [dayOff, setDayOff] = useState()
 
   const map = dayOff?.map(dayOff => dayOff._id)
-  console.log(map)
 
   const start = () => {
     setLoading(true);
