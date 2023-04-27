@@ -1,6 +1,5 @@
 .ant-table-content {
   .ant-table-thead > tr > th {
-    // background-color: #fff !important;
     justify-content: center !important;
     font-size: 17px;
   }
@@ -96,5 +95,44 @@
       max-width: 390px;
       overflow: auto;
     }
+  }
+}
+
+.status-tag {
+
+  border-style: none !important;
+  border-radius: 10% !important;
+
+  font-weight: 500;
+  font-size: 14px !important;
+
+  &.pending-status-tag {
+    color: #FF6D4C !important;
+    background-color: #FEEAE6 !important;
+  }
+
+  &.approved-status-tag {
+    color: #2AC155 !important;
+    background-color: #E3F9E9 !important;
+  }
+
+  &.rejected-status-tag {
+    color: #FA4687 !important;
+    background-color: #f7d8eb !important;
+  }
+
+  &.morning-status-tag {
+    color: #E97A9A !important;
+    background-color: #FBE8EE !important;
+  }
+
+  &.afternoon-status-tag {
+    color: #212529 !important;
+    background-color: #F1F4F9 !important;
+  }
+
+  &.all_day-status-tag {
+    color: #1EA8C5 !important;
+    background-color: #A4E2F1 !important;
   }
 }

@@ -2,7 +2,6 @@
 import {
   Row,
   Col,
-  Timeline,
   Modal,
   Input,
   Descriptions,
@@ -16,15 +15,15 @@ import {
   message,
   Select,
   Button,
+  Timeline,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./RequestDetail.scss";
 import {
-  ClockCircleOutlined,
   EditFilled,
-  ArrowRightOutlined,
   CheckSquareFilled,
   CloseSquareFilled,
+  ClockCircleOutlined,
 } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import MyCard from "../Card/Card";
@@ -36,11 +35,15 @@ const RequestDetail = () => {
   const [requestDetail, setRequestDetail] = useState([]);
   const [isModalApproveOpen, setIsModalApproveOpen] = useState(false);
   const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
+  const [requestHistories, setRequestHistories] = useState([]);
+
+  const [isRefresh, setIsRefresh] = useState(false);
 
   const [dayOffAmount, setDayOffAmount] = useState(0);
   const [dayOffSession, setDayOffSession] = useState("morning");
 
   const [messageApi, contextHolder] = message.useMessage();
+  
   const dateFormat = "YYYY/MM/DD";
   const { TextArea } = Input;
   const [form] = Form.useForm();
@@ -61,8 +64,6 @@ const RequestDetail = () => {
       quantity: dayOffAmount,
       day_off_type: day_off_type,
       day_off_time: session,
-      status: "pending",
-      approvers_number: 2, //HARD CODE
     };
     updateRequest(update_request);
     setIsModalEditOpen(false);
@@ -119,15 +120,68 @@ const RequestDetail = () => {
       });
   }, [id]);
 
+  const handleOk = () => {
+    setIsModalEditOpen(false);
+  }
+
   if (!requestDetail) {
     return (
       <MyCard title="Request detail" loading={!requestDetail ? true : false} />
     );
   }
-  const handleOk = () => {
+
+  const displayRequestApprovers = (histories) => {
+    let count = 0;
+    histories?.map((history) => {
+      if (history.action === "approve") {
+        count++;
+      }
+    });
+    return count;
+  };
+
+  const handleApprove = () => {
+    setIsModalEditOpen(false);
     setIsModalApproveOpen(false);
     setIsModalRejectOpen(false);
+
+    axiosClient.put("/requests/approve", { request_id: id }).then((res) => {
+      if (res.data.success) {
+        messageApi.open({
+          type: "success",
+          content: res.data.message,
+        });
+        setIsRefresh(true);
+      } else {
+        messageApi.open({
+          type: "error",
+          content: res.data.message,
+        });
+      }
+    });
   };
+
+  const handleReject = () => {
+    setIsModalEditOpen(false);
+    setIsModalApproveOpen(false);
+    setIsModalRejectOpen(false);
+
+    axiosClient.put("/requests/reject", { request_id: id }).then((res) => {
+      if (res.data.success) {
+        messageApi.open({
+          type: "success",
+          content: res.data.message,
+        });
+        setIsRefresh(true);
+      } else {
+        messageApi.open({
+          type: "error",
+          content: res.data.message,
+        });
+      }
+    });
+  };
+
   const handleCancel = () => {
     setIsModalApproveOpen(false);
     setIsModalRejectOpen(false);
@@ -142,6 +196,24 @@ const RequestDetail = () => {
   const showModalEdit = () => {
     setIsModalEditOpen(true);
   };
+
+  useEffect(() => {
+    axiosClient
+      .get(`/requests/${id}`)
+      .then((res) => {
+        setRequestDetail(res.data.request);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+    axiosClient.get(`/histories/${id}`).then((res) => {
+      setRequestHistories(res.data.request_histories);
+    });
+
+    if(isRefresh) {
+      setIsRefresh(false)
+    }
+  }, [id, isRefresh]);
 
   return (
     <Card title="REQUEST DETAIL" bordered={false} className="card-container">
@@ -210,9 +282,24 @@ const RequestDetail = () => {
         </Form>
       </Modal>
       <Modal
+        title="Reason for change"
+        open={isModalEditOpen}
+        onCancel={handleCancel}
+      >
+        <TextArea
+          placeholder="Need more detail"
+          style={{
+            height: "200px",
+            border: "1px solid #F4B0C2",
+            borderRadius: "10px",
+            boxShadow: "0px 0px 5px #e97a9a",
+          }}
+        ></TextArea>
+      </Modal>
+      <Modal
         title="Approved"
         open={isModalApproveOpen}
-        onOk={handleOk}
+        onOk={handleApprove}
         onCancel={handleCancel}
       >
         <p>Are you sure approve this request?</p>
@@ -220,7 +307,7 @@ const RequestDetail = () => {
       <Modal
         title="Rejected"
         open={isModalRejectOpen}
-        onOk={handleOk}
+        onOk={handleReject}
         onCancel={handleCancel}
       >
         <p>Are you sure reject this request?</p>
@@ -244,7 +331,9 @@ const RequestDetail = () => {
                 {requestDetail.end_date}
               </Descriptions.Item>
               <Descriptions.Item label="Time :">
-                {requestDetail.day_off_time}
+                {requestDetail.day_off_time
+                  ?.replace(/_/g, " ")
+                  .replace(/\b\w/g, (char) => char.toUpperCase())}
               </Descriptions.Item>
               <Descriptions.Item label="Quantity :">
                 {requestDetail.quantity}
@@ -252,8 +341,18 @@ const RequestDetail = () => {
               <Descriptions.Item label="Reason :">
                 {requestDetail.reason}
               </Descriptions.Item>
-              <Descriptions.Item label="Status :">
-                {requestDetail.status}
+              <Descriptions.Item label="Approvers :">
+                {displayRequestApprovers(requestHistories) +
+                  "/" +
+                  parseInt(
+                    requestDetail.approvers_number +
+                      displayRequestApprovers(requestHistories)
+                  )}
+              </Descriptions.Item>
+              <Descriptions.Item className={`request-status`} label="Status :">
+                {requestDetail.status
+                  ?.replace(/_/g, " ")
+                  .replace(/\b\w/g, (char) => char.toUpperCase())}
               </Descriptions.Item>
             </Descriptions>
             <Space direction="vertical">
@@ -295,76 +394,19 @@ const RequestDetail = () => {
               <Typography.Text style={{ fontSize: "16px", fontWeight: "bold" }}>
                 HISTORIES
               </Typography.Text>
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row className="request-detail__history-text">Request</Row>
-                <Row>{requestDetail?.user_id?.username} requested</Row>
-                <Row>From : {requestDetail.start_date}</Row>
-                <Row>To : {requestDetail.end_date}</Row>
-                <Row>Time : {requestDetail.day_off_time}</Row>
-                <Row>Quantity : {requestDetail.quantity}</Row>
-                <Row>Reason : {requestDetail.reason}</Row>
-              </Timeline.Item>
 
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row className="request-detail__history-text">Approved</Row>
-                <Row>Hoang Pham Approved</Row>
-              </Timeline.Item>
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row className="request-detail__history-text">
-                  Request change
-                </Row>
-                <Row>Vinh Bui requested for change</Row>
-              </Timeline.Item>
-              <Timeline.Item
-                dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
-                className="timeline-clock-icon"
-              >
-                <Row>
-                  <Col xl={10} lg={10} md={10} sm={10} xs={24}>
-                    <Row className="request-detail__history-text">Request</Row>
-                    <Row>Khoa Nguyen updated request</Row>
-                    <Row>From: 14/04/2023</Row>
-                    <Row>To: 16/04/2023</Row>
-                    <Row>Time: All day</Row>
-                    <Row>Quantity: 4</Row>
-                    <Row>Reason: Personal Issue</Row>
-                  </Col>
-                  <Col
-                    xl={2}
-                    lg={2}
-                    md={2}
-                    sm={2}
-                    xs={24}
-                    style={{
-                      fontSize: "30px",
-                      margin: "50px 20px 0 0",
-                      color: "#e97a9a",
-                    }}
-                  >
-                    <ArrowRightOutlined className="arrow-1" />
-                  </Col>
-                  <Col xl={10} lg={10} md={10} sm={10} xs={24}>
-                    <Row className="request-detail__history-text">
-                      Request revert
-                    </Row>
-                    <Row>Khoa Nguyen updated request</Row>
-                    <Row>From: 14/04/2023</Row>
-                    <Row>To: 16/04/2023</Row>
-                    <Row>Time: All day</Row>
-                    <Row>Quantity: 4</Row>
-                    <Row>Reason: Personal Issue</Row>
-                  </Col>
-                </Row>
-              </Timeline.Item>
+              {requestHistories.map((history, id) => (
+                <Timeline.Item
+                  key={id}
+                  dot={<ClockCircleOutlined style={{ color: "#e97a9a" }} />}
+                  className="timeline-clock-icon"
+                >
+                  <Row className="request-detail__history-text">{history.action?.charAt(0).toUpperCase() + history.action?.slice(1)}</Row>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: history.description }}
+                  />
+                </Timeline.Item>
+              ))}
             </Space>
           </Col>
         </Row>

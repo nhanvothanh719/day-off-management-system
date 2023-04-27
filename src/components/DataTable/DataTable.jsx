@@ -13,8 +13,12 @@ import React, { useEffect, useState } from "react";
 import "./DataTable.scss";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
+import { useSelector } from "react-redux";
+import { user_role } from "../../const/role";
 
 const DataTable = () => {
+  const userRole = useSelector((state) => state.auth.userRole);
+
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [request, setRequest] = useState([]);
@@ -24,10 +28,11 @@ const DataTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const get_request_url = userRole === user_role.admin ? "/requests" : "/requests/get-all-requests-in-user-groups";
     axiosClient
-      .get("/requests")
+      .get(get_request_url)
       .then((res) => {
-        setRequest(res.data?.request);
+        setRequest(res.data?.requests);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -51,7 +56,7 @@ const DataTable = () => {
       render: (text, record, rowIndex) => {
         return (
           <Typography.Text>
-            {record?.start_date}-{record?.end_date}
+            {record?.start_date} - {record?.end_date}
           </Typography.Text>
         );
       },
@@ -77,8 +82,15 @@ const DataTable = () => {
       align: "center",
       key: "tags",
       dataIndex: "tags",
+<<<<<<< HEAD
       render: () => {
         return <Tag className="ant-tag-geekblue" >PENDING</Tag>;
+=======
+      render: (text, record) => {
+        return <Tag className={`status-tag ${record.status}-status-tag`}>
+          {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
+          </Tag>;
+>>>>>>> feat: dpm-finish-display-request-history
       },
     },
     {
@@ -87,14 +99,16 @@ const DataTable = () => {
       dataIndex: "day_off_time",
       key: "day_off_time",
       render: (text, record, rowIndex) => {
-        return <Typography.Text>{record?.day_off_time}</Typography.Text>;
+        return <Typography.Text className={`status-tag ${record.day_off_time}-status-tag`}>
+          {record?.day_off_time.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())}
+        </Typography.Text>;
       },
     },
   ];
 
   const handleRowClick = (record) => {
-    const rowKey = record._id; // lấy rowKey của hàng được chọn
-    navigate(`/account/requests/${rowKey}/request-detail`); // chuyển đến route với rowKey được truyền vào
+    const rowKey = record._id; 
+    navigate(`/account/requests/${rowKey}/request-detail`);
   };
 
   const start = () => {

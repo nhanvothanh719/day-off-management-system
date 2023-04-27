@@ -44,7 +44,7 @@ export const RequestStatusChart = () => {
   return (<Fragment>
   {
     data &&
-    <MyCard title="Chart 1" content={RequestStatusChartComponent} />
+    <MyCard title="Total requests by status" content={RequestStatusChartComponent} />
   }
 </Fragment>);
 };

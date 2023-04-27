@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 const withAuthorization = (requiredPermissions) => WrappedComponent => {
     const AuthorizedComponent = ({ userPermissions, ...props }) => {
         const navigate = useNavigate();
+        userPermissions = requiredPermissions.map((permission) => permission.toUpperCase());
         const hasPermission = requiredPermissions.every(permission => userPermissions.includes(permission));
         useEffect(() => {
             if(!hasPermission) navigate('/error/403'); 

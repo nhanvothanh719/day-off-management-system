@@ -1,4 +1,5 @@
-import { GroupRequestChart } from "./GroupRequestChart/GroupRequestChart";
+import { RequestSessionChart } from "./RequestSessionChart/RequestSessionChart";
 import { RequestStatusChart } from "./RequestStatusChart/RequestStatusChart";
+import { RequestAmountByMonth } from "./RequestAmountByMonth/RequestAmountByMonth";
 
-export  {GroupRequestChart, RequestStatusChart};
+export  { RequestSessionChart, RequestStatusChart, RequestAmountByMonth };
