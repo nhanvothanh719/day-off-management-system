@@ -60,7 +60,7 @@ const Groups = () => {
       </Button>
 
       <Table dataSource={groups} className="groups">
-        <Table.Column title="Name" dataIndex="name" key="name" />
+        <Table.Column title="Name" dataIndex="name" key="name" className="group-name__tag" />
 
         <Table.Column
           title="Staff(s)"
