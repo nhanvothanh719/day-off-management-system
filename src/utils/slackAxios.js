@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosClient from "./clientAxios";
 
 const tokenBot = "xoxb-5169513343826-5169554102002-JRdkA9oXrarPHP4epJDOslrj";
 const tokenAdmin =
@@ -31,4 +32,28 @@ export const privateChannel = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const sendSlackChannelHr = (data) => {
+    axiosClient
+      .post(`/notification/sendHr`, data)
+      .then((res) => {
+        console.error(res.data.message);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+
+};
+
+export const sendSlackChannelDayOff = (data) => {
+  axiosClient
+    .post(`/notification/sendDayoff`, data)
+    .then((res) => {
+      console.error(res.data.message);
+    })
+    .catch((error) => {
+      console.error("Error fetching data: ", error);
+    });
+
 };
