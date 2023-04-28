@@ -1,16 +1,12 @@
 import axios from "axios";
 import axiosClient from "./clientAxios";
 
-const tokenBot = "xoxb-5169513343826-5169554102002-JRdkA9oXrarPHP4epJDOslrj";
-const tokenAdmin =
-  "xoxp-5169513343826-5169380876243-5189669810737-c8ce1639f44347d035bafe967e3e1c70";
-
 export const publicChannel = async () => {
   try {
     const response = await axios({
       method: "post",
       url: "https://slack.com/api/conversations.list",
-      data: `token=${tokenBot}`,
+      data: `token=${process.env.REACT_APP_TOKEN_BOT}`,
     });
     return response.data;
   } catch (error) {
@@ -23,10 +19,7 @@ export const privateChannel = async () => {
     const response = await axios({
       method: "post",
       url: "https://slack.com/api/conversations.list",
-      data: `token=${tokenAdmin}`,
-      params: {
-        types: "private_channel",
-      },
+      data: `token=${process.env.REACT_APP_TOKEN_BOT}`,
     });
     return response.data;
   } catch (error) {

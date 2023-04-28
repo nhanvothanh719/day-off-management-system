@@ -5,11 +5,14 @@ import "./Members.scss";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
 import TableMember from "../TableMember/TableMember";
+import { useSelector } from "react-redux";
+import { user_role } from "../../const/role";
 
 const UserTable = (values) => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const userRole = useSelector((state) => state.auth.userRole);
 
   useEffect(() => {
     fetchUsers();
@@ -19,7 +22,7 @@ const UserTable = (values) => {
       setUsers(res.data);
     });
   };
-  
+
   const onDelete = async (id) => {
     await axiosClient.delete(`/users/${id}`);
     setUsers(users.filter((user) => user.id !== id));
@@ -55,28 +58,31 @@ const UserTable = (values) => {
     >
       <div>
         <>
-          <Row
-            style={{
-              marginBottom: 16,
-              justifyContent: "flex-end",
-            }}
-          >
-            <Button
-              type="primary"
-              onClick={start}
-              loading={loading}
+          {userRole === user_role.admin && (
+            <Row
               style={{
-                borderRadius: "8px",
-                height: "40px",
-                fontWeight: "500",
-                fontSize: "16px ",
-                backgroundColor: "#ea7a9a",
-                border: "none",
+                marginBottom: 16,
+                justifyContent: "flex-end",
               }}
             >
-              New member
-            </Button>
-          </Row>
+              <Button
+                type="primary"
+                onClick={start}
+                loading={loading}
+                style={{
+                  borderRadius: "8px",
+                  height: "40px",
+                  fontWeight: "500",
+                  fontSize: "16px ",
+                  backgroundColor: "#ea7a9a",
+                  border: "none",
+                }}
+              >
+                New member
+              </Button>
+            </Row>
+          )}
+
           <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <TableMember
