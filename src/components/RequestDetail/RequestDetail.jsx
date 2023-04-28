@@ -30,6 +30,7 @@ import axiosClient from "../../utils/clientAxios";
 import moment from "moment";
 import { googleSheetURL } from "../../const/googleSheetConnection";
 import axios from "axios";
+import { sendSlackChannelDayOff } from "../../utils/slackAxios";
 
 const RequestDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -98,10 +99,16 @@ const RequestDetail = () => {
   };
 
   const updateRequest = (update_request) => {
+    const dataSendSlack = {
+      start_date: requestDetail.start_date,
+      end_date: requestDetail.end_date,
+      user_name: localStorage.getItem("user_name"),
+      day_off_type: requestDetail.day_off_type,
+    };
     axiosClient
       .put(`/requests/${id}`, update_request)
       .then(() => {
-        sendToDayOffChannel();
+        sendSlackChannelDayOff(dataSendSlack);
         form.resetFields();
         setDayOffAmount(0);
         messageApi.open({
@@ -150,55 +157,6 @@ const RequestDetail = () => {
     return count;
   };
 
-  const sendToDayOffChannel = () => {
-    const data = {
-      blocks: [
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: "New request",
-            emoji: true,
-          },
-        },
-        {
-          type: "section",
-          fields: [
-            {
-              type: "mrkdwn",
-              text: `*Type:*\n${requestDetail.day_off_type}`,
-            },
-            {
-              type: "mrkdwn",
-              text: `*Created by:*\n ${localStorage.getItem("user_name")}`,
-            },
-          ],
-        },
-        {
-          type: "section",
-          fields: [
-            {
-              type: "mrkdwn",
-              text: `*When:*\n${requestDetail.start_date} - ${requestDetail.end_date}`,
-            },
-          ],
-        },
-      ],
-    };
-    axios.post(
-      "https://hooks.slack.com/services/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",
-      JSON.stringify(data),
-      {
-        withCredentials: false,
-        transformRequest: [
-          (data, headers) => {
-            return data;
-          },
-        ],
-      }
-    );
-  };
-
   const sendToGoogleSheet = () => {
     const {
       day_off_time,
@@ -241,7 +199,13 @@ const RequestDetail = () => {
         });
 
         if (res.data.send_to_slack) {
-          sendToDayOffChannel();
+          const dataSendSlack = {
+            start_date: requestDetail.start_date,
+            end_date: requestDetail.end_date,
+            user_name: localStorage.getItem("user_name"),
+            day_off_type: requestDetail.day_off_type,
+          };
+          sendSlackChannelDayOff(dataSendSlack);
           sendToGoogleSheet();
         }
         setIsRefresh(true);

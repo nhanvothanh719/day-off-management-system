@@ -16,8 +16,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import MyCard from "../Card/Card";
 import axiosClient from "../../utils/clientAxios";
 import moment from "moment";
-import { sendTohrchannel } from "../../utils/slackAxios";
-import axios from "axios";
+import { sendSlackChannelHr } from "../../utils/slackAxios";
 
 dayjs.extend(customParseFormat);
 
@@ -46,13 +45,19 @@ function InputForm() {
       day_off_time: session,
     };
     storeRequest(new_request);
-    sendToSlack(new_request);
   };
 
   const storeRequest = (new_request) => {
+    const dataSendSlack = {
+      start_date: new_request.start_date,
+      end_date: new_request.end_date,
+      user_name: localStorage.getItem("user_name"),
+      day_off_type: new_request.day_off_type,
+    };
     axiosClient
       .post("/requests", new_request)
       .then(() => {
+        sendSlackChannelHr(dataSendSlack);
         form.resetFields();
         setDayOffAmount(0);
         messageApi.open({
@@ -61,81 +66,6 @@ function InputForm() {
         });
       })
       .catch((error) => console.log(error));
-  };
-
-  const sendToSlack = (dataMes) => {
-    const data = {
-      blocks: [
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: "New request",
-            emoji: true,
-          },
-        },
-        {
-          type: "section",
-          fields: [
-            {
-              type: "mrkdwn",
-              text: `*Type:*\n${dataMes.day_off_type}`,
-            },
-            {
-              type: "mrkdwn",
-              text: `*Created by:*\n ${localStorage.getItem("user_name")}`,
-            },
-          ],
-        },
-        {
-          type: "section",
-          fields: [
-            {
-              type: "mrkdwn",
-              text: `*When:*\n${dataMes.start_date} - ${dataMes.end_date}`,
-            },
-          ],
-        },
-        {
-          type: "actions",
-          elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                emoji: true,
-                text: "Approve",
-              },
-              style: "primary",
-              value: "click_me_123",
-              url: "https://log-off-management.netlify.app/",
-            },
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                emoji: true,
-                text: "Reject",
-              },
-              style: "danger",
-              value: "click_me_123",
-            },
-          ],
-        },
-      ],
-    };
-    axios.post(
-      "https://hooks.slack.com/services/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",
-      JSON.stringify(data),
-      {
-        withCredentials: false,
-        transformRequest: [
-          (data, headers) => {
-            return data;
-          },
-        ],
-      }
-    );
   };
 
   const onDateRangeChange = (range) => {
