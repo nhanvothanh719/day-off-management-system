@@ -26,20 +26,11 @@ const DayOffDetail = () => {
   const dateFormat = "YYYY/MM/DD";
   const { TextArea } = Input;
   const [form] = Form.useForm();
-  const onDelete = async () => {
-    await axiosClient.delete(`/dayOff/${id}`);
-    (setDayOffDetail.filter((dayOff) => dayOff.id !== id));
-    navigate("/account/day-offs")
-    axiosClient
-      .get("/dayOff")
-      .then((res) => {
-        setDayOffDetail(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
+  const onDelete = () => {
+    axiosClient.delete(`/dayOff/${id}`).then((res) => {
+      navigate("/account/day-offs")
+    })
   };
-
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -69,7 +60,7 @@ const DayOffDetail = () => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
+  }, [id]);
 
   const onFinish = (values) => {
     const { day_off_range, day_off_type, reason, session } = values;
@@ -127,7 +118,6 @@ const DayOffDetail = () => {
       setDayOffAmount(day_off_amount * 2);
     }
   };
-
 
   if (!dayOffDetail) {
     return (
