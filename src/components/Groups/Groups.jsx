@@ -3,14 +3,14 @@ import { Space, Table, Tag, Button, Card, message } from "antd";
 import "./Groups.scss";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../utils/clientAxios";
-import {
-  EditFilled,
-  DeleteFilled
-} from '@ant-design/icons';
+import { EditFilled, DeleteFilled } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { user_role } from "../../const/role";
 
 const Groups = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
+  const userRole = useSelector((state) => state.auth.userRole);
 
   const [groups, setGroups] = useState([]);
 
@@ -22,15 +22,14 @@ const Groups = () => {
       case "new-group":
         navigate("/manager/groups/new-group");
         break;
-      case "delete": 
-        axiosClient.delete("/groups/" + id)
-        .then(() => {
+      case "delete":
+        axiosClient.delete("/groups/" + id).then(() => {
           setGroups(groups.filter((group) => group.id !== id));
           messageApi.open({
             type: "success",
             content: "Delete group successfully!",
           });
-        })
+        });
         break;
       default:
         break;
@@ -51,16 +50,22 @@ const Groups = () => {
   return (
     <Card title="ALL GROUPS" bordered={false} className="groups-table">
       {contextHolder}
-      <Button
-        className="groups-table-button"
-        onClick={() => handleOnClick("new-group")}
-        style ={{marginBottom: "10px"}}
-      >
-        + New Group
-      </Button>
-
+      {userRole === user_role.admin && (
+        <Button
+          className="groups-table-button"
+          onClick={() => handleOnClick("new-group")}
+          style={{ marginBottom: "10px" }}
+        >
+          + New Group
+        </Button>
+      )}
       <Table dataSource={groups} className="groups">
-        <Table.Column title="Name" dataIndex="name" key="name" className="group-name__tag" />
+        <Table.Column
+          title="Name"
+          dataIndex="name"
+          key="name"
+          className="group-name__tag"
+        />
 
         <Table.Column
           title="Staff(s)"
@@ -68,7 +73,7 @@ const Groups = () => {
           key="staffs"
           render={(staffs) => (
             <>
-              {staffs.map(({_id, name}) => (
+              {staffs.map(({ _id, name }) => (
                 <Tag key={_id}>{name}</Tag>
               ))}
             </>
@@ -81,38 +86,39 @@ const Groups = () => {
           key="masters"
           render={(masters) => (
             <>
-              {masters.map(({_id, name}) => (
+              {masters.map(({ _id, name }) => (
                 <Tag key={_id}>{name}</Tag>
               ))}
             </>
           )}
         />
+        {userRole === user_role.admin && (
+          <Table.Column
+            title="Action"
+            key="action"
+            render={(_, group) => (
+              <Space size="small">
+                <Button
+                  className="groups-table-btn edit-button"
+                  onClick={() => {
+                    handleOnClick("detail", group.id, group);
+                  }}
+                >
+                  <EditFilled />
+                </Button>
 
-        <Table.Column
-          title="Action"
-          key="action"
-          render={(_, group) => (
-            <Space size="small">
-              <Button
-                className="groups-table-btn edit-button"
-                onClick={() => {
-                  handleOnClick("detail", group.id, group);
-                }}
-              >
-                <EditFilled />
-              </Button>
-
-              <Button
-                className="groups-table-btn delete-button"
-                onClick={() => {
-                  handleOnClick("delete", group.id, group);
-                }}
-              >
-                <DeleteFilled />
-              </Button>
-            </Space>
-          )}
-        />
+                <Button
+                  className="groups-table-btn delete-button"
+                  onClick={() => {
+                    handleOnClick("delete", group.id, group);
+                  }}
+                >
+                  <DeleteFilled />
+                </Button>
+              </Space>
+            )}
+          />
+        )}
       </Table>
     </Card>
   );

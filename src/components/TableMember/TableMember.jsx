@@ -16,9 +16,11 @@ import { useState, useEffect } from "react";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import "./TableMember.scss";
 import axiosClient from "../../utils/clientAxios";
-
+import { useSelector } from "react-redux";
+import { user_role } from "../../const/role";
 function TableMember({ users, onEdit, onDelete }) {
   const [form] = Form.useForm();
+  const userRole = useSelector((state) => state.auth.userRole);
 
   const [editingUser, setEditingUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -81,11 +83,18 @@ function TableMember({ users, onEdit, onDelete }) {
       dataIndex: "role",
       key: "role",
       render: (text, record, rowIndex) => {
-        return <Typography.Text className={`role-tag ${record?.role_id?.role_name}-tag`}>{record?.role_id?.role_name.charAt(0).toUpperCase() + record?.role_id?.role_name.slice(1)}</Typography.Text>;
+        return (
+          <Typography.Text
+            className={`role-tag ${record?.role_id?.role_name}-tag`}
+          >
+            {record?.role_id?.role_name.charAt(0).toUpperCase() +
+              record?.role_id?.role_name.slice(1)}
+          </Typography.Text>
+        );
       },
     },
     {
-      title: "Action",
+      title: userRole === user_role.admin ? "Action" : "",
       align: "center",
       key: "actions",
       dataIndex: "actions",
@@ -93,24 +102,26 @@ function TableMember({ users, onEdit, onDelete }) {
       render: (text, record) => {
         return (
           <>
-            <Row className="request-detail__actions">
-              <Col className="request-detail__icon">
-                <Popconfirm
-                  title="You want to delete this user?"
-                  onConfirm={() => onDelete(record._id)}
-                  okText="Yes"
-                  cancelText="No"
+            {userRole === user_role.admin && (
+              <Row className="request-detail__actions">
+                <Col className="request-detail__icon">
+                  <Popconfirm
+                    title="You want to delete this user?"
+                    onConfirm={() => onDelete(record._id)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <DeleteFilled />
+                  </Popconfirm>
+                </Col>
+                <Col
+                  className="request-detail__icon3"
+                  onClick={() => handleEdit(record)}
                 >
-                  <DeleteFilled />
-                </Popconfirm>
-              </Col>
-              <Col
-                className="request-detail__icon3"
-                onClick={() => handleEdit(record)}
-              >
-                <EditFilled />
-              </Col>
-            </Row>
+                  <EditFilled />
+                </Col>
+              </Row>
+            )}
           </>
         );
       },
@@ -133,7 +144,7 @@ function TableMember({ users, onEdit, onDelete }) {
   };
 
   const handleSave = (values) => {
-    const valueData = {...values, role_id: values.role}
+    const valueData = { ...values, role_id: values.role };
     onEdit({ ...editingUser, ...valueData });
     setIsModalVisible(false);
   };
@@ -163,7 +174,7 @@ function TableMember({ users, onEdit, onDelete }) {
           <Form
             form={form}
             onFinish={handleSave}
-            initialValue={{role: editingUser?.role_id?._id}}
+            initialValue={{ role: editingUser?.role_id?._id }}
           >
             <Form.Item
               label="Role"
@@ -173,7 +184,6 @@ function TableMember({ users, onEdit, onDelete }) {
               <Radio.Group
                 size="large"
                 defaultValue={editingUser?.role_id?._id}
-                
               >
                 <Space direction="vertical">
                   {roles?.role?.map((role) => {

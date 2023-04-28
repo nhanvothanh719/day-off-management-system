@@ -55,5 +55,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1"
   }
 }
